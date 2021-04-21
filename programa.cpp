@@ -139,9 +139,12 @@ do {
 					//cumple un papel parecido al de la variable "respuesta", pero con valores enteros.
 
 	printf("	Debes mandar a algunas de las persobnas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
+	fflush(stdin);
 	scanf("%i",num);
 	i=1;
-	do{	if (num==variable[N].poblacion){
+	
+while(i!=0);{
+		if (num==10){
 			printf("	Lamentamos comunicarle que su aldea a sido asaltada por el pueblo vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
 			printf("Lo has oerdidio TODO. Aunque casi no e ha dado tiempo a tener nada....\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
@@ -157,26 +160,27 @@ do {
 		else if(asentamiento==2){
 				variable[N].madera=1.2*num;
 				variable[N].metal=1.8*num;
-				variable[N].alimentos=num*1.8;
+				variable[N].alimentos=num*1.5;
 				i=0;
 		}	
 		else if (asentamiento==3){
-			if (num>(variable[N].poblacion/2)){
-				variable[N].dinero-=30;
+			if (num>5){
+				variable[N].dinero=variable[N].dinero-30;
 				printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Ha venido el pueblo vecino, y se ha llevado 30 dolares de las arcas publicas. Suerte has tenido de que no se llevase mas.");
 			}
-				variable[N].madera=1.8*num;
+				variable[N].madera=1.9*num;
 				variable[N].metal=1.8*num;
 				variable[N].alimentos=num*2;
-				variable[N].madera=num*2;
 				i=0;
 		}
-		else{	i=1;
-				printf("El caracter introducido no es valido. Introduzca un 1, un 2, o 3.\n");
+		else {
+				i=1;
+				printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
 				fflush(stdin);
 				scanf("%i",&num);
 			}
-	}while(i!=0);
+	}
+	
 			//Informamos del estado del imperio:
 		printf("	Actualmente, tu imperio cuenta con:\n");
 			printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
