@@ -43,8 +43,7 @@ do {
 	//Preguntamos si conoce el juego, si no, se lo explicamos 
 	printf("	Nos dirigiremos hacia ti como %s a partir de ahora.\n",nombre);
 	printf("\n");
-	printf("	Dinos %s, eresn
-	 nuevo en EMPIRES GLOBAL OFFENSIVE?? (EGO para los amigos) Si no lo has hecho nunca te vendria bien una explicacion de como funciona. Quieres que te expliquemos lo basico??\n",nombre);
+	printf("	Dinos %s, eres nuevo en EMPIRES GLOBAL OFFENSIVE?? (EGO para los amigos) Si no lo has hecho nunca te vendria bien una explicacion de como funciona. Quieres que te expliquemos lo basico??\n",nombre);
 	printf("Introduce S para si y N para no:\n");
 	fflush(stdin);
 	scanf("%c",&respuesta);
