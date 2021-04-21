@@ -128,6 +128,7 @@ do {
 		variable[N].metal=0;
 		variable[N].alimentos=0;
 		variable[N].madera=0;
+		//comunicamos al jugador
 		printf("\n\n\n");
 		printf("	Actualmente, tu imperio cuenta con:\n");
 		printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
@@ -140,12 +141,10 @@ do {
 	printf("	Debes mandar a algunas de las persobnas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
 	scanf("%i",num);
 	i=1;
-	do{
-		if (num==variable[N].poblacion){
+	do{	if (num==variable[N].poblacion){
 			printf("	Lamentamos comunicarle que su aldea a sido asaltada por el pueblo vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
 			printf("Lo has oerdidio TODO. Aunque casi no e ha dado tiempo a tener nada....\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
-			i=1;
 			return 0;
 		}
 		else if(asentamiento==1){
@@ -177,13 +176,12 @@ do {
 				fflush(stdin);
 				scanf("%i",&num);
 			}
-	}while (i!=0);
-	
+	}while(i!=0);
 			//Informamos del estado del imperio:
 		printf("	Actualmente, tu imperio cuenta con:\n");
 			printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
 			printf("			%.1f dolares en las arcas publicas.\n",variable[N].dinero);
-			printf("			%.2f Kg de madera y otros %.2f Kg de metales varios.\n",variable[N].dinero);
+			printf("			%.2f Kg de madera y otros %.2f Kg de metales varios.\n",variable[N].madera,variable[N].metal);
 	
 	
 	
