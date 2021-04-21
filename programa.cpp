@@ -43,7 +43,7 @@ do {
 	//Preguntamos si conoce el juego, si no, se lo explicamos 
 	printf("	Nos dirigiremos hacia ti como %s a partir de ahora.\n",nombre);
 	printf("\n");
-	printf("	Dinos %s, eresn
+	printf("	Dinos %s", eres
 	 nuevo en EMPIRES GLOBAL OFFENSIVE?? (EGO para los amigos) Si no lo has hecho nunca te vendria bien una explicacion de como funciona. Quieres que te expliquemos lo basico??\n",nombre);
 	printf("Introduce S para si y N para no:\n");
 	fflush(stdin);
@@ -144,8 +144,8 @@ do {
 	do{
 		if (num==variable[N].poblacion){
 			printf("	Lamentamos comunicarle que su aldea a sido asaltada por el pueblo vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
-			printf("Lo has oerdidio TODO. Aunque casi no e ha dado tiempo a tener nada....\n");
-			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
+			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n");
+			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien esperamos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
 			return 0;
 		}
