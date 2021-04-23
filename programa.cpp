@@ -86,7 +86,7 @@ do {
 	printf("\n\n");
 	
 		printf("		ASENTAMIENTO EN LA COSTA:\n");
-			printf("	Tendras un rapido crecimiento al inicio debido al comercio matritimo, pero si no eres capaz de aprovecharlo para sacarle el suficiente ventaja a los imperios rivales, te deseo suerte para defenderte en el futuro.\n");
+			printf("	Tendras un rapido crecimiento al inicio debido al comercio maritimo, pero si no eres capaz de aprovecharlo para sacarle el suficiente ventaja a los imperios rivales, te deseo suerte para defenderte en el futuro.\n");
 	printf("\n");
 	
 		printf("		ASENTAMIENTO EN LA CORDILLERA:\n");
@@ -138,7 +138,7 @@ do {
 	int num; 		//Esta variable será usada para recoger la respuesta a multiples preguntas durante el programa.
 					//cumple un papel parecido al de la variable "respuesta", pero con valores enteros.
 
-	printf("	Debes mandar a algunas de las persobnas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
+	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
 	fflush(stdin);
 	scanf("%i",num);
 	i=1;
@@ -146,7 +146,7 @@ do {
 while(i!=0);{
 		if (num==10){
 			printf("	Lamentamos comunicarle que su aldea a sido asaltada por el pueblo vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
-			printf("Lo has oerdidio TODO. Aunque casi no e ha dado tiempo a tener nada....\n");
+			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			return 0;
 		}
