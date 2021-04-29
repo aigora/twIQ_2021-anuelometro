@@ -8,6 +8,15 @@ struct variables{
 	float dinero,metal,alimentos,madera;
 };
 
+void informe(){	//Informamos del estado del imperio:
+	struct variables variable[N];
+		printf("	Actualmente, tu imperio cuenta con:\n");
+		printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
+		printf("			%.1f dolares en las arcas publicas.\n",variable[N].dinero);
+		printf("			%.2f Kg de madera y otros %.2f Kg de metal.\n",variable[N].madera,variable[N].metal);
+
+}
+
 int main(){
 	
 	int i=1;	
@@ -38,7 +47,8 @@ do {
 	// Preguntamos el nombre
 		
 	printf("	Empecemos entonces!!\n	Antes de nada, te recomendamos que pongas la pantalla completa, te va a tocar leer bastante xD.\n	Dinos un nombre con el que referirnos a ti:\n");	
-	scanf("%s",nombre);
+	fflush(stdin);
+	gets(nombre);
 
 	//Preguntamos si conoce el juego, si no, se lo explicamos 
 	printf("	Nos dirigiremos hacia ti como %s a partir de ahora.\n",nombre);
@@ -117,9 +127,11 @@ do {
 	else if(asentamiento==2){printf("	Has elegido sabiamente la CORDILLERA.\n");	}
 	else {printf("	Has elegido sabiamente la MESETA.\n");	}	
 
-	printf(	"	No te acostumbres a que te digamos todas las consecuencias de tus decisiones. A partir de ahora vas a tener que apañartelas solito.\n");
+	printf(	"	No te acostumbres a que te digamos todas las consecuencias de tus decisiones. A partir de ahora vas a tener que apaniartelas solito.\n");
 	
-// EMPEZAMOS  CON EL JUEGO //***********************************************************************************
+	
+	
+// EMPEZAMOS  CON EL JUEGO //*******************************************************************************************************************************************************
 	//declaramos los vaslores iniciales de las variables (iguales para todos)
 	
 		variable[N].dinero=100;
@@ -129,64 +141,54 @@ do {
 		variable[N].alimentos=0;
 		variable[N].madera=0;
 		//comunicamos al jugador
-		printf("\n\n\n");
-		printf("	Actualmente, tu imperio cuenta con:\n");
-		printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
-		printf("			%.1f dolares en las arcas publicas.\n",variable[N].dinero);
-		printf("			Sin embargo nada de metal, alimentos o madera\n");
-
+		informe();
 	int num; 		//Esta variable será usada para recoger la respuesta a multiples preguntas durante el programa.
 					//cumple un papel parecido al de la variable "respuesta", pero con valores enteros.
 
 	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
 	fflush(stdin);
 	scanf("%i",num);
-	i=1;
 	
-while(i!=0);{
+	i=0;
+	do{
 		if (num==10){
-			printf("	Lamentamos comunicarle que su aldea a sido asaltada por el pueblo vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
-			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n");
+			printf("	%s, lamentamos comunicarle, que su aldea a sido asaltada por el pueblo vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!",nombre);
+			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de %s\n",nombreimperio);
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
+			i=1;
+//Aqui se puede ejecutar una funcion de final del programa. Que haga un resumende la partida o algo por el estilo
 			return 0;
-		}
+			}
 		else if(asentamiento==1){
 				variable[N].dinero=variable[N].dinero+num*1.3;
 				variable[N].madera=1.5*num;
 				variable[N].metal=1.2*num;
 				variable[N].alimentos=num*1.8;
-				i=0;
+				i=1;
 		}
 		else if(asentamiento==2){
 				variable[N].madera=1.2*num;
 				variable[N].metal=1.8*num;
 				variable[N].alimentos=num*1.5;
-				i=0;
+				i=1;
 		}	
 		else if (asentamiento==3){
 			if (num>5){
 				variable[N].dinero=variable[N].dinero-30;
 				printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Ha venido el pueblo vecino, y se ha llevado 30 dolares de las arcas publicas. Suerte has tenido de que no se llevase mas.");
-			}
 				variable[N].madera=1.9*num;
 				variable[N].metal=1.8*num;
 				variable[N].alimentos=num*2;
-				i=0;
-		}
-		else {
 				i=1;
-				printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
+			}
+		}
+		else {	printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
 				fflush(stdin);
 				scanf("%i",&num);
 			}
-	}
-	
-			//Informamos del estado del imperio:
-		printf("	Actualmente, tu imperio cuenta con:\n");
-			printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
-			printf("			%.1f dolares en las arcas publicas.\n",variable[N].dinero);
-			printf("			%.2f Kg de madera y otros %.2f Kg de metales varios.\n",variable[N].madera,variable[N].metal);
-	
+	}while(i==0);
+	informe();
+
 	
 	
 return 0;	
