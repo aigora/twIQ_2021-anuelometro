@@ -20,8 +20,10 @@ void informe(){	//Informamos del estado del imperio:
 int main(){
 	
 	int i=1;	
+	FILE *fentrada;	
 	struct variables variable[N];
 	char nombre[N],nombreimperio[N],respuesta;
+
 //MENU INICIAL
 
 	printf("				*EMPIRES GLOBAL OFFENSIVE*\n");	
@@ -74,7 +76,7 @@ do {
 			i=0;
 		}
 		else {
-			printf("El caracter introducido no es valido. Introduzca un caracter valido.\n");
+			printf("El caracter introducido no es valido. Introduzca un caracter valido (S o N).\n");
 			fflush(stdin);
 			scanf("%c",&respuesta);
 		}
@@ -87,49 +89,64 @@ do {
 	printf("	Uh! %s? es un buen nombre... Pero necesitas algo mas que eso para conquistar El Contintente!!\n	Sin mas dilacion... EMPECEMOS DE VERDAD\n(presiona ENTER)\n",nombreimperio);
 	getch();
 	
+					//Guardamos los datos de nombres ():	//Guardamos la decision en el fichero de decisiones:
+					fentrada=fopen("decisiones.txt","w");
+						if (fentrada == NULL){
+							printf("Ha ocurrido un error en la lectura del archivo. Reinicie el programa");
+						return 0;	}
+						fprintf(fentrada," 		NUEVA PARTIDA\nJugó: %s\n Su imperio se llamó:%s",nombre,nombreimperio);						
+					fclose(fentrada);
+	
+	
 // EMPEZAMOS CON LA TOMA DE DECISIONES --> ASENTAMIENTO 
 	
 	printf("\n");
 		printf("	Lo segundo que debes elegir, %s, es un buen lugar en el que asentarte al inicio. Posteriormente, este lugar pasara a ser la capital de tu imperio.\n 	Cada localizacion tiene bentajas y desventajas:\n(presiona ENTER)\n",nombre);
-	getch();
+	getch();	printf("\n\n");
+
 	
-	printf("\n\n");
+	printf("		ASENTAMIENTO EN LA COSTA:\n");
+		printf("	Tendras un rapido crecimiento al inicio debido al comercio maritimo, pero si no eres capaz de aprovecharlo para sacarle el suficiente ventaja a los imperios rivales, te deseo suerte para defenderte en el futuro.\n");
+			printf("\n");
 	
-		printf("		ASENTAMIENTO EN LA COSTA:\n");
-			printf("	Tendras un rapido crecimiento al inicio debido al comercio maritimo, pero si no eres capaz de aprovecharlo para sacarle el suficiente ventaja a los imperios rivales, te deseo suerte para defenderte en el futuro.\n");
-	printf("\n");
+	printf("		ASENTAMIENTO EN LA CORDILLERA:\n");
+		printf("	Aqui , ademas de unas vistas privilegiadas de todo el valle (un matiz clave para la defensa de tu base), encontramos una gran variedad de minerales y metales, e incluso algo de madera. Sin embargo no se ven muchos sitios donde montar un huerto o una granja...\n");
+			printf("\n");
 	
-		printf("		ASENTAMIENTO EN LA CORDILLERA:\n");
-			printf("	Aqui , ademas de unas vistas privilegiadas de todo el valle (un matiz clave para la defensa de tu base), encontramos una gran variedad de minerales y metales, e incluso algo de madera. Sin embargo no se ven muchos sitios donde montar un huerto o una granja...\n");
-	printf("\n");
-	
-		printf("		ASENTAMIENTO EN LA MESETA:\n");
-			printf("	Este es un asentamiento complicado la verdad... No se ve ningun tipo de defensa natural que ayude ante un posible ataque enemigo. Sin embargo, esta REPLETO de materiales de todo tipo; tenemos madera, tierras para cultivo, animales que domesticar, una red de cuevas mas o menos cercana con metales y otros minerales....\n");
+	printf("		ASENTAMIENTO EN LA MESETA:\n");
+		printf("	Este es un asentamiento complicado la verdad... No se ve ningun tipo de defensa natural que ayude ante un posible ataque enemigo. Sin embargo, esta REPLETO de materiales de todo tipo; tenemos madera, tierras para cultivo, animales que domesticar, una red de cuevas mas o menos cercana con metales y otros minerales....\n");
 			printf("	Desde luego que empezar aqui no va a ser facil, pero como sobrevivas al inicio... VAS A SER INDESTRUCTIBLE!!");
-	printf("\n\n");
-	int aux, asentamiento;
+				printf("\n\n");
+	
+	int asentamiento;
 	printf("Introduce un 1 para asentarte en la COSTA.		Introduce un 2 para asentarte en la CORDILLERA.		Introduce un 3 para asentarte en la MESETA\n");
 	fflush(stdin);
-	scanf("%i",&aux);
-	do {
-		if ((aux==1)||(aux==2)||(aux==3)){
-			asentamiento=aux;
-			i=0;
-		}
-		else {
-			i=1;
+	scanf("%i",&asentamiento);
+	do {if ((asentamiento!=1)&&(asentamiento!=2)&&(asentamiento!=3)){
 			printf("El caracter introducido no es valido. Introduzca un 1, un 2, o 3.\n");
 			fflush(stdin);
 			scanf("%c",&respuesta);
 		}
 	}while (i!=0);
+	
 	if (asentamiento==1){printf("	Has elegido sabiamente la COSTA.\n");	}
 	else if(asentamiento==2){printf("	Has elegido sabiamente la CORDILLERA.\n");	}
 	else {printf("	Has elegido sabiamente la MESETA.\n");	}	
 
-	printf(	"	No te acostumbres a que te digamos todas las consecuencias de tus decisiones. A partir de ahora vas a tener que apaniartelas solito.\n");
+	printf("	No te acostumbres a que te digamos todas las consecuencias de tus decisiones. A partir de ahora vas a tener que apaniartelas solito.\n");
 	
-	
+				//Guardamos la decision en el fichero de decisiones:
+					fentrada = fopen("decisiones.txt", "w");
+					
+						if (fentrada == NULL){
+							printf("Ha ocurrido un error en la lectura del archivo. Reinicie el programa");
+						return 0;	}
+					
+						if(asentamiento==1){fprintf(fentrada,"Decision 2: Asentamiento inicial---> COSTA");	}
+						else if(asentamiento==2){fprintf(fentrada,"Decision 2: Asentamiento inicial---> CORDILLERA");	}	
+						else {fprintf(fentrada,"Decision 2: Asentamiento inicial---> MESETA");	}
+						
+						fclose(fentrada);
 	
 // EMPEZAMOS  CON EL JUEGO //*******************************************************************************************************************************************************
 	//declaramos los vaslores iniciales de las variables (iguales para todos)
@@ -142,12 +159,13 @@ do {
 		variable[N].madera=0;
 		//comunicamos al jugador
 		informe();
+		
 	int num; 		//Esta variable será usada para recoger la respuesta a multiples preguntas durante el programa.
 					//cumple un papel parecido al de la variable "respuesta", pero con valores enteros.
 
 	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
 	fflush(stdin);
-	scanf("%i",num);
+	scanf("%i",&num);
 	
 	i=0;
 	do{
@@ -156,36 +174,39 @@ do {
 			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de %s\n",nombreimperio);
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
-//Aqui se puede ejecutar una funcion de final del programa. Que haga un resumende la partida o algo por el estilo
+			//Aqui se puede ejecutar una funcion de final del programa. Que haga un resumende la partida o algo por el estilo
 			return 0;
-			}
-		else if(asentamiento==1){
+		}
+		else if((num>10)||(num<0)){	printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
+				fflush(stdin);
+				scanf("%i",&num);
+		}
+		else{
+			if(asentamiento==1){
 				variable[N].dinero=variable[N].dinero+num*1.3;
 				variable[N].madera=1.5*num;
 				variable[N].metal=1.2*num;
 				variable[N].alimentos=num*1.8;
 				i=1;
-		}
-		else if(asentamiento==2){
+			}
+			else if(asentamiento==2){
 				variable[N].madera=1.2*num;
 				variable[N].metal=1.8*num;
 				variable[N].alimentos=num*1.5;
 				i=1;
-		}	
-		else if (asentamiento==3){
-			if (num>5){
-				variable[N].dinero=variable[N].dinero-30;
-				printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Ha venido el pueblo vecino, y se ha llevado 30 dolares de las arcas publicas. Suerte has tenido de que no se llevase mas.");
-				variable[N].madera=1.9*num;
-				variable[N].metal=1.8*num;
-				variable[N].alimentos=num*2;
-				i=1;
+			}
+			else{
+				if (num>5){
+					variable[N].dinero=variable[N].dinero-30;
+					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Ha venido el pueblo vecino, y se ha llevado 30 dolares de las arcas publicas. Suerte has tenido de que no se llevase mas.");
+				}
+					variable[N].madera=1.9*num;
+					variable[N].metal=1.8*num;
+					variable[N].alimentos=num*2;
+					i=1;
 			}
 		}
-		else {	printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
-				fflush(stdin);
-				scanf("%i",&num);
-			}
+		
 	}while(i==0);
 	informe();
 
