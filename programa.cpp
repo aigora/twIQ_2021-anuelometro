@@ -8,12 +8,11 @@ struct variables{
 	float dinero,metal,alimentos,madera;
 };
 
-void informe(){	//Informamos del estado del imperio:
-	struct variables variable[N];
+void informe(struct variables variable[N]){	//Informamos del estado del imperio:
 		printf("	Actualmente, tu imperio cuenta con:\n");
 		printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
 		printf("			%.1f dolares en las arcas publicas.\n",variable[N].dinero);
-		printf("			%.2f Kg de madera y otros %.2f Kg de metal.\n",variable[N].madera,variable[N].metal);
+		printf("			%.2f Kg de madera; %.1f Kg de alimentos; y otros %.2f Kg de metal.\n",variable[N].madera,variable[N].alimentos,variable[N].metal);
 
 }
 
@@ -158,7 +157,7 @@ do {
 		variable[N].alimentos=0;
 		variable[N].madera=0;
 		//comunicamos al jugador
-		informe();
+		informe(variable);
 		
 	int num; 		//Esta variable será usada para recoger la respuesta a multiples preguntas durante el programa.
 					//cumple un papel parecido al de la variable "respuesta", pero con valores enteros.
@@ -208,8 +207,8 @@ do {
 		}
 		
 	}while(i==0);
-	informe();
-
+	informe(variable);
+	printf("%i",variable[N].ejercito);
 	
 	
 return 0;	
