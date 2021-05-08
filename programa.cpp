@@ -4,8 +4,7 @@
 #define N 1000
 
 struct variables{
-	int poblacion, ejercito;
-	float dinero,metal,alimentos,madera;
+	float dinero,metal,alimentos,madera,poblacion, ejercito;
 };
 
 void informe(struct variables variable[N]); 
@@ -43,7 +42,7 @@ do {
 //PEDIMOS NOMBRE AL USUARIO Y preguntamos si es novato. Si lo es, le explicamos el juego.
 	// Preguntamos el nombre
 		
-	printf("	Empecemos entonces!!\n	Antes de nada, te recomendamos que pongas la pantalla completa, te va a tocar leer bastante xD.\n	Dinos un nombre con el que referirnos a ti:\n");	
+	printf("	Empecemos entonces!!\n	Antes de nada, te recomendamos que pongas la pantalla completa, te va a tocar leer bastante xD.\n 	Te recordamos ademas, que cuando acabes la partida, tendras un resumen de tus decisiones en la misma carpeta donde tengas el juego, en el archivo llamado 'decisiones'\n	Dinos un nombre con el que referirnos a ti:\n");	
 	fflush(stdin);
 	gets(nombre);
 
@@ -132,11 +131,9 @@ do {
 	
 				//Guardamos la decision en el fichero de decisiones:
 					fentrada = fopen("decisiones.txt", "w");
-					
-						if (fentrada == NULL){
-							printf("Ha ocurrido un error en la lectura del archivo. Reinicie el programa");
-						return 0;	}
-					
+									if (fentrada == NULL){
+										printf("Ha ocurrido un error en la lectura del archivo. Reinicie el programa");
+									return 0;	}
 						if(asentamiento==1){fprintf(fentrada,"Decision 2: Asentamiento inicial---> COSTA");	}
 						else if(asentamiento==2){fprintf(fentrada,"Decision 2: Asentamiento inicial---> CORDILLERA");	}	
 						else {fprintf(fentrada,"Decision 2: Asentamiento inicial---> MESETA");	}
@@ -223,17 +220,17 @@ do {
 						printf("	En dinero($):\n");
 						fflush(stdin);
 						scanf("f",&aux);		
-						variable.dinero=variable.dinero-aux;
+						variable[N].dinero=variable[N].dinero-aux;
 							//MADERA
 						printf("	En madera (kg):\n");
 						fflush(stdin);
 						scanf("%f",&aux);		
-						variable.madera=variable.madera-aux;
+						variable[N].madera=variable[N].madera-aux;
 							//METAL
 						printf("	En metal (kg):\n");
 						fflush(stdin);
 						scanf("%f",&aux);		
-						variable.metal=variable.metal-aux;
+						variable[N].metal=variable[N].metal-aux;
 						
 						//INCIDENTE DE LOS OBREROS Y LA COMIDA:
 							printf("	3 de los obreros que trabajan en el astillero quieren comida (1kg cada uno). Vas a tener que dársela para que no se te revelen.\n	Se la das??");
@@ -243,10 +240,12 @@ do {
 									while(j==0){
 										
 										if((respuesta=='S')||(respuesta=='s')){ 
-											variables.alimentos = variables.alimentos-3;
-												if (variable.alimentos<0){
+											variable[N].alimentos = variable[N].alimentos-3;
+												//Si no tiene comida suficiente:
+												if (variable[N].alimentos<0){
 													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.",nombre); 
 													final();	
+													return 0;
 												}													
 											j=1;
 										}
@@ -262,8 +261,9 @@ do {
 										
 									}
 							i=1;
-						}
-						else if((respuesta=='N')||(respuesta=='n')){
+						}	//Aqui acaba el 1º IF 
+						
+						else if((respuesta=='N')||(respuesta=='n')){	//Lo que pasa si NO quiene construir el barco:
 							i=1;
 							printf("Tu mismo con tu mecanismo amigo... A ver como te las apanias en el futuro...");
 						}
@@ -272,17 +272,19 @@ do {
 							fflush(stdin);
 							scanf("%f",&aux);
 						}
-				}
-		
-		else{
+				}	
+		}//Aqui acaba el while del asentamiento 1 
+					
+		else{ //Lo que ocurre en la 2ª ronda para los asentamientos 2 y 3
 			printf("Se ve que vienen unas personas hacia %s. Debemos atacarlesantes de que ellos nos ataquen primero??",nombreimperio);
 			printf("(S para si, y N para no)");
 				fflush(stdin);
 				scanf("c",&respuesta);
-		printf("CONTINUARA");
+			printf("CONTINUARA");
 		}
-	
-	
+		//Informamos del estado de su imperio tras el 2º movimiento del jugador 
+	printf("	Así es como estan las cosas en %s, %s:\n",nombreimperio,nombre);
+	informe(variable);
 	
 	
 	
@@ -304,16 +306,17 @@ void informe(struct variables variable[N]){	//Informamos del estado del imperio:
 
 }
 
-void explorar (struct variables variable){
+void explorar (struct variables variable[N], int asentamiento){
 	int i,num;
+	struct variables variable[N];
 	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
 	fflush(stdin);
 	scanf("%i",&num);
 	i=0;
 	do{
-		if (num==variable.poblacion){
-			printf("	%s, lamentamos comunicarle, que su aldea a sido asaltada por el pueblo vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!",nombre);
-			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de %s\n",nombreimperio);
+		if (num==variable[N].poblacion){
+			printf("	Lamentamos comunicarte, que tu imperio a sido asaltado por el imperio vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
+			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de tu imperio\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
 			//Aqui se puede ejecutar una funcion de final del programa. Que haga un resumende la partida o algo por el estilo
@@ -332,14 +335,14 @@ void explorar (struct variables variable){
 				i=1;
 			}
 			else if(asentamiento==2){
-				variable[N].dinero
+				variable[N].dinero;
 				variable[N].madera=1.2*num;
 				variable[N].metal=1.8*num;
 				variable[N].alimentos=num*1.5;
 				i=1;
 			}
 			else{
-				if (num>){
+				if (num>(variable[N].ejercito*0.5)){
 					variable[N].dinero=variable[N].dinero-30;
 					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Ha venido el pueblo vecino, y se ha llevado 30 dolares de las arcas publicas. Suerte has tenido de que no se llevase mas.");
 				}
