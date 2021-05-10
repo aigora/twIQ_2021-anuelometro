@@ -8,8 +8,8 @@ struct variables{
 };
 
 void informe(struct variables variable[N]); 
-void explorar (struct variables variable);
-void final();
+void explorar (struct variables variable[N]);
+void final(char nombre, char nombreimperio);
 
 int main(){
 	
@@ -216,17 +216,17 @@ do {
 				while(i=0){
 					if ((respuesta=='S')||(respuesta=='s')){
 						printf("	Cuantos recursos quieres gastar en la construccion del barco??\n");
-							//DINERO
+					//DINERO
 						printf("	En dinero($):\n");
 						fflush(stdin);
 						scanf("f",&aux);		
 						variable[N].dinero=variable[N].dinero-aux;
-							//MADERA
+					//MADERA
 						printf("	En madera (kg):\n");
 						fflush(stdin);
 						scanf("%f",&aux);		
 						variable[N].madera=variable[N].madera-aux;
-							//METAL
+					//METAL
 						printf("	En metal (kg):\n");
 						fflush(stdin);
 						scanf("%f",&aux);		
@@ -244,7 +244,7 @@ do {
 												//Si no tiene comida suficiente:
 												if (variable[N].alimentos<0){
 													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.",nombre); 
-													final();	
+													final(nombre,nombreimperio);	
 													return 0;
 												}													
 											j=1;
@@ -276,11 +276,17 @@ do {
 		}//Aqui acaba el while del asentamiento 1 
 					
 		else{ //Lo que ocurre en la 2ª ronda para los asentamientos 2 y 3
-			printf("Se ve que vienen unas personas hacia %s. Debemos atacarlesantes de que ellos nos ataquen primero??",nombreimperio);
+			printf("Se ve que vienen unas personas hacia %s. Crees que debemos atacarles antes de que ellos nos ataquen primero??",nombreimperio);
 			printf("(S para si, y N para no)");
 				fflush(stdin);
 				scanf("c",&respuesta);
 			printf("CONTINUARA");
+			if((respuesta=='S')||(respuesta=='s')){
+				printf("AL ATAQUEEEEEEE !!!!!\n");
+			}
+			if((respuesta=='n')||(respuesta=='N')){
+				printf("AL ATAQUEEEEEEE !!!!! Ah... que no ataquemos... okey, perdon me pudo la emocion xD... Bueno, al caso!\n");
+			}
 		}
 		//Informamos del estado de su imperio tras el 2º movimiento del jugador 
 	printf("	Así es como estan las cosas en %s, %s:\n",nombreimperio,nombre);
@@ -356,6 +362,10 @@ void explorar (struct variables variable[N], int asentamiento){
 	}while(i==0);
 }
 
-void final(){	printf("	Te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos. HASTA LUEGO !!!!");}
+void final(char nombre, char nombreimperio){
+	printf("	Esto ha sido lo que el destino le tenia guardado a %s.\n");
+	printf("	%s, te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos.\n\n\n				 HASTA LUEGO !!!!");
+	
+	}
 
 
