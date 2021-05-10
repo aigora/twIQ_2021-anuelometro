@@ -33,11 +33,12 @@ do {
 		return 0;
 	}
 	else {
-		printf("El caracter introducido no es valido. Introduzca un caracter valido (E para empezar y S para salir).\n");
+		printf("El caracter introducido no es valido. Introduzca un caracter valido.\n");
+		printf("(E para empezar y S para salir)\n");
 		fflush(stdin);
 		scanf("%c",&respuesta);
 	}
-}while (i!=0);
+}while (i!=0); 
 
 //PEDIMOS NOMBRE AL USUARIO Y preguntamos si es novato. Si lo es, le explicamos el juego.
 	// Preguntamos el nombre
