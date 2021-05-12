@@ -21,7 +21,7 @@ int main(){
 //MENU INICIAL
 
 	printf("				*EMPIRES GLOBAL OFFENSIVE*\n");	
-	printf("	Bienvenido jugador, si quiere empezar a jugar introduzca una E; de lo contrario, una S para salir.\n");	
+	printf("	Bienvenido jugador, si quiere empezar a jugar introduzca una E; una S para salir del juego,una C para ver los creditos, o una P para poner la pausa.\n");	
 	scanf("%c",&respuesta);
 	
 do {	
@@ -31,6 +31,18 @@ do {
 	else if  ((respuesta == 'S')||(respuesta == 's')){
 		printf("	Esperamos verte pronto. Hasta luego !!!");
 		return 0;
+	}
+	else if  ((respuesta == 'P')||(respuesta == 'p')){
+		getch();
+		printf("(Presiona ENTER para salir de la pausa)");
+		i=0;
+	}
+	else if  ((respuesta == 'C')||(respuesta == 'c')){
+		printf("	Este videojuego, ha sido realizado enteramente por:\n")
+		printf("		Angel Rubio Ramos.\n			Federico Javier Laoroga de Villa\n			Alejandro Bejar.\n")
+		printf("(Presiona ENTER para empezar)")
+		getch();
+		i=0;
 	}
 	else {
 		printf("El caracter introducido no es valido. Introduzca un caracter valido.\n");
