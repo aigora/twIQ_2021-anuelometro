@@ -38,9 +38,9 @@ do {
 		i=0;
 	}
 	else if  ((respuesta == 'C')||(respuesta == 'c')){
-		printf("	Este videojuego, ha sido realizado enteramente por:\n")
-		printf("		Angel Rubio Ramos.\n			Federico Javier Laoroga de Villa\n			Alejandro Bejar.\n")
-		printf("(Presiona ENTER para empezar)")
+		printf("	Este videojuego, ha sido realizado enteramente por:\n");
+		printf("		Angel Rubio Ramos.\n			Federico Javier Laoroga de Villa\n			Alejandro Bejar.\n");
+		printf("(Presiona ENTER para empezar)");
 		getch();
 		i=0;
 	}
