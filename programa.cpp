@@ -331,7 +331,7 @@ void explorar (struct variables variable[N], int asentamiento, char nombre[N], c
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
 			//Aqui se puede ejecutar una funcion de final del programa. Que haga un resumende la partida o algo por el estilo
-			final(nombre, nombremperio);
+			final(nombre, nombreimperio);
 		}
 		else if((num>10)||(num<0)){	printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
 				fflush(stdin);
