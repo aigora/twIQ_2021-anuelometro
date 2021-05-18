@@ -8,7 +8,7 @@ struct variables{
 };
 
 void informe(struct variables variable[6]); 
-void explorar (struct variables variable[6], int asentamiento, char nombre[N], char nombreimperio[N]);
+int explorar (struct variables variable[6], int asentamiento, char nombre[N], char nombreimperio[N]);
 void final(char nombre[N], char nombreimperio[N]);
 
 int main(){
@@ -162,44 +162,57 @@ do {
 		
 	//1º MOVIMIENTO: Exploracion ******************* 1 ************** 1 ************ 1 ************* 1 ************ 1 ************* 1 ************ 1 ************* 1 ***************
 	
-	explorar(variable, asentamiento, nombre, nombreimperio);
+	if(explorar(variable, asentamiento, nombre, nombreimperio)==0) {	return 0;}
 	informe(variable);
 	
 	
 	//ANTES HACEMOS TENEMOS QUE HACER ACLARACIONES SOBRE COMO FUNCIONANAN LAS GUERRAS Y COMO SE POSICIONAN LOS PUEBLOS EN FUNCION DE SU ASENTAMIENTO.
 
 	printf("	Te vamos a explicar como se distribuyen los imperios en El continente:\n");		printf("\n\n\n\n");
-	printf("	Veras; %s, se encuentra en la siguiente posicion gegráfica con respecto al resto de imperios cercanos:\n",nombreimperio);
+	printf("	Veras; %s, se encuentra en la siguiente posicion gegrafica con respecto al resto de imperios cercanos:\n",nombreimperio);
 	
 		//PRESENTACION DE LOS IMPERIOS EN FUNCION DEL ASENTAMIENTO 
 		if(asentamiento==1){
 			printf("	Al rededor nuestro, tenemos 4 imperios grandes. Sus nombres en clave son, por orden de cercania a la capital: 'Alfa','Beta''Gamma','Delta'.\n");
+				printf("\n");
 				printf("		La verdad es que el imperio Alfa es el que menos te debe preocupar, porque acaba de salir de una crisis social y economica y no parece que tenga muchas ganas de pelear. Puedes aprobechar eso para tratar de llegar a acuerdos, o directamente llevamos al ejército.\n");
+				printf("\n");
 				printf("		El imperio Beta, está posicionado en una peninsula al norte de %s. Se llega antes por agua que por tierra. Actrualmente se encuentra en expansion.\n",nombreimperio);
+				printf("\n");
 				printf("		El imperio Gamma, está algo alejado, pero no tanto como el Delta.Estos dos tienen asuntos por resolver, por la hija del rey de Gamma y el principe de Delta, que al parecer tienen sus cositas en comun; aunque aun es prnto para saber si terminaran en guerra o en alienza... Todo se vera con el tiempo.\n");
+				printf("\n");
 				printf("		Por ultimo, el imperio Delta, es el mas alejado; a mas de dos dias de camino. Es un imperio de los mas potentes, ten seguro que como hagan bien las cosas... tienes pocas cosas que hacer para ganarles la batalla.\n");
 		}	
 		else if(asentamiento==2){
 			printf("	Al rededor nuestro, tenemos 4 imperios grandes. Sus nombres en clave son, por orden de cercania a la capital: 'Alfa','Beta''Gamma','Delta'.\n");	
+				printf("\n");
 				printf("		La verdad es que el imperio Alfa es el que menos te debe preocupar, porque acaba de salir de una crisis social y economica y no parece que tenga muchas ganas de pelear. Puedes aprobechar eso para tratar de llegar a acuerdos, o directamente llevamos al ejército.\n ");
+				printf("\n");
 				printf("		El imperio Beta, está en expansion. TIENES SUERTE... creo. Su emperador es tu primo!! Eso te puede servir para llegar a pactos de familia. Aunque tambien ten en cuenta que te conoce a la perfeccion, no intentes colarsela que te tiene fichado.\n");
+				printf("\n");
 				printf("		El imperio Gamma, está algo alejado, pero no tanto como el Delta.Estos dos tienen asuntos por resolver, por la hija del rey de Gamma y el principe de Delta, que al parecer tienen sus cositas en comun; aunque aun es prnto para saber si terminaran en guerra o en alienza... Todo se vera con el tiempo.\n");
+				printf("\n");
 				printf("		Por ultimo, el imperio Delta, es el mas alejado; a mas de dos dias de camino. Es un imperio de los mas potentes, ten seguro que como hagan bien las cosas... tienes pocas cosas que hacer para ganarles la batalla.\n");
 			}
 		else{
 			printf("	Al rededor nuestro, tenemos 4 imperios grandes. Sus nombres en clave son, por orden de cercania a la capital: 'Alfa','Beta''Gamma','Delta'.\n");	
+				printf("\n");
 				printf("		La verdad es que el imperio Alfa es el que menos te debe preocupar, porque acaba de salir de una crisis social y economica y no parece que tenga muchas ganas de pelear. Puedes aprobechar eso para tratar de llegar a acuerdos, o directamente llevamos al ejército.\n ");
+				printf("\n");
 				printf("		El imperio Beta, se encuentra en un momento complicado, acaba de estallar la revolucion del pueblo por los excesivos impuestos. Mantente atento porque nunca se sabe por donde salen estas cosas. Imaginate que a algun iluminado de %s se le ocurre imiterles... tu cargo de emperador estaria en peligro %s. Solo queria avisarte.\n",nombreimperio,nombre);
+				printf("\n");
 				printf("		El imperio Gamma, está algo alejado, pero no tanto como el Delta.Estos dos tienen asuntos por resolver, por la hija del rey de Gamma y el principe de Delta, que al parecer tienen sus cositas en comun; aunque aun es prnto para saber si terminaran en guerra o en alienza... Todo se vera con el tiempo.\n");
+				printf("\n");
 				printf("		Por ultimo, el imperio Delta, es el mas alejado; a mas de dos dias de camino. Es un imperio de los mas potentes, ten seguro que como hagan bien las cosas... tienes pocas cosas que hacer para ganarles la batalla.\n");
 			}
 		printf("\n\n\n\n");
 	
 	//2º MOVIMIENTO DEL JUGARDOR: Gastar o ganar dinero:******************* 2 ************** 2 ************ 2 ************* 2 ************ 2 ************* 2 ************ 2 ************* 2 ***************
 	float aux;
-	char respuesta2;
+	char respuestados;
 	int j=0;
 		printf("	Hoy hace un dia esplendido... El pueblo de %s se levanta para tomar un poco el sol y ponerse a trabajar, que el continente no se conquista solo.\n",nombreimperio);
+		
 		if (asentamiento==1){
 			printf("	La recolecta que has hiciste, no fue demasiado fructifera, por ello seria conveniente que algunos de tus ciudadanos vayan en busca de mas recusos.\n");
 			printf("	Ten en cuenta que el resto de pueblos igual prefieren saquear a tus marineros antes de mediar palabra. Ademas del gasto inicial que supone fabricar un barco desde cero.\n");
@@ -285,17 +298,17 @@ do {
 					printf("	Buenos dias emperador! Hoy ha salido un sol precioso, y podemos ver como %s empieza a coger forma y a ganarse el respeto de los imperios vecinos.\n ");
 					printf("Quieres salir a la ventana y observar el maravilloso dia que hace??		(S para si y N para no)\n");
 						fflush(stdin);
-						scanf("c",&respuesta2);
+						scanf("c",&respuestados);
 					//Ver llegar al ejercito alfa
 						while(j==0){
-							if((respuesta2=='S')||(respuesta2=='s')){
+							if((respuestados=='S')||(respuestados=='s')){
 							j=1;
 								printf("	Bonito sol... Bonito cielo... Pero... Que es eso que se ve en el horizonte?! NO... NO PUEDE SER!! EL IMPERIO ALFA VIENE CON  TODO SU EJERCITO LISTO PARA LA BATALLA !!! \n");
 								printf("	RAPIDO !! Es necesario un comite de emergencia!");
 								j=1;
 								
 							}
-							else if((respuesta2=='n')||(respuesta2=='N')){
+							else if((respuestados=='n')||(respuestados=='N')){
 							j=1;
 								printf("	Uno de los altos mandos militares irrumpe en tu habitacion antes incluso de que te puedas levantgar de la cama. Casi sin aliento, te avisa de algo bastante grave y urgente que esta ocurriendo:\n");
 								printf("	El ejercito del imperio alfa viene con cara de pocos amigos. Debe de ser que los individuos de ayer eran de los suyos. \n");
@@ -304,7 +317,7 @@ do {
 							else{
 								printf("	El caracter introducido no es valido, por favor introduzca una S o una N:\n");
 									fflush(stdin);
-									scanf("c",&respuesta2);
+									scanf("c",&respuestados);
 							}	
 						}//Acaba el bucle de la pregunta: ¿SALIMOS A LA VENTANA?
 				}
@@ -329,6 +342,7 @@ do {
 	//3º MOVIMIENTO DEL JUGADOR****************************** 3************** 3 ************ 3 ************* 3 ************ 3 ************* 3 ************ 3 ********* 3 **************
 	printf("	Toca salir a explorar... a ver que nos encontramos hoy!\n");
 	explorar(variable, asentamiento, nombre, nombreimperio);
+	if(explorar(variable, asentamiento, nombre, nombreimperio)==0) {	return 0;}
 	informe(variable);
 	
 	
@@ -353,21 +367,22 @@ void informe(struct variables variable[6]){	//Informamos del estado del imperio:
 
 }
 
-void explorar (struct variables variable[], int asentamiento, char nombre[N], char nombreimperio[N]){
+int explorar (struct variables variable[6], int asentamiento, char nombre[N], char nombreimperio[N]){
 	int i,num;
 	float mitad;
 	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %.0f mandas.\n",variable[6].poblacion);
 		fflush(stdin);
 		scanf("%i",&num);
-	mitad=variable[6].poblacion;
+	mitad=variable[6].poblacion*0.5;
 	i=0;
 	while(i==0){
-		if (num==variable[N].poblacion){
+		if (num==variable[6].poblacion){
 			printf("	Lamentamos comunicarte, que tu imperio a sido asaltado por el imperio vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
 			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de tu imperio\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
 			final(nombre, nombreimperio);
+			return 0;
 		}
 		else if((num>variable[6].poblacion)||(num<0)){	
 			printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
@@ -379,7 +394,7 @@ void explorar (struct variables variable[], int asentamiento, char nombre[N], ch
 				variable[6].dinero=variable[6].dinero+num*1.7;
 				variable[6].madera=variable[6].madera+1.2*num;
 				variable[6].metal=variable[6].metal+1.2*num;
-				variable[6].alimentos=variable[6].dinero+num*1.8;
+				variable[6].alimentos=variable[6].alimentos+num*1.8; 
 				variable[6].poblacion=variable[6].poblacion+variable[6].alimentos*0.25;
 				variable[6].ejercito=variable[6].ejercito+variable[6].poblacion*0.2;
 				i=1;
@@ -396,7 +411,7 @@ void explorar (struct variables variable[], int asentamiento, char nombre[N], ch
 			else{   //asentamiento==3
 				if (num>=mitad){
 					variable[6].dinero=variable[6].dinero-40;
-					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevase mas.");
+					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevasen mas.");
 				}
 					variable[6].dinero=variable[6].dinero+num*1.25;
 					variable[6].madera=variable[6].madera+1.9*num;
@@ -415,6 +430,7 @@ void final(char nombre[N], char nombreimperio[N]){
 	printf("	Esto ha sido lo que el destino le tenia guardado a %s.\n");
 	printf("	%s, te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos.\n\n\n				 HASTA LUEGO !!!!");
 	printf("\n\n\n			ACUERDATE----> En el documento 'decisiones.txt' (que se encuentra en la misma carpeta que el archivo del juego 'programa.cpp'), tienes un resumen de como te ha ido en la partida de hoy.\n");
+	printf("\n");
 	}
 
 
