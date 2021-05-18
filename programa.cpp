@@ -1,4 +1,4 @@
-#include <stdio.h>
+	#include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
 #define N 1000
@@ -7,15 +7,15 @@ struct variables{
 	float dinero,metal,alimentos,madera,poblacion, ejercito;
 };
 
-void informe(struct variables variable[N]); 
-void explorar (struct variables variable[N], int asentamiento, char nombre[N], char nombreimperio[N]);
+void informe(struct variables variable[6]); 
+void explorar (struct variables variable[6], int asentamiento, char nombre[N], char nombreimperio[N]);
 void final(char nombre[N], char nombreimperio[N]);
 
 int main(){
 	
 	int i=1;	
 	FILE *fentrada;	
-	struct variables variable[N];
+	struct variables variable[6];
 	char nombre[N],nombreimperio[N],respuesta;
 
 //MENU INICIAL
@@ -34,13 +34,13 @@ do {
 	}
 	else if  ((respuesta == 'P')||(respuesta == 'p')){
 		getch();
-		printf("(Presiona ENTER para salir de la pausa)");
+		printf("(Presiona ENTER para salir de la pausa)\n");
 		i=0;
 	}
 	else if  ((respuesta == 'C')||(respuesta == 'c')){
 		printf("	Este videojuego, ha sido realizado enteramente por:\n");
-		printf("		Angel Rubio Ramos.\n			Federico Javier Laoroga de Villa\n			Alejandro Bejar.\n");
-		printf("(Presiona ENTER para empezar)");
+		printf("			Angel Rubio Ramos.\n			Federico Javier Laoroga de Villa\n			Alejandro Bejar.\n");
+		printf("(Presiona ENTER para empezar)\n");
 		getch();
 		i=0;
 	}
@@ -151,12 +151,12 @@ do {
 // EMPEZAMOS  CON EL JUEGO //*******************************************************************************************************************************************************
 	//declaramos los vaslores iniciales de las variables (iguales para todos)
 	
-		variable[N].dinero=100;
-		variable[N].poblacion=10;
-		variable[N].ejercito=5;
-		variable[N].metal=0;
-		variable[N].alimentos=0;
-		variable[N].madera=0;
+		variable[6].dinero=100;
+		variable[6].poblacion=10;
+		variable[6].ejercito=5;
+		variable[6].metal=0;
+		variable[6].alimentos=0;
+		variable[6].madera=0;
 		//comunicamos al jugador
 		informe(variable);
 		
@@ -182,17 +182,17 @@ do {
 						printf("	En dinero($):\n");
 						fflush(stdin);
 						scanf("f",&aux);		
-						variable[N].dinero=variable[N].dinero-aux;
+						variable[6].dinero=variable[6].dinero-aux;
 					//MADERA
 						printf("	En madera (kg):\n");
 						fflush(stdin);
 						scanf("%f",&aux);		
-						variable[N].madera=variable[N].madera-aux;
+						variable[6].madera=variable[6].madera-aux;
 					//METAL
 						printf("	En metal (kg):\n");
 						fflush(stdin);
 						scanf("%f",&aux);		
-						variable[N].metal=variable[N].metal-aux;
+						variable[6].metal=variable[6].metal-aux;
 						
 						//INCIDENTE DE LOS OBREROS Y LA COMIDA:
 							printf("	3 de los obreros que trabajan en el astillero quieren comida (casi 2kg cada uno). Vas a tener que dársela para que no se te revelen.\n	Se la das??");
@@ -202,9 +202,9 @@ do {
 									while(j==0){
 										
 										if((respuesta=='S')||(respuesta=='s')){ 
-											variable[N].alimentos = variable[N].alimentos-5;
+											variable[6].alimentos = variable[6].alimentos-5;
 												//Si no tiene comida suficiente:
-												if (variable[N].alimentos<0){
+												if (variable[6].alimentos<0){
 													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.",nombre); 
 													final(nombre, nombreimperio);	
 													return 0;
@@ -304,68 +304,70 @@ return 0;
 
 //************************************		FUNCIONES 	***************************************		FUNCIONES		***************************************
 
-void informe(struct variables variable[]){	//Informamos del estado del imperio:
+void informe(struct variables variable[6]){	//Informamos del estado del imperio:
 		printf("	Actualmente, tu imperio cuenta con:\n");
-		printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
-		printf("			%.1f dolares en las arcas publicas.\n",variable[N].dinero);
-		printf("			%.2f Kg de madera; %.1f Kg de alimentos; y otros %.2f Kg de metal.\n",variable[N].madera,variable[N].alimentos,variable[N].metal);
+		printf("			%.0f personas. De los cuales, %.0f pertenecen al ejercito.\n",variable[6].poblacion,variable[6].ejercito);
+		printf("			%.1f dolares en las arcas publicas.\n",variable[6].dinero);
+		printf("			%.2f Kg de madera; %.1f Kg de alimentos; y otros %.2f Kg de metal.\n",variable[6].madera,variable[6].alimentos,variable[6].metal);
 
 }
 
 void explorar (struct variables variable[], int asentamiento, char nombre[N], char nombreimperio[N]){
 	int i,num;
-	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
+	float mitad;
+	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %.0f mandas.\n",variable[6].poblacion);
 	fflush(stdin);
 	scanf("%i",&num);
+	mitad=variable[6].poblacion;
 	i=0;
-	do{
+	while(i==0){
 		if (num==variable[N].poblacion){
 			printf("	Lamentamos comunicarte, que tu imperio a sido asaltado por el imperio vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
 			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de tu imperio\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
-			//Aqui se puede ejecutar una funcion de final del programa. Que haga un resumende la partida o algo por el estilo
 			final(nombre, nombreimperio);
 		}
-		else if((num>10)||(num<0)){	printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
+		else if((num>variable[6].poblacion)||(num<0)){	
+			printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
 				fflush(stdin);
 				scanf("%i",&num);
 		}
 		else{
 			if(asentamiento==1){
-				variable[N].dinero=variable[N].dinero+num*1.6;
-				variable[N].madera=1.2*num;
-				variable[N].metal=1.2*num;
-				variable[N].alimentos=num*1.8;
+				variable[6].dinero=variable[6].dinero+num*1.6;
+				variable[6].madera=variable[6].madera+1.2*num;
+				variable[6].metal=variable[6].metal+1.2*num;
+				variable[6].alimentos=variable[6].dinero+num*1.8;
 				i=1;
 			}
 			else if(asentamiento==2){
-				variable[N].dinero=variable[N].dinero+num*1.25;
-				variable[N].madera=1.2*num;
-				variable[N].metal=1.8*num;
-				variable[N].alimentos=num*1.5;
+				variable[6].dinero=variable[6].dinero+num*1.25;
+				variable[6].madera=variable[6].madera+1.2*num;
+				variable[6].metal=variable[6].metal+1.8*num;
+				variable[6].alimentos=variable[6].alimentos+num*1.5;
 				i=1;
 			}
-			else{
-				if (num>(variable[N].ejercito*0.5)){
-					variable[N].dinero=variable[N].dinero-40;
+			else{   //asentamiento==3
+				if (num>=mitad){
+					variable[6].dinero=variable[6].dinero-40;
 					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevase mas.");
 				}
-					variable[N].dinero=variable[N].dinero+num*1.25;
-					variable[N].madera=1.9*num;
-					variable[N].metal=1.8*num;
-					variable[N].alimentos=num*2;
+					variable[6].dinero=variable[6].dinero+num*1.25;
+					variable[6].madera=variable[6].madera+1.9*num;
+					variable[6].metal=variable[6].metal+1.8*num;
+					variable[6].alimentos=variable[6].alimentos+num*2;
 					i=1;
 			}
 		}
 		
-	}while(i==0);
+	}
 }
 
 void final(char nombre[N], char nombreimperio[N]){
 	printf("	Esto ha sido lo que el destino le tenia guardado a %s.\n");
 	printf("	%s, te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos.\n\n\n				 HASTA LUEGO !!!!");
-	
+	printf("\n\n\n			ACUERDATE----> En el documento 'decisiones.txt' (que se encuentra en la misma carpeta que el archivo del juego 'programa.cpp'), tienes un resumen de como te ha ido en la partida de hoy.\n");
 	}
 
 
