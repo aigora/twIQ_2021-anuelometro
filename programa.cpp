@@ -102,7 +102,6 @@ do {
 							printf("Ha ocurrido un error en la escritura del archivo. Reinicie el programa");
 						return 0;	}
 						fprintf(fentrada,"NUEVA PARTIDA\n		Jugó: %s\n 		Su imperio se llamó: %s",nombre,nombreimperio);
-						fclose(fentrada);
 	
 	
 // EMPEZAMOS CON LA TOMA DE DECISIONES --> ASENTAMIENTO 
@@ -143,10 +142,6 @@ do {
 	printf("	No te acostumbres a que te digamos todas las consecuencias de tus decisiones. A partir de ahora vas a tener que apaniartelas solito.\n");
 	
 				//Guardamos la decision en el fichero de decisiones:
-					fentrada = fopen("decisiones.txt", "w");
-									if (fentrada == NULL){
-										printf("Ha ocurrido un error en la lectura del archivo. Reinicie el programa");
-									return 0;	}
 						if(asentamiento==1){fprintf(fentrada,"Decision 2: Asentamiento inicial---> COSTA");	}
 						else if(asentamiento==2){fprintf(fentrada,"Decision 2: Asentamiento inicial---> CORDILLERA");	}	
 						else {fprintf(fentrada,"Decision 2: Asentamiento inicial---> MESETA");	}
@@ -309,7 +304,7 @@ return 0;
 
 //************************************		FUNCIONES 	***************************************		FUNCIONES		***************************************
 
-void informe(struct variables variable[N]){	//Informamos del estado del imperio:
+void informe(struct variables variable[]){	//Informamos del estado del imperio:
 		printf("	Actualmente, tu imperio cuenta con:\n");
 		printf("			%i personas. De los cuales, %i pertenecen al ejercito.\n",variable[N].poblacion,variable[N].ejercito);
 		printf("			%.1f dolares en las arcas publicas.\n",variable[N].dinero);
@@ -317,9 +312,8 @@ void informe(struct variables variable[N]){	//Informamos del estado del imperio:
 
 }
 
-void explorar (struct variables variable[N], int asentamiento, char nombre[N], char nombreimperio[N]){
+void explorar (struct variables variable[], int asentamiento, char nombre[N], char nombreimperio[N]){
 	int i,num;
-	struct variables variable[N];
 	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %i mandas.\n",variable[N].poblacion);
 	fflush(stdin);
 	scanf("%i",&num);
