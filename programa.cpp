@@ -432,18 +432,17 @@ void final(char nombre[N], char nombreimperio[N], struct variables variable[]){
 	printf("	%s, te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos.\n\n\n				 HASTA LUEGO !!!!");
 	printf("\n\n\n			ACUERDATE----> En el documento 'decisiones.txt' (que se encuentra en la misma carpeta que el archivo del juego 'programa.cpp'), tienes un resumen de como te ha ido en la partida de hoy.\n");
 	printf("\n");
-		//ABRIMOS EL FICHERO DE DECISIONES LOS DATOS DEL IMPERIO:
-		fentrada=fopen("decisiones.txt","w");
-					if (fentrada == NULL){	printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'decisiones.txt'."); }
-		//ESCRIBIMOS LOS DATOS CONM LOS QUE EL IMPERIO TERMINA SU HISTORIA:
-		fprintf(fentrada,"El imperio %s, termino su historia con:\n");
-			fprintf(fentrada,"	--> %.0f habitantes.\n",variable[6].poblacion);
-			fprintf(fentrada,"	--> %.0f miembros del ejercito .\n");
-			fprintf(fentrada,"	--> %.2f Dolares de dinero publico en las arcas del estado.\n",variable[6].ejercito);
-			fprintf(fentrada,"	--> %.2f kilogramos de madera.\n",variable[6].madera);
-			fprintf(fentrada,"	--> %.2f kilogramos de metales y minerales.\n",variable[6].metal);
-			fprintf(fentrada,"	--> %.2f kilogramos de alimentos con los que mantenía a su pueblo.\n",variable[6].alimentos);
-	
+				//ABRIMOS EL FICHERO DE DECISIONES LOS DATOS DEL IMPERIO:
+				fentrada=fopen("decisiones.txt","w");
+							if (fentrada == NULL){	printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'decisiones.txt'."); }
+				//ESCRIBIMOS LOS DATOS CONM LOS QUE EL IMPERIO TERMINA SU HISTORIA:
+				fprintf(fentrada,"El imperio %s, termino su historia con:\n");
+					fprintf(fentrada,"	--> %.0f habitantes.\n",variable[6].poblacion);
+					fprintf(fentrada,"	--> %.0f miembros del ejercito .\n");
+					fprintf(fentrada,"	--> %.2f Dolares de dinero publico en las arcas del estado.\n",variable[6].ejercito);
+					fprintf(fentrada,"	--> %.2f kilogramos de madera.\n",variable[6].madera);
+					fprintf(fentrada,"	--> %.2f kilogramos de metales y minerales.\n",variable[6].metal);
+					fprintf(fentrada,"	--> %.2f kilogramos de alimentos con los que mantenía a su pueblo.\n",variable[6].alimentos);
 	}
 
 
