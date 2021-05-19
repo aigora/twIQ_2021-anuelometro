@@ -9,7 +9,7 @@ struct variables{
 
 void informe(struct variables variable[]); 
 int explorar (struct variables variable[], int asentamiento, char nombre[N], char nombreimperio[N]);
-void final(char nombre[N], char nombreimperio[N]);
+void final(char nombre[N], char nombreimperio[N], struct variables variable[]);
 
 int main(){
 	
@@ -54,7 +54,7 @@ do {
 
 //PEDIMOS NOMBRE AL USUARIO Y preguntamos si es novato. Si lo es, le explicamos el juego.
 	// Preguntamos el nombre
-		
+
 	printf("	Empecemos entonces!!\n	Antes de nada, te recomendamos que pongas la pantalla completa, te va a tocar leer bastante xD.\n 	Te recordamos ademas, que cuando acabes la partida, tendras un resumen de tus decisiones en la misma carpeta donde tengas el juego, en el archivo llamado 'decisiones'\n	Dinos un nombre con el que referirnos a ti:\n");	
 		fflush(stdin);
 		gets(nombre);
@@ -253,7 +253,7 @@ do {
 												//Si no tiene comida suficiente:
 												if (variable[6].alimentos<0){
 													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.",nombre); 
-													final(nombre, nombreimperio);	
+													final(nombre, nombreimperio, variable);	
 													return 0;
 												}													
 											j=1;
@@ -383,7 +383,7 @@ int explorar (struct variables variable[], int asentamiento, char nombre[N], cha
 			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de tu imperio\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
-			final(nombre, nombreimperio);
+			final(nombre, nombreimperio, variable);
 			return 0;
 		}
 		else if((num>variable[6].poblacion)||(num<0)){	
@@ -434,7 +434,9 @@ void final(char nombre[N], char nombreimperio[N], struct variables variable[]){
 	printf("\n");
 				//ABRIMOS EL FICHERO DE DECISIONES LOS DATOS DEL IMPERIO:
 				fentrada=fopen("decisiones.txt","w");
-							if (fentrada == NULL){	printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'decisiones.txt'."); }
+							if (fentrada == NULL){
+								printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'decisiones.txt'.");
+							}
 				//ESCRIBIMOS LOS DATOS CONM LOS QUE EL IMPERIO TERMINA SU HISTORIA:
 				fprintf(fentrada,"El imperio %s, termino su historia con:\n");
 					fprintf(fentrada,"	--> %.0f habitantes.\n",variable[6].poblacion);
@@ -444,5 +446,4 @@ void final(char nombre[N], char nombreimperio[N], struct variables variable[]){
 					fprintf(fentrada,"	--> %.2f kilogramos de metales y minerales.\n",variable[6].metal);
 					fprintf(fentrada,"	--> %.2f kilogramos de alimentos con los que mantenía a su pueblo.\n",variable[6].alimentos);
 	}
-
 
