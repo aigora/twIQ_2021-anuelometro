@@ -99,9 +99,9 @@ do {
 					//Guardamos los datos de nombres ():	//Guardamos la decision en el fichero de decisiones:
 					fentrada = fopen("decisiones.txt", "w");
 						if (fentrada == NULL){
-							printf("Ha ocurrido un error en la escritura del archivo. Reinicie el programa");
+							printf("Ha ocurrido un error en la escritura del archivo. Reinicie el programa. Revise la ubicadion del archivo, y si se encuentra en la misma carpeta que el archivo de texto: 'decisiones.txt'.\n");
 						return 0;	}
-						fprintf(fentrada,"NUEVA PARTIDA\n		Jugó: %s\n 		Su imperio se llamó: %s",nombre,nombreimperio);
+						fprintf(fentrada,"NUEVA PARTIDA\n		Jugó: %s\n 		Su imperio se llamó: %s\n",nombre,nombreimperio);
 	
 	
 // EMPEZAMOS CON LA TOMA DE DECISIONES --> ASENTAMIENTO 
@@ -142,9 +142,9 @@ do {
 	printf("	No te acostumbres a que te digamos todas las consecuencias de tus decisiones. A partir de ahora vas a tener que apaniartelas solito.\n");
 	
 				//Guardamos la decision en el fichero de decisiones:
-						if(asentamiento==1){fprintf(fentrada,"Decision 2: Asentamiento inicial---> COSTA");	}
-						else if(asentamiento==2){fprintf(fentrada,"Decision 2: Asentamiento inicial---> CORDILLERA");	}	
-						else {fprintf(fentrada,"Decision 2: Asentamiento inicial---> MESETA");	}
+						if(asentamiento==1){fprintf(fentrada,"Decision 2: Asentamiento inicial---> COSTA\n");	}
+						else if(asentamiento==2){fprintf(fentrada,"Decision 2: Asentamiento inicial---> CORDILLERA\n");	}	
+						else {fprintf(fentrada,"Decision 2: Asentamiento inicial---> MESETA\n");	}
 						
 
 	
@@ -209,7 +209,7 @@ do {
 	
 	//2º MOVIMIENTO DEL JUGARDOR: Gastar o ganar dinero:******************* 2 ************** 2 ************ 2 ************* 2 ************ 2 ************* 2 ************ 2 ************* 2 ***************
 	float aux;
-	char respuestados;
+	char letra;
 	int j=0;
 		printf("	Hoy hace un dia esplendido... El pueblo de %s se levanta para tomar un poco el sol y ponerse a trabajar, que el continente no se conquista solo.\n",nombreimperio);
 		
@@ -218,37 +218,37 @@ do {
 			printf("	Ten en cuenta que el resto de pueblos igual prefieren saquear a tus marineros antes de mediar palabra. Ademas del gasto inicial que supone fabricar un barco desde cero.\n");
 			printf("(S para construir el barco, N pra no hacerlo)\n");
 				fflush(stdin);
-				scanf("c",&respuesta);
+				scanf("%c",&respuesta);
 					
 			i=0;
 				while(i=0){
 					if ((respuesta=='S')||(respuesta=='s')){
-						printf("	Cuantos recursos quieres gastar en la construccion del barco??\n");
+						printf("			Cuantos recursos quieres gastar en la construccion del barco??:\n");
 					//DINERO
-						printf("	En dinero($):\n");
-						fflush(stdin);
-						scanf("f",&aux);		
-						variable[6].dinero=variable[6].dinero-aux;
+						printf("	En dinero (dolares):\n");
+							fflush(stdin);
+							scanf("f",&aux);		
+								variable[6].dinero=variable[6].dinero-aux;
 					//MADERA
 						printf("	En madera (kg):\n");
-						fflush(stdin);
-						scanf("%f",&aux);		
-						variable[6].madera=variable[6].madera-aux;
+							fflush(stdin);
+							scanf("%f",&aux);		
+								variable[6].madera=variable[6].madera-aux;
 					//METAL
 						printf("	En metal (kg):\n");
-						fflush(stdin);
-						scanf("%f",&aux);		
-						variable[6].metal=variable[6].metal-aux;
+							fflush(stdin);
+							scanf("%f",&aux);		
+								variable[6].metal=variable[6].metal-aux;
 						
 						//INCIDENTE DE LOS OBREROS Y LA COMIDA:
-							printf("	3 de los obreros que trabajan en el astillero quieren comida (casi 2kg cada uno). Vas a tener que dársela para que no se te revelen.\n	Se la das??");
+							printf("	Algunos de los obreros que trabajan en el astillero quieren comida (casi 2kg cada uno). Vas a tener que dársela para que no se te revelen.\n	Se la das??");
 							printf("(S para darsela y N para no:)\n");
 								fflush(stdin);
-								scanf("%c",&respuesta);
+								scanf("%c",&letra);
 									while(j==0){
 										
-										if((respuesta=='S')||(respuesta=='s')){ 
-											variable[6].alimentos = variable[6].alimentos-5;
+										if((letra=='S')||(letra=='s')){ 
+											variable[6].alimentos = variable[6].alimentos-17;
 												//Si no tiene comida suficiente:
 												if (variable[6].alimentos<0){
 													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.",nombre); 
@@ -257,14 +257,15 @@ do {
 												}													
 											j=1;
 										}
-										else if((respuesta=='N')||(respuesta=='n')){
+										else if((letra=='N')||(letra=='n')){
 											printf("	Tienes agallas %s... Por desgacia los obreros no les ha hecho mucha gracia tu decision.\n	Han cogido sus cosas y se han marchado. Ahora sois tres menos en tu imperio...\n",nombre);
+											variable[6].poblacion=variable[6].poblacion-7;
 											j=1;
 										}
 										else{
 											printf("El caracter introducido no es valido. Escriba una S o una N por favor.");
 												fflush(stdin);
-												scanf("%c",&respuesta);
+												scanf("%c",&letra);
 										}
 										
 									}
@@ -273,12 +274,12 @@ do {
 						
 						else if((respuesta=='N')||(respuesta=='n')){	//Lo que pasa si NO quiene construir el barco:
 							i=1;
-							printf("Tu mismo con tu mecanismo amigo... A ver como te las apanias en el futuro...");
+							printf("Tu mismo con tu mecanismo amigo... A ver como te las apanias en el futuro sin ni siquiera alimentos para poder mantener al ejercito...");
 						}
 						else {
 							printf("El caracter introducido no es valido. Escriba una S o una N por favor.");
-							fflush(stdin);
-							scanf("%f",&aux);
+								fflush(stdin);
+								scanf("%c",&respuesta);
 						}
 				}	
 		}//Aqui acaba el while del asentamiento 1 
@@ -298,17 +299,17 @@ do {
 					printf("	Buenos dias emperador! Hoy ha salido un sol precioso, y podemos ver como %s empieza a coger forma y a ganarse el respeto de los imperios vecinos.\n ");
 					printf("Quieres salir a la ventana y observar el maravilloso dia que hace??		(S para si y N para no)\n");
 						fflush(stdin);
-						scanf("c",&respuestados);
+						scanf("c",&letra);
 					//Ver llegar al ejercito alfa
 						while(j==0){
-							if((respuestados=='S')||(respuestados=='s')){
+							if((letra=='S')||(letra=='s')){
 							j=1;
 								printf("	Bonito sol... Bonito cielo... Pero... Que es eso que se ve en el horizonte?! NO... NO PUEDE SER!! EL IMPERIO ALFA VIENE CON  TODO SU EJERCITO LISTO PARA LA BATALLA !!! \n");
 								printf("	RAPIDO !! Es necesario un comite de emergencia!");
 								j=1;
 								
 							}
-							else if((respuestados=='n')||(respuestados=='N')){
+							else if((letra=='n')||(letra=='N')){
 							j=1;
 								printf("	Uno de los altos mandos militares irrumpe en tu habitacion antes incluso de que te puedas levantgar de la cama. Casi sin aliento, te avisa de algo bastante grave y urgente que esta ocurriendo:\n");
 								printf("	El ejercito del imperio alfa viene con cara de pocos amigos. Debe de ser que los individuos de ayer eran de los suyos. \n");
@@ -317,7 +318,7 @@ do {
 							else{
 								printf("	El caracter introducido no es valido, por favor introduzca una S o una N:\n");
 									fflush(stdin);
-									scanf("c",&respuestados);
+									scanf("c",&letra);
 							}	
 						}//Acaba el bucle de la pregunta: ¿SALIMOS A LA VENTANA?
 				}
@@ -385,42 +386,40 @@ int explorar (struct variables variable[6], int asentamiento, char nombre[N], ch
 			return 0;
 		}
 		else if((num>variable[6].poblacion)||(num<0)){	
-			printf("El caracter introducido no es valido. Introduzca un numero del 1 al 10.\n");
+			printf("El numero introducido no es valido. Introduzca un numero del 0 al numero de habitantes que tenga %s.\n",nombreimperio);
 				fflush(stdin);
 				scanf("%i",&num);
 		}
 		else{
 			if(asentamiento==1){
-				variable[6].dinero=variable[6].dinero+num*1.7;
 				variable[6].madera=variable[6].madera+1.2*num;
 				variable[6].metal=variable[6].metal+1.2*num;
 				variable[6].alimentos=variable[6].alimentos+num*1.8; 
 				variable[6].poblacion=variable[6].poblacion+variable[6].alimentos*0.25;
 				variable[6].ejercito=variable[6].ejercito+variable[6].poblacion*0.2;
-				i=1;
+				variable[6].dinero=variable[6].dinero+((variable[6].madera+variable[6].metal+variable[6].alimentos)/2.0);
 			}
 			else if(asentamiento==2){
-				variable[6].dinero=variable[6].dinero+num*1.25;
 				variable[6].madera=variable[6].madera+1.2*num;
 				variable[6].metal=variable[6].metal+1.8*num;
 				variable[6].alimentos=variable[6].alimentos+num*1.5;
 				variable[6].poblacion=variable[6].poblacion+variable[6].alimentos*0.25;
 				variable[6].ejercito=variable[6].ejercito+variable[6].poblacion*0.2;
-				i=1;
+				variable[6].dinero=variable[6].dinero+(variable[6].madera+variable[6].metal+variable[6].alimentos)*0.3;
 			}
 			else{   //asentamiento==3
 				if (num>=mitad){
 					variable[6].dinero=variable[6].dinero-40;
 					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevasen mas.");
 				}
-					variable[6].dinero=variable[6].dinero+num*1.25;
 					variable[6].madera=variable[6].madera+1.9*num;
 					variable[6].metal=variable[6].metal+1.8*num;
 					variable[6].alimentos=variable[6].alimentos+num*2;
 					variable[6].poblacion=variable[6].poblacion+variable[6].alimentos*0.25;
-				variable[6].ejercito=variable[6].ejercito+variable[6].poblacion*0.2;
-					i=1;
+					variable[6].ejercito=variable[6].ejercito+variable[6].poblacion*0.2;
+					variable[6].dinero=variable[6].dinero+(variable[6].madera+variable[6].metal+variable[6].alimentos)*0.3;
 			}
+		i=1;
 		}
 		
 	}
@@ -431,6 +430,15 @@ void final(char nombre[N], char nombreimperio[N]){
 	printf("	%s, te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos.\n\n\n				 HASTA LUEGO !!!!");
 	printf("\n\n\n			ACUERDATE----> En el documento 'decisiones.txt' (que se encuentra en la misma carpeta que el archivo del juego 'programa.cpp'), tienes un resumen de como te ha ido en la partida de hoy.\n");
 	printf("\n");
+		//IMPRIMIMOS EN EL FICHERO DE DECISIONES LOS DATOS DEL IMPERIO:
+	//	fprintf(fentrada,"El imperio %s, termino su historia con:\n");
+		//	fprintf(fentrada,"	--> %.0f habitantes.\n",variable[6].poblacion);
+		//	fprintf(fentrada,"	--> %.0f miembros del ejercito .\n");
+		//	fprintf(fentrada,"	--> %.2f Dolares de dinero publico en las arcas del estado.\n",variable[6].ejercito);
+		//	fprintf(fentrada,"	--> %.2f kilogramos de madera.\n",variable[6].madera);
+		//	fprintf(fentrada,"	--> %.2f kilogramos de metales y minerales.\n",variable[6].metal);
+		//	fprintf(fentrada,"	--> %.2f kilogramos de alimentos con los que mantenía a su pueblo.\n",variable[6].alimentos);
+	
 	}
 
 
