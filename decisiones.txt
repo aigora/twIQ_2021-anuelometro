@@ -1,3 +1,4 @@
 NUEVA PARTIDA
-		Jugó: angel
- 		Su imperio se llamó: angelDecision 2: Asentamiento inicial---> COSTA
+		Jugó: Angel
+ 		Su imperio se llamó: Angelandia
+Decision 2: Asentamiento inicial---> COSTA
