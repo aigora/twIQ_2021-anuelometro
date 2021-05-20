@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 #define N 1000
-
+		
+		
+		
 struct variables{
 	int contadorpartida, partepartida;
 	char nombre[N],nombreimperio[N];
