@@ -7,7 +7,7 @@
 		
 		
 struct variables{
-	int contadorpartida, partepartida;
+	int contadorpartida, partepartida=0;
 	char nombre[N],nombreimperio[N];
 	float dinero,metal,alimentos,madera,poblacion, ejercito;
 };
