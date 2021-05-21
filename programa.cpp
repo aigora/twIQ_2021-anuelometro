@@ -1,24 +1,25 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #define N 1000
 		
 		
 		
 struct variables{
-	int contadorpartida, partepartida=0;
+	int contadorpartida, partepartida;
 	char nombre[N],nombreimperio[N];
 	float dinero,metal,alimentos,madera,poblacion, ejercito;
 };
 
 
 	//	FUNCIONES "MISIONES"
-void introduccion (struct variables variable[]); 			//nombre del jugador y del imperio.
-int episodio1 (struct variables variable[]);				//elige asentamiento.
-//EPISODIO 2	(No tiene funcion, porque es sencillo)		//Sale a explorar por primera vez.
+void introduccion (struct variables variable[]); 				//nombre del jugador y del imperio.
+int episodio1 (struct variables variable[]);					//elige asentamiento.
+//EPISODIO 2	(No tiene funcion, porque es sencillo)			//Sale a explorar por primera vez.
 int episodio3 (struct variables variable[], int asentamiento);				//Construccion del barco para la COSTA.		Aparicion de indigenas para MESETA y CORDILLERA
-int episodio4 (struct variables variable[], int asentamiento);				//1ª Guerra o 1ª acuerdo...... lo que surja.
+//EPISODIO 4	(No tiene funcion, porque es sencillo. Es igual que el 2)	//Preparacion para la 1 guerra.
 
 	// FUNCIONES "SECUNDARIAS"
 void informe(struct variables variable[]); 						//Le comumnica al jugador el estado de su imperio.
@@ -51,13 +52,14 @@ do{
 				while(j!=0){
 					if ((respuesta == 'S')||(respuesta == 's')){
 						printf("De acuerdo, vamos a cargar tu partida.");
-						CargaPartida(variable);
+							CargaPartida(variable);
 						printf("%i",variable[1].partepartida);
 						j=0;
 					}
 					else if ((respuesta == 'N')||(respuesta == 'n')){
 						printf("	Vas a empezar una nueva partida, si existian datos de otra diferente, quedaran sobreescritos.\n");
 							printf("\n");
+						variable[1].partepartida=0;
 						j=0;
 					}
 					else{
@@ -216,6 +218,7 @@ do{
 		printf("	Asi es como estan las cosas en %s, %s:\n",variable[1].nombreimperio,variable[1].nombre);
 		informe(variable);
 		aux=episodio3(variable, asentamiento);
+		variable[1].partepartida++;
 	}
 	
 		//Guardamos lo decidido en decisiones.txt
@@ -247,7 +250,7 @@ do{
 	
 	
 	
-		fclose(fentrada);
+	fclose(fentrada);
 return 0;	
 }
 
@@ -258,7 +261,7 @@ return 0;
 void introduccion (struct variables variable[]){
 	
 	int i=1;
-	char respuesta;
+	char respuesta,aux[N];
 		//PEDIMOS NOMBRE AL USUARIO Y preguntamos si es novato. Si lo es, le explicamos el juego.
 			// Preguntamos el nombre
 	
@@ -271,8 +274,8 @@ void introduccion (struct variables variable[]){
 				printf("\n");
 			printf("	Dinos %s, eres nuevo en EMPIRES GLOBAL OFFENSIVE?? (EGO para los amigos) Si no lo has hecho nunca te vendria bien una explicacion de como funciona. Quieres que te expliquemos lo basico??\n",variable[1].nombre);
 			printf("Introduce S para si y N para no:\n");
-				fflush(stdin);
-				scanf("%c",&respuesta);
+					fflush(stdin);
+					scanf("%c",&respuesta);
 				printf("\n");
 			
 		while (i!=0){ 
@@ -298,14 +301,15 @@ void introduccion (struct variables variable[]){
 		printf("\n");
 		printf("	Procedamos a la creacion de tu imperio. Lo primero que hay que concretar es el nombre. Este es un momneto importante... tomate tu tiempo, porque no lo podras cambiar despues:\n");
 			fflush(stdin);
-			gets(variable[1].nombreimperio);
-		printf("	Uh! %s? es un buen nombre... Pero necesitas algo mas que eso para conquistar El Contintente!!\n	Sin mas dilacion... EMPECEMOS DE VERDAD\n(presiona ENTER)\n",variable[1].nombreimperio);
+			gets(aux);
+		printf("	Uh! %s? es un buen nombre... Pero necesitas algo mas que eso para conquistar El Contintente!!\n	Sin mas dilacion... EMPECEMOS DE VERDAD\n(presiona ENTER)\n",aux);
+		strcpy(variable[1].nombreimperio,aux);
 		getch();
 	
 }
 
 
-int episodio1 (struct variables variable[]){
+int episodio1 (struct variables variable[]){			// ASENTAMIENTO 
 	int asentamiento,i=1;
 	
 			printf("\n");
@@ -328,9 +332,11 @@ int episodio1 (struct variables variable[]){
 		
 					//El ususario lo intyroduce por teclado:
 		printf("Introduce un 1 para asentarte en la COSTA.		Introduce un 2 para asentarte en la CORDILLERA.		Introduce un 3 para asentarte en la MESETA\n");
+			
 			scanf("%i",&asentamiento);
 				do {if ((asentamiento!=1)&&(asentamiento!=2)&&(asentamiento!=3)){
 						printf("El caracter introducido no es valido. Introduzca un 1, un 2, o 3.\n");
+							fflush(stdin);
 							scanf("%i",&asentamiento );
 					}
 				}while (i!=0);
@@ -634,15 +640,13 @@ int guardar (struct variables variable[], int asentamiento) {
 
 int CargaPartida (struct variables variable[]){
 	FILE *fhistorial;
-	int i=1,asentamiento;
+	int asentamiento;
 		fhistorial=fopen("historial.txt","r");
 				if (fhistorial == NULL){
 					printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'decisiones.txt'.");
 				}
-		while(fscanf(fhistorial,"%i %i %s %s %f %f %f %f %f %f",&variable[i].contadorpartida,&variable[i].partepartida,variable[i].nombre,variable[i].nombreimperio,&variable[i].poblacion,&variable[i].ejercito,&variable[i].alimentos,&variable[i].madera,&variable[i].metal,&variable[i].dinero,asentamiento)!=EOF){
-			i++;
-		}
-		return asentamiento;
+		fscanf(fhistorial,"%i %i %s %s %f %f %f %f %f %f",&variable[1].contadorpartida,&variable[1].partepartida,variable[1].nombre,variable[1].nombreimperio,&variable[1].poblacion,&variable[1].ejercito,&variable[1].alimentos,&variable[1].madera,&variable[1].metal,&variable[1].dinero,&asentamiento);
+	return asentamiento;
 }
  
 void final(struct variables variable[]){
