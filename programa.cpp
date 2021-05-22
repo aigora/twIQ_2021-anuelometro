@@ -645,7 +645,7 @@ int explorar (struct variables variable[]){
 				variable[1].ejercito=variable[1].ejercito+variable[1].poblacion*0.2;
 				variable[1].dinero=variable[1].dinero+((variable[1].madera+variable[1].metal+variable[1].alimentos)*0.3);
 			}
-			else{   asentamientos 2 y 3
+			else{   //asentamientos 2 y 3
 				if (num>=mitad){
 					variable[1].dinero=variable[1].dinero-40;
 					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevasen mas.");
