@@ -8,7 +8,7 @@
 		
 		
 struct variables{
-	int contadorpartida, partepartida,unidos,asentamiento;
+	int jugador, partepartida,unidos,asentamiento;
 	char nombre[N],nombreimperio[N];
 	float dinero,metal,alimentos,madera,poblacion, ejercito;
 };
@@ -26,13 +26,13 @@ void informe(struct variables variable[]); 						//Le comumnica al jugador el es
 int explorar (struct variables variable[]);						//Le permite al jugador avanzar y prosperar como imperio.
 void final( struct variables variable[]);						//Le agradece al jugado cuando acaba la partida, y escribe datos en el archivo decisiones.txt
 int guardar(struct variables variable[], int unidos);			//Guarda los avances en el archivo historial.txt
-int CargaPartida (struct variables variable[], char compnombre[N]);			//Carga la informacion del archivo historial.txt para que el jugador pueda seguir la partida, en el mismo punto, habiendo cerrado el programa.
+int CargaPartida (struct variables variable[], int jugador);			//Carga la informacion del archivo historial.txt para que el jugador pueda seguir la partida, en el mismo punto, habiendo cerrado el programa.
 
 
 
 int main(){
 	
-	int i=1,j=1;
+	int i=1,j=1,jugador;
 	FILE *fentrada;	
 	struct variables variable[5];
 	char respuesta,compnombre[N];
@@ -50,15 +50,16 @@ do{
 			scanf("%c",&respuesta);
 				while(j!=0){
 					if ((respuesta == 'S')||(respuesta == 's')){
-						printf("	Perfecto!! Vamos a cargar tu partida. Como te llamabas??\n");
+						printf("	Perfecto!! Vamos a cargar tu partida. Que numero de jugador eras??\n");
 							fflush(stdin);
-							gets(compnombre);
+							scanf("%i",&jugador);
 						printf("De acuerdo, vamos a cargar tu partida.\n");
-							if(CargaPartida(variable, compnombre)==0){
-								printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
-								return 0;
-							}
-						printf("%i",variable[1].partepartida);
+							jugador=CargaPartida(variable, jugador);
+							printf("%i %i",variable[1].jugador,variable[1].partepartida);
+								if(jugador==0){
+									printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
+									return 0;
+								}
 						j=0;
 					}
 					else if ((respuesta == 'N')||(respuesta == 'n')){
@@ -88,17 +89,18 @@ do{
 				j=0;
 				while(j!=0){
 					if ((respuesta == 'S')||(respuesta == 's')){
-						printf("	Perfecto!! Vamos a cargar tu partida. Como te llamabas??\n");
+						printf("	Perfecto!! Vamos a cargar tu partida. Cual era tu numero de jugador??\n");
 							fflush(stdin);
-							gets(compnombre);
+							scanf("%i",&jugador);
 						printf("De acuerdo, vamos a cargar tu partida.\n");
-							if(CargaPartida(variable, compnombre)==0){
+							jugador=CargaPartida(variable, jugador);
+							if(jugador==0){
 								printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
 								return 0;
 							}
 						printf("%i",variable[1].partepartida);
 						j=0;
-					}
+						}
 					else if ((respuesta == 'N')||(respuesta == 'n')){
 						printf("	Vas a empezar una nueva partida, si existian datos de otra diferente, quedaran sobreescritos.\n");
 							printf("\n");
@@ -126,9 +128,10 @@ do{
 					if ((respuesta == 'S')||(respuesta == 's')){
 						printf("	Perfecto!! Vamos a cargar tu partida. Como te llamabas??\n");
 							fflush(stdin);
-							gets(compnombre);
+							scanf("%i",&jugador);
 						printf("De acuerdo, vamos a cargar tu partida.");
-							if(CargaPartida(variable, compnombre)==0){
+							jugador=CargaPartida(variable, jugador);
+							if(jugador==0){
 								printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
 								return 0;
 							}
@@ -167,7 +170,7 @@ do{
 		
 					fentrada = fopen("decisiones.txt", "w");
 						if (fentrada == NULL){
-							printf("Ha ocurrido un error en la escritura del archivo. Reinicie el programa. Revise la ubicadion del archivo, y si se encuentra en la misma carpeta que el archivo de texto: 'decisiones.txt'.\n");
+							printf("Ha ocurrido un error en la escritura del archivo 'decisiones.txt'. Reinicie el programa. Revise la ubicadion del archivo, y si se encuentra en la misma carpeta que el archivo de texto: 'decisiones.txt'.\n");
 							return 0;
 							}
 						fprintf(fentrada,"NUEVA PARTIDA\n	Jugó: %s\n	Su imperio se llamó: %s\n",variable[1].nombre, variable[1].nombreimperio);
@@ -673,7 +676,7 @@ int guardar (struct variables variable[], int unidos) {
 				return 0;
 			}
 		
-	fprintf(fhistorial,"%i ",variable[1].contadorpartida);
+	fprintf(fhistorial,"%i ",variable[1].jugador);
 	fprintf(fhistorial,"%i ",variable[1].partepartida);
 	fprintf(fhistorial,"%s ",variable[1].nombre);
 	fprintf(fhistorial,"%s ",variable[1].nombreimperio);
@@ -689,19 +692,25 @@ int guardar (struct variables variable[], int unidos) {
  
 }
 
-int CargaPartida (struct variables variable[], char compnombre[N]){
+int CargaPartida (struct variables variable[], int jugador){
 	FILE *fhistorial;
-	int i=1,jugador=1;
+	int i=1,j=0;
 		fhistorial=fopen("historial.txt","r");
 				if (fhistorial == NULL){
-					printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'decisiones.txt'.");
+					printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'historial.txt'.");
 					return 0;
 				}
-		while((fscanf(fhistorial,"%i %i %s %s %f %f %f %f %f %f %i %i",&variable[i].contadorpartida,&variable[i].partepartida,variable[i].nombre,variable[i].nombreimperio,&variable[i].poblacion,&variable[i].ejercito,&variable[i].alimentos,&variable[i].madera,&variable[i].metal,&variable[i].dinero,&variable[i].asentamiento,&variable[i].unidos)!=EOF)&&(strcmp(variable[i].nombre,compnombre)==1)){
+		while((j==0)){
+		fscanf(fhistorial,"%i %i %s %s %f %f %f %f %f %f %i %i",&variable[i].jugador,&variable[i].partepartida,variable[i].nombre,variable[i].nombreimperio,&variable[i].poblacion,&variable[i].ejercito,&variable[i].alimentos,&variable[i].madera,&variable[i].metal,&variable[i].dinero,&variable[i].asentamiento,&variable[i].unidos);
+			if(jugador==variable[1].jugador){
+				j=1;
+			}
+			else if(fscanf(fhistorial,"%i %i %s %s %f %f %f %f %f %f %i %i",&variable[i].jugador,&variable[i].partepartida,variable[i].nombre,variable[i].nombreimperio,&variable[i].poblacion,&variable[i].ejercito,&variable[i].alimentos,&variable[i].madera,&variable[i].metal,&variable[i].dinero,&variable[i].asentamiento,&variable[i].unidos)==EOF){
+				return 0;
+			}
 			i++;
-			jugador++;
 		}
-		return jugador;
+		return jugador;	//Siempre es !=0
 }
  
 void final(struct variables variable[]){
