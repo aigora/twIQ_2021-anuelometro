@@ -34,7 +34,7 @@ int main(){
 	
 	int i=1,j=1,jugador;
 	FILE *fentrada;	
-	struct variables variable[5];
+	struct variables variable[N];
 	char respuesta,compnombre[N];
 
 //MENU INICIAL
@@ -50,12 +50,12 @@ do{
 			scanf("%c",&respuesta);
 				while(j!=0){
 					if ((respuesta == 'S')||(respuesta == 's')){
-						printf("	Perfecto!! Vamos a cargar tu partida. Que numero de jugador eras??\n");
+						printf("	Perfecto!! Vamos a cargar tu partida. Que numero de jugador eras?? (Numero del 0 al 4 por favor)\n");
 							fflush(stdin);
 							scanf("%i",&jugador);
 						printf("De acuerdo, vamos a cargar tu partida.\n");
 							jugador=CargaPartida(variable, jugador);
-							printf("%i %i",variable[1].jugador,variable[1].partepartida);
+							printf("%i %i %i",jugador,variable[jugador].jugador,variable[jugador].partepartida);
 								if(jugador==0){
 									printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
 									return 0;
@@ -694,23 +694,20 @@ int guardar (struct variables variable[], int unidos) {
 
 int CargaPartida (struct variables variable[], int jugador){
 	FILE *fhistorial;
-	int i=1,j=0;
+	int i=0;
 		fhistorial=fopen("historial.txt","r");
 				if (fhistorial == NULL){
 					printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'historial.txt'.");
 					return 0;
 				}
-		while((j==0)){
+		while((i<5)){
 		fscanf(fhistorial,"%i %i %s %s %f %f %f %f %f %f %i %i",&variable[i].jugador,&variable[i].partepartida,variable[i].nombre,variable[i].nombreimperio,&variable[i].poblacion,&variable[i].ejercito,&variable[i].alimentos,&variable[i].madera,&variable[i].metal,&variable[i].dinero,&variable[i].asentamiento,&variable[i].unidos);
-			if(jugador==variable[1].jugador){
-				j=1;
-			}
-			else if(fscanf(fhistorial,"%i %i %s %s %f %f %f %f %f %f %i %i",&variable[i].jugador,&variable[i].partepartida,variable[i].nombre,variable[i].nombreimperio,&variable[i].poblacion,&variable[i].ejercito,&variable[i].alimentos,&variable[i].madera,&variable[i].metal,&variable[i].dinero,&variable[i].asentamiento,&variable[i].unidos)==EOF){
-				return 0;
+			if(jugador==variable[i].jugador){
+				return jugador;
 			}
 			i++;
 		}
-		return jugador;	//Siempre es !=0
+		return 0;	
 }
  
 void final(struct variables variable[]){
