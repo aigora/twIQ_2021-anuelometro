@@ -15,17 +15,17 @@ struct variables{
 
 
 	//	FUNCIONES "MISIONES"
-void introduccion (struct variables variable[]); 				//nombre del jugador y del imperio.
-void episodio1 (struct variables variable[]);					//elige asentamiento.
+void introduccion (struct variables variable[], int jugador); 				//nombre del jugador y del imperio.
+void episodio1 (struct variables variable[], int jugador);					//elige asentamiento.
 //EPISODIO 2	(No tiene funcion, porque es sencillo)			//Sale a explorar por primera vez.
-int episodio3 (struct variables variable[]);				//Construccion del barco para la COSTA.		Aparicion de indigenas para MESETA y CORDILLERA
+int episodio3 (struct variables variable[], int jugador);				//Construccion del barco para la COSTA.		Aparicion de indigenas para MESETA y CORDILLERA
 //EPISODIO 4	(No tiene funcion, porque es sencillo. Es igual que el 2)	//Preparacion para la 1 guerra.
 
 	// FUNCIONES "SECUNDARIAS"
-void informe(struct variables variable[]); 						//Le comumnica al jugador el estado de su imperio.
-int explorar (struct variables variable[]);						//Le permite al jugador avanzar y prosperar como imperio.
-void final( struct variables variable[]);						//Le agradece al jugado cuando acaba la partida, y escribe datos en el archivo decisiones.txt
-int guardar(struct variables variable[], int unidos);			//Guarda los avances en el archivo historial.txt
+void informe(struct variables variable[], int jugador); 						//Le comumnica al jugador el estado de su imperio.
+int explorar (struct variables variable[], int jugador);						//Le permite al jugador avanzar y prosperar como imperio.
+void final( struct variables variable[], int jugador);						//Le agradece al jugado cuando acaba la partida, y escribe datos en el archivo decisiones.txt
+int guardar(struct variables variable[], int unidos, int jugador);			//Guarda los avances en el archivo historial.txt
 int CargaPartida (struct variables variable[], int jugador);			//Carga la informacion del archivo historial.txt para que el jugador pueda seguir la partida, en el mismo punto, habiendo cerrado el programa.
 
 
@@ -53,6 +53,10 @@ do{
 						printf("	Perfecto!! Vamos a cargar tu partida. Que numero de jugador eras?? (Numero del 0 al 4 por favor)\n");
 							fflush(stdin);
 							scanf("%i",&jugador);
+							if((jugador<0)||(jugador>4)){
+								printf("Ha introducido un numero que no es valido. Reinicie el programa.");
+								return 0;
+							}
 						printf("De acuerdo, vamos a cargar tu partida.\n");
 							jugador=CargaPartida(variable, jugador);
 							printf("%i %i %i",jugador,variable[jugador].jugador,variable[jugador].partepartida);
@@ -92,6 +96,10 @@ do{
 						printf("	Perfecto!! Vamos a cargar tu partida. Cual era tu numero de jugador??\n");
 							fflush(stdin);
 							scanf("%i",&jugador);
+							if((jugador<0)||(jugador>4)){
+								printf("Ha introducido un numero que no es valido. Reinicie el programa.");
+								return 0;
+							}
 						printf("De acuerdo, vamos a cargar tu partida.\n");
 							jugador=CargaPartida(variable, jugador);
 							if(jugador==0){
@@ -129,6 +137,10 @@ do{
 						printf("	Perfecto!! Vamos a cargar tu partida. Como te llamabas??\n");
 							fflush(stdin);
 							scanf("%i",&jugador);
+							if((jugador<0)||(jugador>4)){
+								printf("Ha introducido un numero que no es valido. Reinicie el programa.");
+								return 0;
+							}
 						printf("De acuerdo, vamos a cargar tu partida.");
 							jugador=CargaPartida(variable, jugador);
 							if(jugador==0){
@@ -161,9 +173,9 @@ do{
 
 				//*************INTRODUCCION*************//
 				
-	if(variable[1].partepartida==0){
-		introduccion(variable);
-		variable[1].partepartida++;
+	if(variable[jugador].partepartida==0){
+		introduccion(variable, jugador);
+		variable[jugador].partepartida++;
 	}
 	
 		//Guardamos los datos de nombres ():	//Guardamos la decision en el fichero de decisiones:
@@ -173,50 +185,50 @@ do{
 							printf("Ha ocurrido un error en la escritura del archivo 'decisiones.txt'. Reinicie el programa. Revise la ubicadion del archivo, y si se encuentra en la misma carpeta que el archivo de texto: 'decisiones.txt'.\n");
 							return 0;
 							}
-						fprintf(fentrada,"NUEVA PARTIDA\n	Jugó: %s\n	Su imperio se llamó: %s\n",variable[1].nombre, variable[1].nombreimperio);
+						fprintf(fentrada,"NUEVA PARTIDA\n	Jugó: %s\n	Su imperio se llamó: %s\n",variable[jugador].nombre, variable[jugador].nombreimperio);
 	
 	
 	// EMPEZAMOS  CON EL JUEGO //*******************************************************************************************************************************************************
 
 		// EMPEZAMOS CON LA TOMA DE DECISIONES --> variable[1].asentamiento 
-	if(variable[1].partepartida==1){
-		episodio1(variable);
-		variable[1].partepartida++;
+	if(variable[jugador].partepartida==1){
+		episodio1(variable, jugador);
+		variable[jugador].partepartida++;
 	}
 			//Guardamos la decision en el fichero de decisiones:
-						if(variable[1].asentamiento==1){fprintf(fentrada,"Asentamiento inicial---> COSTA\n");	}
-						else if(variable[1].asentamiento==2){fprintf(fentrada,"Asentamiento inicial---> CORDILLERA\n");	}	
+						if(variable[jugador].asentamiento==1){fprintf(fentrada,"Asentamiento inicial---> COSTA\n");	}
+						else if(variable[jugador].asentamiento==2){fprintf(fentrada,"Asentamiento inicial---> CORDILLERA\n");	}	
 						else {fprintf(fentrada,"Asentamiento inicial---> MESETA\n");	}
 	
 
 
 		//**************  declaramos los VALORES INICIALES de las variables (iguales para todos)  ***************
-				variable[1].dinero=100;
-				variable[1].poblacion=10;
-				variable[1].ejercito=5;
-				variable[1].metal=0;
-				variable[1].alimentos=0;
-				variable[1].madera=0;
+				variable[jugador].dinero=100;
+				variable[jugador].poblacion=10;
+				variable[jugador].ejercito=5;
+				variable[jugador].metal=0;
+				variable[jugador].alimentos=0;
+				variable[jugador].madera=0;
 					//comunicamos al jugador
-					informe(variable);
+					informe(variable, jugador);
 						printf("\n\n");
 					
 		
 	//2º EPISODIO: Exploracion ******************* 2 ************** 2 ************ 2 ************* 2 ************ 2 ************* 2 ************ 2 ************* 2 ***************//
 	
 			// Para este poco código, no merece la pena hacer una fincion a parte, se queda asi.
-	if(variable[1].partepartida==2){
-			if(explorar(variable)==0) {
-				final(variable);
+	if(variable[jugador].partepartida==2){
+			if(explorar(variable,jugador)==0) {
+				final(variable, jugador);
 				return 0;
 			}
-		informe(variable);
+		informe(variable, jugador);
 	}
 	
 	//ANTES TENEMOS QUE HACER ACLARACIONES SOBRE COMO FUNCIONANAN LAS GUERRAS Y COMO SE POSICIONAN LOS PUEBLOS EN FUNCION DE SU ASENTAMIENTO.
 		printf("\n");
 	printf("	Te vamos a explicar como se distribuyen los imperios en El continente:\n");		printf("\n\n\n");
-	printf("	Veras; %s, se encuentra en la siguiente posicion gegrafica con respecto al resto de imperios cercanos:\n",variable[1].nombreimperio);
+	printf("	Veras; %s, se encuentra en la siguiente posicion gegrafica con respecto al resto de imperios cercanos:\n",variable[jugador].nombreimperio);
 	
 		//PRESENTACION DE LOS IMPERIOS EN FUNCION DEL variable[1].asentamiento 
 		if(variable[1].asentamiento==1){
@@ -224,13 +236,13 @@ do{
 				printf("\n");
 				printf("		La verdad es que el imperio Alfa es el que menos te debe preocupar, porque acaba de salir de una crisis social y economica y no parece que tenga muchas ganas de pelear. Puedes aprobechar eso para tratar de llegar a acuerdos, o directamente llevamos al ejército.\n");
 				printf("\n");
-				printf("		El imperio Beta, está posicionado en una peninsula al norte de %s. Se llega antes por agua que por tierra. Actrualmente se encuentra en expansion.\n",variable[1].nombreimperio);
+				printf("		El imperio Beta, está posicionado en una peninsula al norte de %s. Se llega antes por agua que por tierra. Actrualmente se encuentra en expansion.\n",variable[jugador].nombreimperio);
 				printf("\n");
 				printf("		El imperio Gamma, está algo alejado, pero no tanto como el Delta.Estos dos tienen asuntos por resolver, por la hija del rey de Gamma y el principe de Delta, que al parecer tienen sus cositas en comun; aunque aun es prnto para saber si terminaran en guerra o en alienza... Todo se vera con el tiempo.\n");
 				printf("\n");
 				printf("		Por ultimo, el imperio Delta, es el mas alejado; a mas de dos dias de camino. Es un imperio de los mas potentes, ten seguro que como hagan bien las cosas... tienes pocas cosas que hacer para ganarles la batalla.\n");
 		}	
-		else if(variable[1].asentamiento==2){
+		else if(variable[jugador].asentamiento==2){
 			printf("	Al rededor nuestro, tenemos 4 imperios grandes. Sus nombres en clave son, por orden de cercania a la capital: 'Alfa','Beta''Gamma','Delta'.\n");	
 				printf("\n");
 				printf("		La verdad es que el imperio Alfa es el que menos te debe preocupar, porque acaba de salir de una crisis social y economica y no parece que tenga muchas ganas de pelear. Puedes aprobechar eso para tratar de llegar a acuerdos, o directamente llevamos al ejército.\n ");
@@ -246,7 +258,7 @@ do{
 				printf("\n");
 				printf("		La verdad es que el imperio Alfa es el que menos te debe preocupar, porque acaba de salir de una crisis social y economica y no parece que tenga muchas ganas de pelear. Puedes aprobechar eso para tratar de llegar a acuerdos, o directamente llevamos al ejército.\n ");
 				printf("\n");
-				printf("		El imperio Beta, se encuentra en un momento complicado, acaba de estallar la revolucion del pueblo por los excesivos impuestos. Mantente atento porque nunca se sabe por donde salen estas cosas. Imaginate que a algun iluminado de %s se le ocurre imiterles... tu cargo de emperador estaria en peligro %s. Solo queria avisarte.\n",variable[1].nombreimperio,variable[1].nombre);
+				printf("		El imperio Beta, se encuentra en un momento complicado, acaba de estallar la revolucion del pueblo por los excesivos impuestos. Mantente atento porque nunca se sabe por donde salen estas cosas. Imaginate que a algun iluminado de %s se le ocurre imiterles... tu cargo de emperador estaria en peligro %s. Solo queria avisarte.\n",variable[jugador].nombreimperio,variable[jugador].nombre);
 				printf("\n");
 				printf("		El imperio Gamma, está algo alejado, pero no tanto como el Delta.Estos dos tienen asuntos por resolver, por la hija del rey de Gamma y el principe de Delta, que al parecer tienen sus cositas en comun; aunque aun es prnto para saber si terminaran en guerra o en alienza... Todo se vera con el tiempo.\n");
 				printf("\n");
@@ -256,25 +268,25 @@ do{
 	
 	//3º EPISODIO: Gastar o ganar dinero (Declaracion de guerara):******************* 2 ************** 2 ************ 2 ************* 2 ************ 2 ************* 2 ************ 2 ************* 2 ***************
 	int aux,unidos;
-	if(variable[1].partepartida==3){
-		printf("	Asi es como estan las cosas en %s, %s:\n",variable[1].nombreimperio,variable[1].nombre);
-		informe(variable);
-		aux=episodio3(variable);
-		variable[1].partepartida++;
+	if(variable[jugador].partepartida==3){
+		printf("	Asi es como estan las cosas en %s, %s:\n",variable[jugador].nombreimperio,variable[jugador].nombre);
+		informe(variable, jugador);
+		aux=episodio3(variable, jugador);
+		variable[jugador].partepartida++;
 	}
 	
 		//Guardamos lo decidido en decisiones.txt
 			if (aux==0){
-				fprintf(fentrada,"%s no debió haber construido el barco.",variable[1].nombre);
-				final(variable);
+				fprintf(fentrada,"%s no debió haber construido el barco.",variable[jugador].nombre);
+				final(variable, jugador);
 				return 0;
 			}
-			else if(aux==1){	fprintf(fentrada,"%s decidió atacar a las personas que se acercaron a %s. Esto provocó tensiones con el imperio alfa que ya \n",variable[1].nombre,variable[1].nombreimperio);		}
-			else if(aux==2){		fprintf(fentrada,"%s decidió NO atacar a las personas que se acercaron a %s\n",variable[1].nombre,variable[1].nombreimperio);	}
+			else if(aux==1){	fprintf(fentrada,"%s decidió atacar a las personas que se acercaron a %s. Esto provocó tensiones con el imperio alfa que ya \n",variable[jugador].nombre,variable[jugador].nombreimperio);		}
+			else if(aux==2){		fprintf(fentrada,"%s decidió NO atacar a las personas que se acercaron a %s\n",variable[jugador].nombre,variable[jugador].nombreimperio);	}
 			else if(aux==3){unidos=1;}
 			else{unidos=0;}
 	
-	if (guardar(variable, unidos)==0){
+	if (guardar(variable, unidos, jugador)==0){
 			printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
 			return 0;
 		}
@@ -283,12 +295,12 @@ do{
 	//4º EPISODIO: Declaracion de guerra y exploracion.****************************** 3************** 3 ************ 3 ************* 3 ************ 3 ************* 3 ************ 3 ********* 3 **************
 	
 	printf("	Toca salir a explorar... a ver que nos encontramos hoy!\n");
-	if(explorar(variable)==0) {
-		final(variable);
+	if(explorar(variable, jugador)==0) {
+		final(variable, jugador);
 		return 0;
 	}
-	informe(variable);
-		if (guardar(variable, unidos)==0){
+	informe(variable, jugador);
+		if (guardar(variable, unidos, jugador)==0){
 			printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
 			return 0;
 		}
@@ -309,7 +321,7 @@ return 0;
 
 													//*************	EPISODIOS	*****************//
 
-void introduccion (struct variables variable[]){
+void introduccion (struct variables variable[], int jugador){
 	
 	int i=1;
 	char respuesta,aux[N];
@@ -318,12 +330,12 @@ void introduccion (struct variables variable[]){
 	
 			printf("		Empecemos entonces!!\n\n	Antes de nada, te recomendamos que pongas la pantalla completa, te va a tocar leer bastante xD.\n 	Te recordamos ademas, que cuando acabes la partida, tendras un resumen de tus decisiones en la misma carpeta donde tengas el juego, en el archivo llamado 'decisiones'\n	Dinos un nombre con el que referirnos a ti:\n");	
 				fflush(stdin);
-				gets(variable[1].nombre);
+				gets(variable[jugador].nombre);
 		
 				//Preguntamos si conoce el juego, si no, se lo explicamos 
-			printf("	Nos dirigiremos hacia ti como %s a partir de ahora.\n",variable[1].nombre);
+			printf("	Nos dirigiremos hacia ti como %s a partir de ahora.\n",variable[jugador].nombre);
 				printf("\n");
-			printf("	Dinos %s, eres nuevo en EMPIRES GLOBAL OFFENSIVE?? (EGO para los amigos) Si no lo has hecho nunca te vendria bien una explicacion de como funciona. Quieres que te expliquemos lo basico??\n",variable[1].nombre);
+			printf("	Dinos %s, eres nuevo en EMPIRES GLOBAL OFFENSIVE?? (EGO para los amigos) Si no lo has hecho nunca te vendria bien una explicacion de como funciona. Quieres que te expliquemos lo basico??\n",variable[jugador].nombre);
 			printf("Introduce S para si y N para no:\n");
 					fflush(stdin);
 					scanf("%c",&respuesta);
@@ -354,17 +366,17 @@ void introduccion (struct variables variable[]){
 			fflush(stdin);
 			gets(aux);
 		printf("	Uh! %s? es un buen nombre... Pero necesitas algo mas que eso para conquistar El Contintente!!\n	Sin mas dilacion... EMPECEMOS DE VERDAD\n(presiona ENTER)\n",aux);
-		strcpy(variable[1].nombreimperio,aux);
+		strcpy(variable[jugador].nombreimperio,aux);
 		getch();
 	
 }
 
 
-void episodio1 (struct variables variable[]){			// ASENTAMIENTO 
+void episodio1 (struct variables variable[], int jugador){			// ASENTAMIENTO 
 	int i=1,aux;
 	
 			printf("\n");
-		printf("	Lo segundo que debes elegir, %s, es un buen lugar en el que asentarte al inicio. Posteriormente, este lugar pasara a ser la capital de tu imperio.\n 	Cada localizacion tiene bentajas y desventajas:\n(presiona ENTER)\n",variable[1].nombre);
+		printf("	Lo segundo que debes elegir, %s, es un buen lugar en el que asentarte al inicio. Posteriormente, este lugar pasara a ser la capital de tu imperio.\n 	Cada localizacion tiene bentajas y desventajas:\n(presiona ENTER)\n",variable[jugador].nombre);
 		getch();	
 			printf("\n\n");
 		
@@ -391,27 +403,27 @@ void episodio1 (struct variables variable[]){			// ASENTAMIENTO
 							scanf("%i",&aux);
 					}
 				}while (i!=0);
-		variable[1].asentamiento=aux;
+		variable[jugador].asentamiento=aux;
 		
-		if (variable[1].asentamiento==1){printf("	Has elegido sabiamente la COSTA.\n");	}
-		else if(variable[1].asentamiento==2){printf("	Has elegido sabiamente la CORDILLERA.\n");	}
-		else if (variable[1].asentamiento==3){printf("	Has elegido sabiamente la MESETA.\n");	}	
+		if (variable[jugador].asentamiento==1){printf("	Has elegido sabiamente la COSTA.\n");	}
+		else if(variable[jugador].asentamiento==2){printf("	Has elegido sabiamente la CORDILLERA.\n");	}
+		else if (variable[jugador].asentamiento==3){printf("	Has elegido sabiamente la MESETA.\n");	}	
 		else {	printf("ERROR. Por favor reinicie.\n");		}
 	
 		printf("	[ No te acostumbres a que te digamos todas las consecuencias de tus decisiones. A partir de ahora vas a tener que apaniartelas solito. ]\n");
 
 }
 
-int episodio3 (struct variables variable[]) {
+int episodio3 (struct variables variable[], int jugador) {
 	int i,j,aleatorio;
 	float aux;
 	char respuesta,letra;
 
 	
 	j=0;
-		printf("	Hoy hace un dia esplendido... El pueblo de %s se levanta para tomar un poco el sol y ponerse a trabajar, que el continente no se conquista solo.\n",variable[1].nombreimperio);
+		printf("	Hoy hace un dia esplendido... El pueblo de %s se levanta para tomar un poco el sol y ponerse a trabajar, que el continente no se conquista solo.\n",variable[jugador].nombreimperio);
 		
-		if (variable[1].asentamiento==1){
+		if (variable[jugador].asentamiento==1){
 			printf("	La recolecta que has hiciste, no fue demasiado fructifera, por ello seria conveniente que algunos de tus ciudadanos vayan en busca de mas recusos.\n");
 			printf("	Ten en cuenta que el resto de pueblos igual prefieren saquear a tus marineros antes de mediar palabra. Ademas del gasto inicial que supone fabricar un barco desde cero.\n");
 			printf("(S para construir el barco, N pra no hacerlo)\n");
@@ -426,20 +438,20 @@ int episodio3 (struct variables variable[]) {
 						printf("	En dinero (dolares):\n");
 							fflush(stdin);
 							scanf("f",&aux);		
-								variable[1].dinero=variable[1].dinero-aux;
-								if (variable[1].dinero<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
+								variable[jugador].dinero=variable[jugador].dinero-aux;
+								if (variable[jugador].dinero<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
 					//MADERA
 						printf("	En madera (kg):\n");
 							fflush(stdin);
 							scanf("%f",&aux);		
-								variable[1].madera=variable[1].madera-aux;
-								if (variable[1].madera<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
+								variable[jugador].madera=variable[jugador].madera-aux;
+								if (variable[jugador].madera<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
 					//METAL
 						printf("	En metal (kg):\n");
 							fflush(stdin);
 							scanf("%f",&aux);		
-								variable[1].metal=variable[1].metal-aux;
-									if (variable[1].metal<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
+								variable[jugador].metal=variable[jugador].metal-aux;
+									if (variable[jugador].metal<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
 						
 						//INCIDENTE DE LOS OBREROS Y LA COMIDA:
 							printf("	Algunos de los obreros que trabajan en el astillero quieren comida (casi 2kg cada uno). Vas a tener que dársela para que no se te revelen.\n	Se la das??\n");
@@ -450,18 +462,18 @@ int episodio3 (struct variables variable[]) {
 									while(j==0){
 										
 										if((letra=='S')||(letra=='s')){ 
-											variable[1].alimentos = variable[1].alimentos-20;
+											variable[jugador].alimentos = variable[jugador].alimentos-20;
 												//Si no tiene comida suficiente:
-												if (variable[1].alimentos<0){
-													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.\n",variable[1].nombre); 
-													final(variable);	
+												if (variable[jugador].alimentos<0){
+													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
 													return 0;
 												}													
 											j=1;
 										}
 										else if((letra=='N')||(letra=='n')){
-											printf("	Tienes agallas %s... Por desgacia los obreros no les ha hecho mucha gracia tu decision.\n	Han cogido sus cosas y se han marchado. Ahora sois tres menos en tu imperio...\n",variable[1].nombre);
-											variable[1].poblacion=variable[1].poblacion-10;
+											printf("	Tienes agallas %s... Por desgacia los obreros no les ha hecho mucha gracia tu decision.\n	Han cogido sus cosas y se han marchado. Ahora sois tres menos en tu imperio...\n",variable[jugador].nombre);
+											variable[jugador].poblacion=variable[jugador].poblacion-10;
 											j=1;
 										}
 										else{
@@ -479,12 +491,12 @@ int episodio3 (struct variables variable[]) {
 									if(aleatorio<5){
 										printf("	Los marineros traen algo de materiales, nada especial, pero menos da una piedra.\n");
 										printf("	Parece que hay menos personas de las que salieron.... No... NO!... Entre los marineros ha habido un par de bajas...\n");
-										variable[1].alimentos=variable[1].alimentos+5;
-										variable[1].metal=variable[1].metal+18;
-										variable[1].madera=variable[1].madera+15;
-										variable[1].dinero=variable[1].dinero-50;
-										variable[1].poblacion=variable[1].poblacion-3;
-											if((variable[1].poblacion<0)||(variable[1].dinero<0)){
+										variable[jugador].alimentos=variable[jugador].alimentos+5;
+										variable[jugador].metal=variable[jugador].metal+18;
+										variable[jugador].madera=variable[jugador].madera+15;
+										variable[jugador].dinero=variable[jugador].dinero-50;
+										variable[jugador].poblacion=variable[jugador].poblacion-3;
+											if((variable[jugador].poblacion<0)||(variable[jugador].dinero<0)){
 												printf("	Te has quedado sin recursos... HAS PERDIDO.\n");
 												return 0;
 											}
@@ -492,18 +504,18 @@ int episodio3 (struct variables variable[]) {
 									else if(5<aleatorio<8){
 										printf("	\n");
 										printf("	Los marineros traen algo de materiales, nada especial, pero menos da una piedra.\n");
-										printf("	Segun dicen los marineros, se cruzaron con algunos de los marineros del impeio Alfa. Y gracias a que en el barco iba uno de los diplomaticos del imperio %s, se ha llegado a un acuero con el imperio vecino. A partir de ahora el imperio alfa se unirá con nosotros HURRA!!",variable[1].nombreimperio);
-										variable[1].alimentos=variable[1].alimentos+19;
-										variable[1].metal=variable[1].metal+25;
-										variable[1].madera=variable[1].madera+30;
-										variable[1].dinero=variable[1].dinero+110;
-										variable[1].poblacion=variable[1].poblacion+30;
+										printf("	Segun dicen los marineros, se cruzaron con algunos de los marineros del impeio Alfa. Y gracias a que en el barco iba uno de los diplomaticos del imperio %s, se ha llegado a un acuero con el imperio vecino. A partir de ahora el imperio alfa se unirá con nosotros HURRA!!",variable[jugador].nombreimperio);
+										variable[jugador].alimentos=variable[jugador].alimentos+19;
+										variable[jugador].metal=variable[jugador].metal+25;
+										variable[jugador].madera=variable[jugador].madera+30;
+										variable[jugador].dinero=variable[jugador].dinero+110;
+										variable[jugador].poblacion=variable[jugador].poblacion+30;
 												return 3;
 									}
 									else{
 										printf("	Ya han pasado mas de 5 dias desde que salio el barco, y no tenemos noticias... Veremos a ver que ocurre pero me huele a que no van a volver.\n");
-										variable[1].poblacion=variable[1].poblacion-10;
-											if(variable[1].poblacion<0){
+										variable[jugador].poblacion=variable[jugador].poblacion-10;
+											if(variable[jugador].poblacion<0){
 												printf("	Te has quedado sin gente... HAS PERDIDO.\n");
 												return 0;
 											}
@@ -526,7 +538,7 @@ int episodio3 (struct variables variable[]) {
 		}//Aqui acaba el while del asentamiento 1 
 					
 		else{ //Lo que ocurre en la 2ª ronda para los asentamientos 2 y 3
-			printf("	Se ve que vienen unas personas hacia %s. Crees que debemos atacarles antes de que ellos nos puedan atacar primero??\n",variable[1].nombreimperio);
+			printf("	Se ve que vienen unas personas hacia %s. Crees que debemos atacarles antes de que ellos nos puedan atacar primero??\n",variable[jugador].nombreimperio);
 			printf("(S para si, y N para no)\n");
 				fflush(stdin);
 				scanf("%c",&respuesta);
@@ -570,12 +582,12 @@ int episodio3 (struct variables variable[]) {
 					i=1;
 					printf("AL ATAQUEEEEEEE !!!!! Ah... que no ataquemos... okey, perdon me pudo la emocion xD... Bueno, al caso! BAJAD EL PUENTE!!\n");
 					printf("	Tras el saludo y los cordialismos, te das cuenta de que las personas que han entrado son representantes diplomaticos del imperio Alfa. Tras su salida de la crisis social, han decidido tender puentes entre vosotros.\n");
-					printf("	Te ofrecen sencillamente una union politica. Fusionar los dos imperios. Y como son conscientes de que no son el imperio más rico de El continente, asuemmen que será bajo el nombre de %s. Lo aceptas??\n",variable[1].nombreimperio);
+					printf("	Te ofrecen sencillamente una union politica. Fusionar los dos imperios. Y como son conscientes de que no son el imperio más rico de El continente, asuemmen que será bajo el nombre de %s. Lo aceptas??\n",variable[jugador].nombreimperio);
 						j=0;
 							while(j==0){
 							if((letra=='S')||(letra=='s')){
 							j=1;
-								printf("	ESTUPENDO!! Vayamos al despacho del emperador %s a terminar con el papeleo.\n",variable[1].nombreimperio);
+								printf("	ESTUPENDO!! Vayamos al despacho del emperador %s a terminar con el papeleo.\n",variable[jugador].nombreimperio);
 								return 3;
 								j=1;
 								
@@ -601,64 +613,64 @@ return 6;
 
 
 
-void informe(struct variables variable[1]){	//Informamos del estado del imperio:
+void informe(struct variables variable[], int jugador){	//Informamos del estado del imperio:
 		printf("	Actualmente, tu imperio cuenta con:\n");
-		printf("			%.0f personas. De los cuales, %.0f pertenecen al ejercito.\n",variable[1].poblacion,variable[1].ejercito);
-		printf("			%.1f dolares en las arcas publicas.\n",variable[1].dinero);
-		printf("			%.2f Kg de madera; %.1f Kg de alimentos; y otros %.2f Kg de metal.\n",variable[1].madera,variable[1].alimentos,variable[1].metal);
+		printf("			%.0f personas. De los cuales, %.0f pertenecen al ejercito.\n",variable[jugador].poblacion,variable[jugador].ejercito);
+		printf("			%.1f dolares en las arcas publicas.\n",variable[jugador].dinero);
+		printf("			%.2f Kg de madera; %.1f Kg de alimentos; y otros %.2f Kg de metal.\n",variable[jugador].madera,variable[jugador].alimentos,variable[jugador].metal);
 
 }
 
-int explorar (struct variables variable[]){
+int explorar (struct variables variable[], int jugador){
 	int i,num;
 	float mitad;
-	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %.0f mandas.\n",variable[1].poblacion);
+	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %.0f mandas.\n",variable[jugador].poblacion);
 		fflush(stdin);
 		scanf("%i",&num);
-	mitad=variable[1].poblacion*0.5;
+	mitad=variable[jugador].poblacion*0.5;
 	i=0;
 	while(i==0){
-		if (num==variable[1].poblacion){
+		if (num==variable[jugador].poblacion){
 			printf("	Lamentamos comunicarte, que tu imperio a sido asaltado por el imperio vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
 			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de tu imperio\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
 			i=1;
-			final(variable);
+			final(variable, jugador);
 			return 0;
 		}
-		else if((num>variable[1].poblacion)||(num<0)){	
-			printf("El numero introducido no es valido. Introduzca un numero del 0 al numero de habitantes que tenga %s.\n",variable[1].nombreimperio);
+		else if((num>variable[jugador].poblacion)||(num<0)){	
+			printf("El numero introducido no es valido. Introduzca un numero del 0 al numero de habitantes que tenga %s.\n",variable[jugador].nombreimperio);
 				fflush(stdin);
 				scanf("%i",&num);
 		}
 		else{
-			if(variable[1].asentamiento==1){
-				variable[1].madera=variable[1].madera+1.2*num;
-				variable[1].metal=variable[1].metal+1.2*num;
-				variable[1].alimentos=variable[1].alimentos+num*1.8; 
-				variable[1].poblacion=variable[1].poblacion+variable[1].alimentos*0.25;
-				variable[1].ejercito=variable[1].ejercito+variable[1].poblacion*0.2;
-				variable[1].dinero=variable[1].dinero+((variable[1].madera+variable[1].metal+variable[1].alimentos)/2.0);
+			if(variable[jugador].asentamiento==1){
+				variable[jugador].madera=variable[jugador].madera+1.2*num;
+				variable[jugador].metal=variable[jugador].metal+1.2*num;
+				variable[jugador].alimentos=variable[jugador].alimentos+num*1.8; 
+				variable[jugador].poblacion=variable[jugador].poblacion+variable[jugador].alimentos*0.25;
+				variable[jugador].ejercito=variable[jugador].ejercito+variable[jugador].poblacion*0.2;
+				variable[jugador].dinero=variable[jugador].dinero+((variable[jugador].madera+variable[jugador].metal+variable[jugador].alimentos)/2.0);
 			}
-			else if(variable[1].asentamiento==2){
-				variable[1].madera=variable[1].madera+1.2*num;
-				variable[1].metal=variable[1].metal+1.8*num;
-				variable[1].alimentos=variable[1].alimentos+num*1.5;
-				variable[1].poblacion=variable[1].poblacion+variable[1].alimentos*0.25;
-				variable[1].ejercito=variable[1].ejercito+variable[1].poblacion*0.2;
-				variable[1].dinero=variable[1].dinero+((variable[1].madera+variable[1].metal+variable[1].alimentos)*0.3);
+			else if(variable[jugador].asentamiento==2){
+				variable[jugador].madera=variable[jugador].madera+1.2*num;
+				variable[jugador].metal=variable[jugador].metal+1.8*num;
+				variable[jugador].alimentos=variable[jugador].alimentos+num*1.5;
+				variable[jugador].poblacion=variable[jugador].poblacion+variable[jugador].alimentos*0.25;
+				variable[jugador].ejercito=variable[jugador].ejercito+variable[jugador].poblacion*0.2;
+				variable[jugador].dinero=variable[jugador].dinero+((variable[jugador].madera+variable[jugador].metal+variable[jugador].alimentos)*0.3);
 			}
 			else{   //asentamientos 2 y 3
 				if (num>=mitad){
-					variable[1].dinero=variable[1].dinero-40;
+					variable[jugador].dinero=variable[jugador].dinero-40;
 					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevasen mas.");
 				}
-					variable[1].madera=variable[1].madera+1.9*num;
-					variable[1].metal=variable[1].metal+1.8*num;
-					variable[1].alimentos=variable[1].alimentos+num*2;
-					variable[1].poblacion=variable[1].poblacion+variable[1].alimentos*0.25;
-					variable[1].ejercito=variable[1].ejercito+variable[1].poblacion*0.2;
-					variable[1].dinero=variable[1].dinero+((variable[1].madera+variable[1].metal+variable[1].alimentos)*0.3);
+					variable[jugador].madera=variable[jugador].madera+1.9*num;
+					variable[jugador].metal=variable[jugador].metal+1.8*num;
+					variable[jugador].alimentos=variable[jugador].alimentos+num*2;
+					variable[jugador].poblacion=variable[jugador].poblacion+variable[jugador].alimentos*0.25;
+					variable[jugador].ejercito=variable[jugador].ejercito+variable[jugador].poblacion*0.2;
+					variable[jugador].dinero=variable[jugador].dinero+((variable[jugador].madera+variable[jugador].metal+variable[jugador].alimentos)*0.3);
 			}
 		i=1;
 		}
@@ -666,7 +678,7 @@ int explorar (struct variables variable[]){
 	}
 }
 
-int guardar (struct variables variable[], int unidos) {
+int guardar (struct variables variable[], int unidos, int jugador) {
 	
 	FILE *fhistorial;
 	printf("								GUARDANDO LA PARTIDA\n");
@@ -676,18 +688,18 @@ int guardar (struct variables variable[], int unidos) {
 				return 0;
 			}
 		
-	fprintf(fhistorial,"%i ",variable[1].jugador);
-	fprintf(fhistorial,"%i ",variable[1].partepartida);
-	fprintf(fhistorial,"%s ",variable[1].nombre);
-	fprintf(fhistorial,"%s ",variable[1].nombreimperio);
-	fprintf(fhistorial,"%.0f ",variable[1].poblacion);
-	fprintf(fhistorial,"%.0f ",variable[1].ejercito);
-	fprintf(fhistorial,"%.2f ",variable[1].alimentos);
-	fprintf(fhistorial,"%.2f ",variable[1].madera);
-	fprintf(fhistorial,"%.2f ",variable[1].metal);
-	fprintf(fhistorial,"%.2f ",variable[1].dinero);
+	fprintf(fhistorial,"%i ",variable[jugador].jugador);
+	fprintf(fhistorial,"%i ",variable[jugador].partepartida);
+	fprintf(fhistorial,"%s ",variable[jugador].nombre);
+	fprintf(fhistorial,"%s ",variable[jugador].nombreimperio);
+	fprintf(fhistorial,"%.0f ",variable[jugador].poblacion);
+	fprintf(fhistorial,"%.0f ",variable[jugador].ejercito);
+	fprintf(fhistorial,"%.2f ",variable[jugador].alimentos);
+	fprintf(fhistorial,"%.2f ",variable[jugador].madera);
+	fprintf(fhistorial,"%.2f ",variable[jugador].metal);
+	fprintf(fhistorial,"%.2f ",variable[jugador].dinero);
 	fprintf(fhistorial,"%i ",unidos);
-	fprintf(fhistorial,"%i ",variable[1].asentamiento);
+	fprintf(fhistorial,"%i ",variable[jugador].asentamiento);
 	fprintf(fhistorial,"\n");
  
 }
@@ -710,7 +722,7 @@ int CargaPartida (struct variables variable[], int jugador){
 		return 0;	
 }
  
-void final(struct variables variable[]){
+void final(struct variables variable[], int jugador){
 	FILE *fentrada;
 	printf("	Esto ha sido lo que el destino le tenia guardado a %s.\n");
 	printf("	%s, te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos.\n\n\n				 HASTA LUEGO !!!!");
@@ -723,12 +735,12 @@ void final(struct variables variable[]){
 							}
 				//ESCRIBIMOS LOS DATOS CON LOS QUE EL IMPERIO TERMINA SU HISTORIA:
 				fprintf(fentrada,"El imperio %s, termino su historia con:\n");
-					fprintf(fentrada,"	--> %.0f habitantes.\n",variable[1].poblacion);
+					fprintf(fentrada,"	--> %.0f habitantes.\n",variable[jugador].poblacion);
 					fprintf(fentrada,"	--> %.0f miembros del ejercito .\n");
-					fprintf(fentrada,"	--> %.2f Dolares de dinero publico en las arcas del estado.\n",variable[1].dinero);
-					fprintf(fentrada,"	--> %.2f kilogramos de madera.\n",variable[1].madera);
-					fprintf(fentrada,"	--> %.2f kilogramos de metales y minerales.\n",variable[1].metal);
-					fprintf(fentrada,"	--> %.2f kilogramos de alimentos con los que mantenía a su pueblo.\n",variable[1].alimentos);
+					fprintf(fentrada,"	--> %.2f Dolares de dinero publico en las arcas del estado.\n",variable[jugador].dinero);
+					fprintf(fentrada,"	--> %.2f kilogramos de madera.\n",variable[jugador].madera);
+					fprintf(fentrada,"	--> %.2f kilogramos de metales y minerales.\n",variable[jugador].metal);
+					fprintf(fentrada,"	--> %.2f kilogramos de alimentos con los que mantenía a su pueblo.\n",variable[jugador].alimentos);
 			fclose(fentrada);
 	}
 
