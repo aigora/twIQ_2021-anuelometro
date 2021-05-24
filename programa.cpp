@@ -20,6 +20,7 @@ void episodio1 (struct variables variable[], int jugador);					//elige asentamie
 //EPISODIO 2	(No tiene funcion, porque es sencillo)			//Sale a explorar por primera vez.
 int episodio3 (struct variables variable[], int jugador);				//Construccion del barco para la COSTA.		Aparicion de indigenas para MESETA y CORDILLERA
 //EPISODIO 4	(No tiene funcion, porque es sencillo. Es igual que el 2)	//Preparacion para la 1 guerra.
+int episodio5 (struct variables variable[], int jugador);
 
 	// FUNCIONES "SECUNDARIAS"
 void informe(struct variables variable[], int jugador); 						//Le comumnica al jugador el estado de su imperio.
@@ -211,13 +212,13 @@ do{
 	
 	// EMPEZAMOS  CON EL JUEGO //*******************************************************************************************************************************************************
 
-		// EMPEZAMOS CON LA TOMA DE DECISIONES --> variable[1].asentamiento 
+		// EMPEZAMOS CON LA TOMA DE DECISIONES --> variable[jugador].variable[jugador].asentamiento
 	if(variable[jugador].partepartida==1){
 		episodio1(variable, jugador);
 		variable[jugador].partepartida++;
 	}
 			//Guardamos la decision en el fichero de decisiones:
-						if(variable[jugador].asentamiento==1){fprintf(fentrada,"Asentamiento inicial---> COSTA\n");	}
+						if(variable[jugador].asentamiento==1){fprintf(fentrada,"variable[jugador].asentamientoinicial---> COSTA\n");	}
 						else if(variable[jugador].asentamiento==2){fprintf(fentrada,"Asentamiento inicial---> CORDILLERA\n");	}	
 						else {fprintf(fentrada,"Asentamiento inicial---> MESETA\n");	}
 	
@@ -263,8 +264,8 @@ do{
 	printf("	Te vamos a explicar como se distribuyen los imperios en El continente:\n");		printf("\n\n\n");
 	printf("	Veras; %s, se encuentra en la siguiente posicion gegrafica con respecto al resto de imperios cercanos:\n",variable[jugador].nombreimperio);
 	
-		//PRESENTACION DE LOS IMPERIOS EN FUNCION DEL variable[1].asentamiento 
-		if(variable[1].asentamiento==1){
+		//PRESENTACION DE LOS IMPERIOS EN FUNCION DEL variable[jugador].variable[jugador].asentamiento
+		if(variable[jugador].asentamiento==1){
 			printf("	Al rededor nuestro, tenemos 4 imperios grandes. Sus nombres en clave son, por orden de cercania a la capital: 'Alfa','Beta''Gamma','Delta'.\n");
 				printf("\n");
 				printf("		La verdad es que el imperio Alfa es el que menos te debe preocupar, porque acaba de salir de una crisis social y economica y no parece que tenga muchas ganas de pelear. Puedes aprobechar eso para tratar de llegar a acuerdos, o directamente llevamos al ejército.\n");
@@ -306,7 +307,7 @@ do{
 		informe(variable, jugador);
 		aux=episodio3(variable, jugador);
 		variable[jugador].partepartida++;
-	}
+	
 	
 				//Guardamos lo decidido en decisiones.txt
 					if (aux==0){
@@ -319,15 +320,17 @@ do{
 					else if(aux==3){variable[jugador].unidos=1;}
 					else{variable[jugador].unidos=0;}
 			
-	if (guardar(variable, jugador)==0){
-			printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
-			return 0;
-		}
-	
+		if (guardar(variable, jugador)==0){
+				printf(" Ha ocurrido un error al escribir en el archivo 'historial.txt', compruebe si todo está en su sitio en la caarpeta del juego.\n");
+				return 0;
+			}
+			
+	}
 	
 	//4º EPISODIO: Declaracion de guerra y exploracion.****************************** 3************** 3 ************ 3 ************* 3 ************ 3 ************* 3 ************ 3 ********* 3 **************
 	
-	printf("	Toca salir a explorar... a ver que nos encontramos hoy!\n");
+	if (variable[jugador].partepartida==4){
+			printf("	Toca salir a explorar... a ver que nos encontramos hoy!\n");
 	if(explorar(variable, jugador)==0) {
 		final(variable, jugador);
 		return 0;
@@ -338,9 +341,18 @@ do{
 			return 0;
 		}
 	
+	}
+
 	
 	//5º EPISODIO: 1ª GUERRA****************************** 4 ************** 4 ******************* 4 ************* 4 ************ 4 ************* 4 *********** 4 ******** 4 *****
-	
+	if (variable[jugador].partepartida==5){
+		if (episodio5(variable, jugador)==0){
+			return 0;
+		}
+		if (guardar(variable, jugador)==0){
+			return 0;
+		}
+	}
 
 	
 	
@@ -403,7 +415,7 @@ void introduccion (struct variables variable[], int jugador){
 }
 
 
-void episodio1 (struct variables variable[], int jugador){			// ASENTAMIENTO 
+void episodio1 (struct variables variable[], int jugador){			// variable[jugador].asentamiento
 	int i=1,aux=0;
 	
 			printf("\n");
@@ -419,8 +431,8 @@ void episodio1 (struct variables variable[], int jugador){			// ASENTAMIENTO
 			printf("	Aqui , ademas de unas vistas privilegiadas de todo el valle (un matiz clave para la defensa de tu base), encontramos una gran variedad de minerales y metales, e incluso algo de madera. Sin embargo no se ven muchos sitios donde montar un huerto o una granja...\n");
 				printf("\n");
 		
-		printf("		ASENTAMIENTO EN LA MESETA:\n");
-			printf("	Este es un asentamiento complicado la verdad... No se ve ningun tipo de defensa natural que ayude ante un posible ataque enemigo. Sin embargo, esta REPLETO de materiales de todo tipo; tenemos madera, tierras para cultivo, animales que domesticar, una red de cuevas mas o menos cercana con metales y otros minerales....\n");
+		printf("		variable[jugador].asentamientoEN LA MESETA:\n");
+			printf("	Este es un variable[jugador].asentamientocomplicado la verdad... No se ve ningun tipo de defensa natural que ayude ante un posible ataque enemigo. Sin embargo, esta REPLETO de materiales de todo tipo; tenemos madera, tierras para cultivo, animales que domesticar, una red de cuevas mas o menos cercana con metales y otros minerales....\n");
 				printf("	Desde luego que empezar aqui no va a ser facil, pero como sobrevivas al inicio... VAS A SER INDESTRUCTIBLE!!");
 					printf("\n\n");
 		
@@ -570,7 +582,7 @@ int episodio3 (struct variables variable[], int jugador) {
 								scanf("%c",&respuesta);
 						}
 				}	
-		}//Aqui acaba el while del asentamiento 1 
+		}//Aqui acaba el while del variable[jugador].asentamiento1 
 					
 		else{ //Lo que ocurre en la 2ª ronda para los asentamientos 2 y 3
 			printf("	Se ve que vienen unas personas hacia %s. Crees que debemos atacarles antes de que ellos nos puedan atacar primero??\n",variable[jugador].nombreimperio);
@@ -645,6 +657,940 @@ int episodio3 (struct variables variable[], int jugador) {
 return 6;
 }
 
+int episodio5 (struct variables variable [], int jugador){
+	int i,j,aleatorio;
+	int faseguerra=0;
+	int victoria;
+	float aux;
+	char respuesta, letra;
+	
+	if(variable[jugador].asentamiento==1 && variable[jugador].unidos==1){
+		
+		printf("\nGracias a la alianza que lograste con el imperio Alfa parece que las cosas estan mas calmadas.");
+		printf("\nSin embargo tus nuevos aliados advierten que esta paz no parece que vaya a durar, por lo que se olle por los diferentes reinos, los imperios se estan organizando contra ti.");
+		printf("\nLo mas recomendable sería enviar algunos aldeanos a buscar recursos para prepararse para la inminente guerra que se aproxima.");
+		printf("\n(Pulsa S para enviar a parte de tu poblacion en busca de recursos)");
+		fflush(stdin);
+			scanf("%c",&respuesta);
+			i=0;
+			while(i==0){
+				if((respuesta=='S')||(respuesta=='s')){
+					aux=0;
+					printf("Introduce el numero de pobladores que desea enviar: ");
+						scanf("%f",&aux);
+						variable[jugador].poblacion=variable[jugador].poblacion-aux;
+						
+							if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin habitantes y tu territorio ha sido invadido. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+				}
+				else if((respuesta=='N'||(respuesta=='n'))){
+					printf("\nAlla tu, debes ser consciente que sin suficientes recursos luego no estaras listo para la guerra.");
+					return 1;
+				}
+				else{
+					printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&letra);
+				}
+				
+			j=0;
+			while(j==0){
+			
+			printf("\nYa han pasado tres días desde  que tus habitantes salieron en busca de recursos.");
+			printf("\nAlguien se acerca al portón de la muralla.Alguien ha llegado.");
+										srand(time(NULL));
+										aleatorio= 1+rand()%(20);
+						if(aleatorio<12){
+							printf("\nTus habitantes han llegado y parecen muy contentos.");
+							printf("\nEn su camino en busca de materiales han encontrado un poblado asolado por el imperio alfa y un grupo se ha unido a tu causa.");
+							printf("\nAdemas parece que han traido bastantes recursos");
+							
+								variable[jugador].poblacion+=30;
+								variable[jugador].dinero+=50;
+								variable[jugador].madera+=15;
+								variable[jugador].alimentos+=8;
+								variable[jugador].metal+=25;
+						}
+						else if(12<aleatorio<18){
+							printf("\nSon algunos de los habitantes que habías enviados y no parecen muy contentos.");
+							printf("\nEn su camino en busca de materiales han encontrado un grupo de exploradores del imperio delta.");
+							printf("\nVarios de ellos ha perdido la vida y han perdido parte de los recursos que habían conseguido.");
+			
+								variable[jugador].dinero+=8;
+								variable[jugador].madera+=4;
+								variable[jugador].alimentos+=2;
+								variable[jugador].metal+=13;
+							}
+						else{
+							printf("\nParece que solo ha vuelto uno de tus habitantes.");
+							printf("\nAl parecer fueron emboscados por un grupo de exploradores del imperio Delta, fueron emboscados y capturados.");
+							printf("\nEste acto no puede quedar indemne, esto es una declaracion de guerra.");
+							
+								variable[jugador].poblacion+=1;
+							}
+							j++;
+						}
+							
+			i++;			
+		}
+		
+			if(variable[jugador].asentamiento==1 && variable[jugador].unidos==0){
+				printf("\nSe acercan tiempos moviditos, se rumorea que habra una guerra y no tienes ningun aliado, tu imperio es debil.");
+				printf("\nDeberias enviar a parte de tu poblacion en busca de recursos.");
+				printf("\n(Pulsa S para enviar a parte de tu poblacion en busca de recursos)");
+					fflush(stdin);
+					scanf("%c",&respuesta);
+				
+					while(i==0){
+				if((respuesta=='S')||(respuesta=='s')){
+					aux=0;
+					printf("Introduce el numero de pobladores que desea enviar: ");
+						scanf("%f",&aux);
+						variable[jugador].poblacion=variable[jugador].poblacion-aux;
+		
+							if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin habitantes y tu territorio ha sido invadido. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+				}
+				else if((respuesta=='N'||(respuesta=='n'))){
+					printf("\nAlla tu, debes ser consciente que sin suficientes recursos luego no estaras listo para la guerra.");
+					return 1;
+				}
+				else{
+					printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&letra);
+				}
+				
+			
+			while(j==0){
+			
+			printf("\nYa han pasado tres días desde  que tus habitantes salieron en busca de recursos.");
+			printf("\nAlguien se acerca al portón de la muralla.Alguien ha llegado.");
+										srand(time(NULL));
+										aleatorio= 1+rand()%(20);
+						if(aleatorio<12){
+							printf("\nTus habitantes han llegado y parecen muy contentos.");
+							printf("\nEn su camino en busca de materiales han encontrado un poblado asolado por el imperio alfa y un grupo se ha unido a tu causa.");
+							printf("\nAdemas parece que han traido bastantes recursos");
+							
+								variable[jugador].poblacion+=30;
+								variable[jugador].dinero+=50;
+								variable[jugador].madera+=15;
+								variable[jugador].alimentos+=8;
+								variable[jugador].metal+=25;
+						}
+						else if(12<aleatorio<18){
+							printf("\nSon algunos de los habitantes que habías enviados y no parecen muy contentos.");
+							printf("\nEn su camino en busca de materiales han encontrado un grupo de exploradores del imperio delta.");
+							printf("\nVarios de ellos ha perdido la vida y han perdido parte de los recursos que habían conseguido.");
+			
+								variable[jugador].dinero+=8;
+								variable[jugador].madera+=4;
+								variable[jugador].alimentos+=2;
+								variable[jugador].metal+=13;
+							}
+						else{
+							printf("\nParece que solo ha vuelto uno de tus habitantes.");
+							printf("\nAl parecer fueron emboscados por un grupo de exploradores del imperio Delta, fueron emboscados y capturados.");
+							printf("\nEste acto no puede quedar indemne, esto es una declaracion de guerra.");
+							
+								variable[jugador].poblacion+=1;
+							}
+							j++;
+						}
+							
+			i++;			
+		}
+			}
+	}
+
+	//Fin del primer if.
+	aux=0;
+			i=2;
+			while(i==2){
+			
+			printf("\nDebido a los hechos que seacontecen deberias comenzar a preparar un ejercito para hacer frente a los demas ejercitos.");
+			printf("\nDebes decidir la cantidad de poblacion que se van a alistar en el ejercito.");
+			printf("\nCuanta poblacion decides entrenar??");
+				scanf("%f",&aux);
+			printf("\nAsí que %.0f habitantes, estas seguro??");
+			printf("\nPulsa S para confirmar o N para volver a introducir el numero.");
+				fflush(stdin);
+				scanf("%c",&respuesta);
+				
+				if((respuesta=='s'||(respuesta=='S'))){
+					if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin habitantes y tu territorio ha sido invadido. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+					else{
+					printf("\nDe acuerdo %.0f habitantes se han unido al ejercito.",variable[jugador].poblacion);
+					
+					variable[jugador].ejercito+=aux;
+					variable[jugador].poblacion-=aux;
+				}
+					aux=0;
+				}
+				else if((respuesta=='n')||(respuesta=='N')){
+					printf("\nDe acuerdo, cuantas tropas deseas enviar pues??");
+						fflush(stdin);
+						scanf("%f",&aux);
+						if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin habitantes y tu territorio ha sido invadido. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+							printf("De acuerdo, entonces %.0f seran enviados a formar filas.",variable[jugador].poblacion);
+							variable[jugador].ejercito+=aux;
+							variable[jugador].poblacion-=aux;
+						}
+						else{
+					printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&letra);
+											}
+						i=0;
+					}
+					//Fin del 2do IF.
+					
+			
+				
+					while(faseguerra==0){
+						victoria=0;
+					
+					if(variable[jugador].asentamiento==1 && variable[jugador].unidos==1){
+						printf("\nEl ejercito del imperio Beta se aproxima a tus territorios.");
+						printf("\nLa guerra es inminente.");
+						printf("\ntu ejercito cuenta en este momento con %.0f soldados, recuerda que si tus tropas se quedan en 0 tu imperio llegara a su fin.",variable[jugador].ejercito);
+						printf("\nDeseas enviar a tu ejercito a defender??");
+						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+							fflush(stdin);
+							scanf("%c",&respuesta);
+							i=0;
+							while(i==0){
+							
+							
+								if((respuesta=='S')||(respuesta=='s')){
+									
+										printf("\nTu ejercito ha salido de las murallas para defender la fortaleza.");
+										
+										srand(time(NULL));
+										aleatorio= 1+rand()%(20);
+								if(aleatorio<8){
+									variable[jugador].ejercito-=3;
+										if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+													victoria++;
+												}
+												else{
+												
+									printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
+									printf("\nHas hecho prisioneros de guerra y les has ofrecido unirse a tu ejercito a cambio de no ser ejecutados.");
+									printf("\nGracias a ello las perdidas no han sido tan altas.");
+									
+								}
+							}
+							
+								else if(9<=aleatorio<=15){
+										
+										variable[jugador].ejercito-=8;
+										variable[jugador].dinero-=20;
+										variable[jugador].poblacion-=20;
+										variable[jugador].alimentos-=20;
+									
+										if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+											
+											 else if (variable[jugador].dinero<0){
+													printf("Lo siento %s, sin dinero al no poder pagar el salario a tus soldados estos se han sublebado y han acabado con  tu imperio desde dentro. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												
+											 else if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin poblacion, no hay imperio sin habitantes. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+												
+											 else if (variable[jugador].alimentos<0){
+													printf("Lo siento %s, pero te has quedado sin comida para alimentar a tus subditos, por lo que tanto los soldados como la poblacion se ha sublebado contra ti y te han derrocado. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+									
+										else{
+										
+									printf("\nHa caido una gran parte del ejercito, sin embargo has vencido.");
+									printf("\nHas hecho prisioneros de guerra y les has ofrecido unirse a tu ejercito a cambio de no ser ejecutados.");
+									printf("\nEsto no ha sido bien recibido por parte de tus habitantes por los que algunos se han amotinado y han robado viveres y dinero y han huido uniendose a los otros imperios.");
+									
+											
+										victoria++;	
+									}
+										
+																
+												}
+											else if(16<=aleatorio<=18){
+												printf("\nHa caido tu ejercito integramente, te has quedado sin tropas para defender tu imerio.HAS PERDIDO.");
+												return 0;
+												victoria=0;
+											}
+											else{
+												printf("\nEl despliegue de tu ejercito ha sido imponente han masacrado a casi todo el ejercito enemigo.");
+												printf("\nLos que no han sido asesinados se han unido a tu ejercito por miedo a la ejecucion.");
+												
+													variable[jugador].ejercito+=30;
+													victoria++;
+											}
+										
+								
+										
+								}
+								if((respuesta=='N')||(respuesta=='n')){
+									printf("\nDe verdad que no se como has llegado hasta aqui, el ejercito contratio ha entrado en las murallas y ha arrasado con tu territorio.HAS PERDIDO.");
+									return 0;
+									victoria=0;
+								}
+								else{
+										printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&respuesta);
+								}
+								i++;
+					
+				}
+			}
+							if((variable[jugador].asentamiento==1)&&(variable[jugador].unidos==0)){
+									printf("\nEl ejercito del imperio Beta se aproxima a tus territorios.Debido a la mala relacion con el imperio Alfa, el ejercito de este participa en la ofensiva, estas en desentaja.");
+						printf("\nLa guerra es inminente.");
+						printf("\ntu ejercito cuenta en este momento con %.0f soldados, recuerda que si tus tropas se quedan en 0 tu imperio llegara a su fin.",variable[jugador].ejercito);
+						printf("\nDeseas enviar a tu ejercito a defender??");
+						i=0;
+						while(i==0){
+						
+						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+							fflush(stdin);
+							scanf("%c",&respuesta);
+							
+								if((respuesta=='S')||(respuesta=='s')){
+									printf("\nTu ejercito ha salido de las murallas para defender la fortaleza.");
+										
+										srand(time(NULL));
+										aleatorio= 1+rand()%(20);
+								if(aleatorio<5){
+									
+									variable[jugador].ejercito-=3;
+										if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												else{
+												
+									printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
+									printf("\nHas hecho prisioneros de guerra y les has ofrecido unirse a tu ejercito a cambio de no ser ejecutados.");
+									printf("\nGracias a ello las perdidas no han sido tan altas.");
+								victoria++;
+								}
+										
+							}
+								else if(6<=aleatorio<=11){
+									
+									printf("\nHa caido una gran parte del ejercito, sin embargo has vencido.");
+									printf("\nHas hecho prisioneros de guerra y les has ofrecido unirse a tu ejercito a cambio de no ser ejecutados.");
+									printf("\nEsto no ha sido bien recibido por parte de tus habitantes por los que algunos se han amotinado y han robado viveres y dinero y han huido uniendose a los otros imperios.");
+									
+										variable[jugador].ejercito-=8;
+										variable[jugador].dinero-=20;
+										variable[jugador].poblacion-=20;
+										variable[jugador].alimentos-=20;		
+										
+											if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+											
+											 if (variable[jugador].dinero<0){
+													printf("Lo siento %s, sin dinero al no poder pagar el salario a tus soldados estos se han sublebado y han acabado con  tu imperio desde dentro. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												
+											 if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin poblacion, no hay imperio sin habitantes. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+												
+											 if (variable[jugador].alimentos<0){
+													printf("Lo siento %s, pero te has quedado sin comida para alimentar a tus subditos, por lo que tanto los soldados como la poblacion se ha sublebado contra ti y te han derrocado. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}							
+												}
+											else if(12<=aleatorio<=18){
+												printf("\nHa caido tu ejercito integramente, te has quedado sin tropas para defender tu imerio.HAS PERDIDO.");
+												return 0;
+												
+											}
+											else{
+												printf("\nEl despliegue de tu ejercito ha sido imponente han masacrado a casi todo el ejercito enemigo.");
+												printf("\nLos que no han sido asesinados se han unido a tu ejercito por miedo a la ejecucion.");
+												
+													variable[jugador].ejercito+=30;
+													victoria++;
+											}
+									
+								
+							}
+							if((respuesta=='N')||(respuesta=='n')){
+									printf("\nDe verdad que no se como has llegado hasta aqui, el ejercito contratio ha entrado en las murallas y ha arrasado con tu territorio.HAS PERDIDO.");
+									return 0;
+					}
+					else{
+					printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&respuesta);
+											}
+											i++;
+				}
+				}
+				faseguerra++;
+				}
+				while(faseguerra==1 && victoria==1){
+					
+					if(variable[jugador].asentamiento==1 && variable[jugador].unidos==1){
+						printf("\nTras la victoria contra el ejercito del imperio Beta este imperio es debil.");
+						printf("\nes el momento perfecto para iniciar una ofensiva.");
+						printf("\nDeseas enviar a tu ejercito a atacar la capital del imperio Beta??");
+						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+							fflush(stdin);
+							scanf("%c",&respuesta);
+							i=0;
+							
+								while(i==0){
+									i=0;
+									if((respuesta=='S')||(respuesta=='s')){
+										
+										printf("\nQue cantidad de tropas desea enviar??");
+										printf("\nRecuerda que si envias mas cantidad de tropas de las que dispones tu capital quedara desprotegida y seras conquistado.");
+											fflush(stdin);
+											scanf("%f",&aux);
+												if(aux<0){
+													printf("\nIntroduce una cantidad valida de tropas.");
+													scanf("%f",&aux);
+												}
+												else{
+													printf("\nDe acuerdo, %.0f soldados seran enviados",aux);
+														if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+													
+												}
+										srand(time(NULL));
+										aleatorio= 1+rand()%(5);
+										if(aleatorio<4){
+											printf("\nTu ejercito ha invadido exitosamente la capital, aumentando así tu poblacion y recursos.");
+											variable[jugador].poblacion+=30;
+								variable[jugador].dinero+=50;
+								variable[jugador].madera+=15;
+								variable[jugador].alimentos+=8;
+								variable[jugador].metal+=25;
+								variable[jugador].ejercito+=aux;
+											
+										}
+										else{
+											printf("Tu ejercito ha salido con las manos vacías.");
+											printf("Las tropas del imperio Delta y Omega llegaron antes y derrotaron a la mitad de tus tropas.");
+											
+											if(aux%2==0){
+												variable[jugador].ejercito+=aux/2;
+											}
+											else if(aux%2!=0){
+												variable[jugador].ejercito+=(aux-1)/2;
+											}
+										}
+										
+									}
+									if((respuesta=='S')||(respuesta=='s')){
+									printf("\nDebido a esto, la alianza del imperio Delta y Omega terminaron conquistando los resquicios del imperio Beta.");
+									
+									}
+									else{
+											printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&respuesta);
+									}
+									i++;
+								}
+				}
+				if(variable[jugador].asentamiento==1 && variable[jugador].unidos==0){
+						printf("\nTras la victoria contra el ejercito del imperio Beta este imperio es debil.");
+						printf("\nEs el momento perfecto para iniciar una ofensiva.");
+						printf("\nDeseas enviar a tu ejercito a atacar la capital del imperio Beta??");
+						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+							fflush(stdin);
+							scanf("%c",&respuesta);
+							i=0;
+							
+								while(i==0){
+									i=0;
+									if((respuesta=='S')||(respuesta=='s')){
+										
+										printf("\nQue cantidad de tropas desea enviar??");
+										printf("\nRecuerda que si envias mas cantidad de tropas de las que dispones tu capital quedara desprotegida y seras conquistado.");
+											fflush(stdin);
+											scanf("%f",&aux);
+												if(aux<0){
+													printf("\nIntroduce una cantidad valida de tropas.");
+													scanf("%f",&aux);
+												}
+												else{
+													printf("\nDe acuerdo, %.0f soldados seran enviados",aux);
+														if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+													
+												}
+										srand(time(NULL));
+										aleatorio= 1+rand()%(8);
+										if(aleatorio<5){
+											printf("\nTu ejercito ha invadido exitosamente la capital, aumentando así tu poblacion y recursos.");
+											variable[jugador].poblacion+=30;
+								variable[jugador].dinero+=50;
+								variable[jugador].madera+=15;
+								variable[jugador].alimentos+=8;
+								variable[jugador].metal+=25;
+								variable[jugador].ejercito+=aux;
+											
+										}
+										else{
+											printf("Tu ejercito ha salido con las manos vacías.");
+											printf("Las tropas del imperio Delta y Omega llegaron antes y derrotaron a la mitad de tus tropas.");
+											
+											if(aux%2==0){
+												variable[jugador].ejercito+=aux/2;
+											}
+											else if(aux%2!=0){
+												variable[jugador].ejercito+=(aux-1)/2;
+											}
+										}
+										
+									}
+									if((respuesta=='N')||(respuesta=='n')){
+									printf("\nDebido a esto, la alianza del imperio Delta y Omega terminaron conquistando los resquicios del imperio Beta.");
+									
+									}
+									else{
+											printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&respuesta);
+									}
+									i++;
+								}
+					
+				}
+				
+				
+			faseguerra++;	
+				
+		}
+		//Aqui comienza la fase final de la guerra contra el imperio Delta y Omega
+		
+		while(faseguerra==2 && victoria==1){
+			if(variable[jugador].asentamiento==1 && variable[jugador].unidos==1){
+						printf("\nLos ejercitos de los imperios Delta y Omega se han unido.");
+						printf("\nEsta sera la ultima batalla para poder conquistar todo el territorio.");
+						printf("\ntu ejercito cuenta en este momento con %.0f soldados, recuerda que si tus tropas se quedan en 0 tu imperio llegara a su fin.",variable[jugador].ejercito);
+						printf("\nDeseas enviar a tu ejercito a defender??");
+						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+							fflush(stdin);
+							scanf("%c",&respuesta);
+							i=0;
+							while(i==0){
+							
+							
+								if((respuesta=='S')||(respuesta=='s')){
+									
+										printf("\nTu ejercito ha salido de las murallas para defender la fortaleza.");
+										
+										srand(time(NULL));
+										aleatorio= 1+rand()%(30);
+								if(aleatorio<12){
+									variable[jugador].ejercito-=7;
+										if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+													victoria++;
+												}
+												else{
+												
+									printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
+									printf("\nPese a ello los soldados han salido a celebrar la victoria.");
+									printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+								}
+										
+							}
+								else if(13<=aleatorio<=21){
+									
+										variable[jugador].ejercito-=8;
+										variable[jugador].dinero-=20;
+										variable[jugador].poblacion-=20;
+										variable[jugador].alimentos-=20;	
+										victoria++;	
+										
+											if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+											
+											 else if (variable[jugador].dinero<0){
+													printf("Lo siento %s, sin dinero al no poder pagar el salario a tus soldados estos se han sublebado y han acabado con  tu imperio desde dentro. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												
+											 else if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin poblacion, no hay imperio sin habitantes. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+												
+											 else if (variable[jugador].alimentos<0){
+													printf("Lo siento %s, pero te has quedado sin comida para alimentar a tus subditos, por lo que tanto los soldados como la poblacion se ha sublebado contra ti y te han derrocado. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												else{
+													printf("\nHa caido una gran parte del ejercito, sin embargo has vencido.");
+													printf("\nPese a ello los soldados han salido a celebrar con el resto del pueblo.");
+												}
+														
+												}
+											else if(22<=aleatorio<=25){
+												printf("\nHa caido tu ejercito integramente, te has quedado sin tropas para defender tu imerio.HAS PERDIDO.");
+												return 0;
+												victoria=0;
+											}
+											else if(26<=aleatorio<=28){
+												printf("\nEl despliegue de tu ejercito ha sido imponente han masacrado a casi todo el ejercito enemigo.");
+												printf("\nLos que no han sido asesinados han huido por miedo a la ejecucion.");
+												printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+												
+													victoria++;
+											}
+											else{
+												printf("\nTu ejercito ha ganado la batalla pero con un gran costo en bajas.");
+												printf("\nSe celebra una gran fiesta. Los generales del ejercito van tan borrachos que se empiezan a pelear entre ellos.");
+												printf("\nAl final se les pasa el mal rollo entre ellos, pero creen que la culpa de las bajas es tuya y te decapitan.HAS PERDIDO.");
+											}
+								
+										
+								}
+								else if((respuesta=='N')||(respuesta=='n')){
+									printf("\nLo siento, pero no se acepta no por respuesta, el ejercito ha salido, pero ahora cuenta con un tercio menos de posibilidades de ganar por chulo.");
+									
+										printf("\nTu ejercito ha salido de las murallas para defender la fortaleza.");
+										
+										srand(time(NULL));
+										aleatorio= 1+rand()%(10);
+								if(aleatorio<2){
+									variable[jugador].ejercito-=7;
+										if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+													victoria++;
+												}
+												else{
+												
+									printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
+									printf("\nPese a ello los soldados han salido a celebrar la victoria.");
+									printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+								}
+										
+							}
+								else if(3<=aleatorio<=5){
+									
+									variable[jugador].ejercito-=8;
+										variable[jugador].dinero-=20;
+										variable[jugador].poblacion-=20;
+										variable[jugador].alimentos-=20;	
+										victoria++;	
+										
+											if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+											
+											 else if (variable[jugador].dinero<0){
+													printf("Lo siento %s, sin dinero al no poder pagar el salario a tus soldados estos se han sublebado y han acabado con  tu imperio desde dentro. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												
+											 else if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin poblacion, no hay imperio sin habitantes. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+												
+											 else if (variable[jugador].alimentos<0){
+													printf("Lo siento %s, pero te has quedado sin comida para alimentar a tus subditos, por lo que tanto los soldados como la poblacion se ha sublebado contra ti y te han derrocado. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												else{
+												printf("\nHa caido una gran parte del ejercito, sin embargo has vencido.");
+												printf("\nPese a ello los soldados han salido a celebrar con el resto del pueblo.");
+												printf("\nAhora el territorio es tuyo, has ganado.ENHORABUENA.");
+												}
+														
+												}
+											else if(6<=aleatorio<=7){
+												printf("\nHa caido tu ejercito integramente, te has quedado sin tropas para defender tu imerio.HAS PERDIDO.");
+												return 0;
+												victoria=0;
+											}
+											else if(8<=aleatorio<=9){
+												printf("\nEl despliegue de tu ejercito ha sido imponente han masacrado a casi todo el ejercito enemigo.");
+												printf("\nLos que no han sido asesinados han huido por miedo a la ejecucion.");
+												printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+												
+													victoria++;
+											}
+											else{
+												printf("\nTu ejercito ha ganado la batalla pero con un gran costo en bajas.");
+												printf("\nSe celebra una gran fiesta. Los generales del ejercito van tan borrachos que se empiezan a pelear entre ellos.");
+												printf("\nAl final se les pasa el mal rollo entre ellos, pero creen que la culpa de las bajas es tuya y te decapitan.HAS PERDIDO.");
+												
+													return 0;
+											}
+								}
+								else{
+										printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&respuesta);
+								}
+								i++;
+					
+				}
+			}
+							else if((variable[jugador].asentamiento==1)&&(variable[jugador].unidos==0)){
+												printf("\nLos ejercitos de los imperios Delta y Omega se han unido.");
+						printf("\nEsta sera la ultima batalla para poder conquistar todo el territorio.");
+						printf("\ntu ejercito cuenta en este momento con %.0f soldados, recuerda que si tus tropas se quedan en 0 tu imperio llegara a su fin.",variable[jugador].ejercito);
+						printf("\nDeseas enviar a tu ejercito a defender??");
+						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+							fflush(stdin);
+							scanf("%c",&respuesta);
+							i=0;
+							while(i==0){
+							
+							
+								if((respuesta=='S')||(respuesta=='s')){
+									
+										printf("\nTu ejercito ha salido de las murallas para defender la fortaleza.");
+										
+										srand(time(NULL));
+										aleatorio= 1+rand()%(20);
+								if(aleatorio<7){
+									variable[jugador].ejercito-=7;
+										if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+													victoria++;
+												}
+												else{
+												
+									printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
+									printf("\nPese a ello los soldados han salido a celebrar la victoria.");
+									printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+								}
+										
+							}
+								else if(8<=aleatorio<=15){
+									
+									variable[jugador].ejercito-=8;
+										variable[jugador].dinero-=20;
+										variable[jugador].poblacion-=20;
+										variable[jugador].alimentos-=20;	
+										victoria++;	
+										
+											if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+											
+											 else if (variable[jugador].dinero<0){
+													printf("Lo siento %s, sin dinero al no poder pagar el salario a tus soldados estos se han sublebado y han acabado con  tu imperio desde dentro. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												
+											 else if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin poblacion, no hay imperio sin habitantes. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+												
+											 else if (variable[jugador].alimentos<0){
+													printf("Lo siento %s, pero te has quedado sin comida para alimentar a tus subditos, por lo que tanto los soldados como la poblacion se ha sublebado contra ti y te han derrocado. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												else{
+														
+									
+									printf("\nHa caido una gran parte del ejercito, sin embargo has vencido.");
+									printf("\nPese a ello los soldados han salido a celebrar con el resto del pueblo.");
+									
+								}
+														
+												}
+											else if(16<=aleatorio<=18){
+												printf("\nHa caido tu ejercito integramente, te has quedado sin tropas para defender tu imerio.HAS PERDIDO.");
+												return 0;
+												victoria=0;
+											}
+											else if(aleatorio==19){
+												printf("\nEl despliegue de tu ejercito ha sido imponente han masacrado a casi todo el ejercito enemigo.");
+												printf("\nLos que no han sido asesinados han huido por miedo a la ejecucion.");
+												printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+												
+													victoria++;
+											}
+											else{
+												printf("\nTu ejercito ha ganado la batalla pero con un gran costo en bajas.");
+												printf("\nSe celebra una gran fiesta. Los generales del ejercito van tan borrachos que se empiezan a pelear entre ellos.");
+												printf("\nAl final se les pasa el mal rollo entre ellos, pero creen que la culpa de las bajas es tuya y te decapitan.HAS PERDIDO.");
+											}
+								
+										
+								}
+								if((respuesta=='N')||(respuesta=='n')){
+									printf("\nLo siento, pero no se acepta no por respuesta, el ejercito ha salido, pero ahora cuenta con un tercio menos de posibilidades de ganar por chulo.");
+									
+										printf("\nTu ejercito ha salido de las murallas para defender la fortaleza.");
+										
+										srand(time(NULL));
+										aleatorio= 1+rand()%(10);
+								if(aleatorio<2){
+									variable[jugador].ejercito-=7;
+										if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+													victoria++;
+												}
+												else{
+												
+									printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
+									printf("\nPese a ello los soldados han salido a celebrar la victoria.");
+									printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+								}
+										
+							}
+								else if(3<=aleatorio<=5){
+									
+									variable[jugador].ejercito-=8;
+										variable[jugador].dinero-=20;
+										variable[jugador].poblacion-=20;
+										variable[jugador].alimentos-=20;	
+										victoria++;	
+										
+											if (variable[jugador].ejercito<0){
+													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+											
+											 else if (variable[jugador].dinero<0){
+													printf("Lo siento %s, sin dinero al no poder pagar el salario a tus soldados estos se han sublebado y han acabado con  tu imperio desde dentro. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												
+											 else if (variable[jugador].poblacion<0){
+													printf("Lo siento %s, pero te has quedado sin poblacion, no hay imperio sin habitantes. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}	
+												
+											 else if (variable[jugador].alimentos<0){
+													printf("Lo siento %s, pero te has quedado sin comida para alimentar a tus subditos, por lo que tanto los soldados como la poblacion se ha sublebado contra ti y te han derrocado. HAS PERDIDO.\n",variable[jugador].nombre); 
+													final(variable, jugador);	
+													return 0;
+												}
+												else{
+														
+									
+									printf("\nHa caido una gran parte del ejercito, sin embargo has vencido.");
+									printf("\nPese a ello los soldados han salido a celebrar con el resto del pueblo.");
+									printf("\nAhora el territorio es tuyo, has ganado.ENHORABUENA.");
+									
+								}
+														
+												}
+											else if(6<=aleatorio<=7){
+												printf("\nHa caido tu ejercito integramente, te has quedado sin tropas para defender tu imerio.HAS PERDIDO.");
+												return 0;
+												victoria=0;
+											}
+											else if(8<=aleatorio<=9){
+												printf("\nEl despliegue de tu ejercito ha sido imponente han masacrado a casi todo el ejercito enemigo.");
+												printf("\nLos que no han sido asesinados han huido por miedo a la ejecucion.");
+												printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+												
+													victoria++;
+											}
+											else{
+												printf("\nTu ejercito ha ganado la batalla pero con un gran costo en bajas.");
+												printf("\nSe celebra una gran fiesta. Los generales del ejercito van tan borrachos que se empiezan a pelear entre ellos.");
+												printf("\nAl final se les pasa el mal rollo entre ellos, pero creen que la culpa de las bajas es tuya y te decapitan.HAS PERDIDO.");
+												
+													return 0;
+											}
+								}
+								else{
+										printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+												fflush(stdin);
+												scanf("%c",&respuesta);
+								}
+								i++;
+					
+				}
+			}
+		
+		}
+	}
+
+//			Se acabaron los episodios
+// Funciones que realizan funcionalidades, y no episodios:
+
 
 
 
@@ -696,7 +1642,7 @@ int explorar (struct variables variable[], int jugador){
 				variable[jugador].ejercito=variable[jugador].ejercito+variable[jugador].poblacion*0.2;
 				variable[jugador].dinero=variable[jugador].dinero+((variable[jugador].madera+variable[jugador].metal+variable[jugador].alimentos)*0.3);
 			}
-			else{   //asentamientos 2 y 3
+			else{   //variable[jugador].asentamientos 2 y 3
 				if (num>=mitad){
 					variable[jugador].dinero=variable[jugador].dinero-40;
 					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevasen mas.");
