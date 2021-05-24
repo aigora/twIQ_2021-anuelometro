@@ -1,5 +1,0 @@
-1 1 angel alcala 19 9 40.2 40.2 40.2 40.2 1 0
-2 2 rubio alcalaita 19 9 40.2 40.2 40.2 40.2 1 0
-3 3 ramos alcalaota 19 9 40.2 40.2 40.2 40.2 1 0
-4 4 fede alcalaaa 19 9 40.2 40.2 40.2 40.2 1 0
-5 5 fedon alcalaaaa 19 9 40.2 40.2 40.2 40.2 1 0
