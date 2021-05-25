@@ -463,7 +463,7 @@ void episodio1 (struct variables variable[], int jugador){			// variable[jugador
 
 int episodio3 (struct variables variable[], int jugador) {
 	int i,j,aleatorio;
-	float aux;
+	float aux,resto;
 	char respuesta,letra;
 
 	
@@ -641,7 +641,7 @@ int episodio3 (struct variables variable[], int jugador) {
 							}
 							else if((letra=='n')||(letra=='N')){
 							j=1;
-								printf("	\n");
+								printf("	Uhhhh!! No parece que se lo hayan tomado muy fien la verdad. Se van por donde vinieron, pero algo me indica que la cosa no se quedara asi. Desde el imperio Alfa se habbra tomado como una ofensa, y lo más seguro es que haya represalias...\n		 Solo el tiempo lo dira.\n");
 								
 							}
 				return 5;		
@@ -661,7 +661,7 @@ int episodio5 (struct variables variable [], int jugador){
 	int i,j,aleatorio;
 	int faseguerra=0;
 	int victoria;
-	float aux;
+	float aux,resto;
 	char respuesta, letra;
 	
 	if(variable[jugador].asentamiento==1 && variable[jugador].unidos==1){
@@ -1106,7 +1106,7 @@ int episodio5 (struct variables variable [], int jugador){
 										srand(time(NULL));
 										aleatorio= 1+rand()%(5);
 										if(aleatorio<4){
-											printf("\nTu ejercito ha invadido exitosamente la capital, aumentando así tu poblacion y recursos.");
+											printf("\n		Tu ejercito ha invadido exitosamente la capital, aumentando así tu poblacion y recursos.");
 											variable[jugador].poblacion+=30;
 								variable[jugador].dinero+=50;
 								variable[jugador].madera+=15;
@@ -1116,8 +1116,8 @@ int episodio5 (struct variables variable [], int jugador){
 											
 										}
 										else{
-											printf("Tu ejercito ha salido con las manos vacías.");
-											printf("Las tropas del imperio Delta y Omega llegaron antes y derrotaron a la mitad de tus tropas.");
+											printf("	Tu ejercito ha salido con las manos vacías.\n");
+											printf("	Las tropas del imperio Delta y Omega llegaron antes y derrotaron a la mitad de tus tropas.");
 											
 											if(aux%2==0){
 												variable[jugador].ejercito+=aux/2;
@@ -1141,10 +1141,10 @@ int episodio5 (struct variables variable [], int jugador){
 								}
 				}
 				if(variable[jugador].asentamiento==1 && variable[jugador].unidos==0){
-						printf("\nTras la victoria contra el ejercito del imperio Beta este imperio es debil.");
-						printf("\nEs el momento perfecto para iniciar una ofensiva.");
-						printf("\nDeseas enviar a tu ejercito a atacar la capital del imperio Beta??");
-						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+						printf("\n		Tras la victoria contra el ejercito del imperio Beta este imperio es debil.");
+						printf("\n	Es el momento perfecto para iniciar una ofensiva.");
+						printf("\n	Deseas enviar a tu ejercito a atacar la capital del imperio Beta??");
+						printf("\n(Introduce S para enviar el ejercito y N para no enviarlo)");
 							fflush(stdin);
 							scanf("%c",&respuesta);
 							i=0;
@@ -1153,18 +1153,18 @@ int episodio5 (struct variables variable [], int jugador){
 									i=0;
 									if((respuesta=='S')||(respuesta=='s')){
 										
-										printf("\nQue cantidad de tropas desea enviar??");
-										printf("\nRecuerda que si envias mas cantidad de tropas de las que dispones tu capital quedara desprotegida y seras conquistado.");
+										printf("\n		Que cantidad de tropas desea enviar??");
+										printf("\n	Recuerda que si envias mas cantidad de tropas de las que dispones tu capital quedara desprotegida y seras conquistado.");
 											fflush(stdin);
 											scanf("%f",&aux);
 												if(aux<0){
-													printf("\nIntroduce una cantidad valida de tropas.");
+													printf("\n	Introduce una cantidad valida de tropas.");
 													scanf("%f",&aux);
 												}
 												else{
-													printf("\nDe acuerdo, %.0f soldados seran enviados",aux);
+													printf("\n	De acuerdo, %.0f soldados seran enviados",aux);
 														if (variable[jugador].ejercito<0){
-													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
+													printf("	Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
 													final(variable, jugador);	
 													return 0;
 												}
@@ -1173,7 +1173,7 @@ int episodio5 (struct variables variable [], int jugador){
 										srand(time(NULL));
 										aleatorio= 1+rand()%(8);
 										if(aleatorio<5){
-											printf("\nTu ejercito ha invadido exitosamente la capital, aumentando así tu poblacion y recursos.");
+											printf("\n	Tu ejercito ha invadido exitosamente la capital, aumentando así tu poblacion y recursos.");
 											variable[jugador].poblacion+=30;
 								variable[jugador].dinero+=50;
 								variable[jugador].madera+=15;
@@ -1183,10 +1183,10 @@ int episodio5 (struct variables variable [], int jugador){
 											
 										}
 										else{
-											printf("Tu ejercito ha salido con las manos vacías.");
-											printf("Las tropas del imperio Delta y Omega llegaron antes y derrotaron a la mitad de tus tropas.");
+											printf("	Tu ejercito ha salido con las manos vacías.");
+											printf("	Las tropas del imperio Delta y Omega llegaron antes y derrotaron a la mitad de tus tropas.");
 											
-											if(aux%2==0){
+											if(aux%2.0==0){
 												variable[jugador].ejercito+=aux/2;
 											}
 											else if(aux%2!=0){
@@ -1196,11 +1196,11 @@ int episodio5 (struct variables variable [], int jugador){
 										
 									}
 									if((respuesta=='N')||(respuesta=='n')){
-									printf("\nDebido a esto, la alianza del imperio Delta y Omega terminaron conquistando los resquicios del imperio Beta.");
+									printf("\n		Debido a esto, la alianza del imperio Delta y Omega terminaron conquistando los resquicios del imperio Beta.");
 									
 									}
 									else{
-											printf("El caracter introducido no es valido. Escriba una S o una N por favor.\n");
+											printf("	El caracter introducido no es valido. Escriba una S o una N por favor.\n");
 												fflush(stdin);
 												scanf("%c",&respuesta);
 									}
@@ -1217,11 +1217,11 @@ int episodio5 (struct variables variable [], int jugador){
 		
 		while(faseguerra==2 && victoria==1){
 			if(variable[jugador].asentamiento==1 && variable[jugador].unidos==1){
-						printf("\nLos ejercitos de los imperios Delta y Omega se han unido.");
-						printf("\nEsta sera la ultima batalla para poder conquistar todo el territorio.");
-						printf("\ntu ejercito cuenta en este momento con %.0f soldados, recuerda que si tus tropas se quedan en 0 tu imperio llegara a su fin.",variable[jugador].ejercito);
-						printf("\nDeseas enviar a tu ejercito a defender??");
-						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+						printf("\n		Los ejercitos de los imperios Delta y Omega se han unido.");
+						printf("\n	Esta sera la ultima batalla para poder conquistar todo el territorio.");
+						printf("\n	Tu ejercito cuenta en este momento con %.0f soldados, recuerda que si tus tropas se quedan en 0 tu imperio llegara a su fin.",variable[jugador].ejercito);
+						printf("\n	Deseas enviar a tu ejercito a defender??");
+						printf("\n(Introduce S para enviar el ejercito y N para no enviarlo)");
 							fflush(stdin);
 							scanf("%c",&respuesta);
 							i=0;
@@ -1402,7 +1402,7 @@ int episodio5 (struct variables variable [], int jugador){
 						printf("\nEsta sera la ultima batalla para poder conquistar todo el territorio.");
 						printf("\ntu ejercito cuenta en este momento con %.0f soldados, recuerda que si tus tropas se quedan en 0 tu imperio llegara a su fin.",variable[jugador].ejercito);
 						printf("\nDeseas enviar a tu ejercito a defender??");
-						printf("\nIntroduce S para enviar el ejercito y N para no enviarlo: ");
+						printf("\n(Introduce S para enviar el ejercito y N para no enviarlo)");
 							fflush(stdin);
 							scanf("%c",&respuesta);
 							i=0;
@@ -1506,12 +1506,11 @@ int episodio5 (struct variables variable [], int jugador){
 													return 0;
 													victoria++;
 												}
-												else{
-												
-									printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
-									printf("\nPese a ello los soldados han salido a celebrar la victoria.");
-									printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
-								}
+												else{			printf("\n");
+													printf("\nHa caido una parte de tu ejercito, sin embargo has vencido.");
+													printf("\nPese a ello los soldados han salido a celebrar la victoria.");
+													printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
+												}
 										
 							}
 								else if(3<=aleatorio<=5){
