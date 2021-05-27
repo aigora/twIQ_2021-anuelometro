@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include<windows.h>
 #define N 1000
 		
 		
@@ -32,6 +33,7 @@ int CargaPartida (struct variables variable[], int jugador);			//Carga la inform
 void prueba (struct variables variable[], int jugador);
 
 int main(){
+	
 	
 	int i=1,j=1,jugador,aux;
 	FILE *fentrada;	
@@ -468,7 +470,7 @@ void episodio1 (struct variables variable[], int jugador){			// variable[jugador
 				printf("\n");
 		
 		printf("		ASENTAMIENTO EN LA MESETA:\n");
-			printf("	Este es un variable[jugador].asentamientocomplicado la verdad... No se ve ningun tipo de defensa natural que ayude ante un posible ataque enemigo. Sin embargo, esta REPLETO de materiales de todo tipo; tenemos madera, tierras para cultivo, animales que domesticar, una red de cuevas mas o menos cercana con metales y otros minerales....\n");
+			printf("	Este es un territorio complicado la verdad... No se ve ningun tipo de defensa natural que ayude ante un posible ataque enemigo. Sin embargo, esta REPLETO de materiales de todo tipo; tenemos madera, tierras para cultivo, animales que domesticar, una red de cuevas mas o menos cercana con metales y otros minerales....\n");
 				printf("	Desde luego que empezar aqui no va a ser facil, pero como sobrevivas al inicio... VAS A SER INDESTRUCTIBLE!!");
 					printf("\n\n");
 		
@@ -595,7 +597,7 @@ int episodio3 (struct variables variable[], int jugador) {
 										variable[jugador].metal=variable[jugador].metal+25+(total*0.7);
 										variable[jugador].madera=variable[jugador].madera+30+(total*0.7);
 										variable[jugador].dinero=variable[jugador].dinero+110+(total*0.7);
-										variable[jugador].poblacion=variable[jugador].poblacion+30;
+										variable[jugador].poblacion=variable[jugador].poblacion+20;
 										variable[jugador].ejercito=variable[jugador].ejercito+15;
 												return 3;
 									}
@@ -639,7 +641,7 @@ int episodio3 (struct variables variable[], int jugador) {
 							}
 							else if((letra=='n')||(letra=='N')){
 							j=1;
-								printf("	Uno de los altos mandos militares irrumpe en tu habitacion antes incluso de que te puedas levantgar de la cama. Casi sin aliento, te avisa de algo bastante grave y urgente que esta ocurriendo:\n");
+								printf("	Uno de los altos mandos militares irrumpe en tu habitacion antes incluso de que te puedas levantar de la cama. Casi sin aliento, te avisa de algo bastante grave y urgente que esta ocurriendo:\n");
 								printf("	El ejercito del imperio alfa viene con cara de pocos amigos. Debe de ser que los individuos de ayer eran de los suyos. \n");
 								printf("		Esto parece que se va a poner interesante...\n");
 							}
@@ -1463,7 +1465,7 @@ int episodio5 (struct variables variable [], int jugador){
 													printf("Lo siento %s, pero te has quedado sin ejercito con el que defender tu territorio y otros imperios han aprovechado para conquistarte. HAS PERDIDO.\n",variable[jugador].nombre); 
 													final(variable, jugador);	
 													return 0;
-													victoria++;
+													
 												}
 												else{
 												
@@ -1509,6 +1511,7 @@ int episodio5 (struct variables variable [], int jugador){
 									
 									printf("\nHa caido una gran parte del ejercito, sin embargo has vencido.");
 									printf("\nPese a ello los soldados han salido a celebrar con el resto del pueblo.");
+									printf("\nAhora todo el territorio es tuyo. HAS GANADO; ENHORABUENA.");
 									
 								}
 														
@@ -1529,6 +1532,7 @@ int episodio5 (struct variables variable [], int jugador){
 												printf("\nTu ejercito ha ganado la batalla pero con un gran costo en bajas.");
 												printf("\nSe celebra una gran fiesta. Los generales del ejercito van tan borrachos que se empiezan a pelear entre ellos.");
 												printf("\nAl final se les pasa el mal rollo entre ellos, pero creen que la culpa de las bajas es tuya y te decapitan.HAS PERDIDO.");
+												return 0;
 											}
 								
 										
@@ -1668,11 +1672,11 @@ int explorar (struct variables variable[], int jugador){
 		}
 		else{
 			if(variable[jugador].asentamiento==1){
-				variable[jugador].madera=variable[jugador].madera+1.2*num;
-				variable[jugador].metal=variable[jugador].metal+1.2*num;
-				variable[jugador].alimentos=variable[jugador].alimentos+num*1.8; 
-				variable[jugador].poblacion=variable[jugador].poblacion+variable[jugador].alimentos*0.25;
-				variable[jugador].ejercito=variable[jugador].ejercito+variable[jugador].poblacion*0.2;
+				variable[jugador].madera=variable[jugador].madera+3*num;
+				variable[jugador].metal=variable[jugador].metal+3*num;
+				variable[jugador].alimentos=variable[jugador].alimentos+num*5; 
+				variable[jugador].poblacion=variable[jugador].poblacion+variable[jugador].alimentos*1.5;
+				variable[jugador].ejercito=variable[jugador].ejercito+variable[jugador].poblacion*1.5;
 				variable[jugador].dinero=variable[jugador].dinero+((variable[jugador].madera+variable[jugador].metal+variable[jugador].alimentos)/2.0);
 			}
 			else if(variable[jugador].asentamiento==2){
