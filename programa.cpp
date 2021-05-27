@@ -499,7 +499,7 @@ void episodio1 (struct variables variable[], int jugador){			// variable[jugador
 
 int episodio3 (struct variables variable[], int jugador) {
 	int i,j,aleatorio;
-	float aux,resto;
+	float aux,resto,total;
 	char respuesta,letra;
 
 	
@@ -522,18 +522,21 @@ int episodio3 (struct variables variable[], int jugador) {
 							fflush(stdin);
 							scanf("f",&aux);		
 								variable[jugador].dinero=variable[jugador].dinero-aux;
+								total=total+aux;
 								if (variable[jugador].dinero<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
 					//MADERA
 						printf("	En madera (kg):\n");
 							fflush(stdin);
 							scanf("%f",&aux);		
 								variable[jugador].madera=variable[jugador].madera-aux;
+								total=total+aux;
 								if (variable[jugador].madera<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
 					//METAL
 						printf("	En metal (kg):\n");
 							fflush(stdin);
 							scanf("%f",&aux);		
 								variable[jugador].metal=variable[jugador].metal-aux;
+								total=total+aux;
 									if (variable[jugador].metal<0){ printf("	No tienes suficientes materiales.\n");	return 0;}
 						
 						//INCIDENTE DE LOS OBREROS Y LA COMIDA:
@@ -545,7 +548,7 @@ int episodio3 (struct variables variable[], int jugador) {
 									while(j==0){
 										
 										if((letra=='S')||(letra=='s')){ 
-											variable[jugador].alimentos = variable[jugador].alimentos-20;
+											variable[jugador].alimentos = variable[jugador].alimentos-10;
 												//Si no tiene comida suficiente:
 												if (variable[jugador].alimentos<0){
 													printf("Lo siento %s, pero no tienes ni para alimentar a tu pueblo. HAS PERDIDO.\n",variable[jugador].nombre); 
@@ -574,10 +577,10 @@ int episodio3 (struct variables variable[], int jugador) {
 									if(aleatorio<5){
 										printf("	Los marineros traen algo de materiales, nada especial, pero menos da una piedra.\n");
 										printf("	Parece que hay menos personas de las que salieron.... No... NO!... Entre los marineros ha habido un par de bajas...\n");
-										variable[jugador].alimentos=variable[jugador].alimentos+5;
-										variable[jugador].metal=variable[jugador].metal+18;
-										variable[jugador].madera=variable[jugador].madera+15;
-										variable[jugador].dinero=variable[jugador].dinero-50;
+										variable[jugador].alimentos=variable[jugador].alimentos+5*(total*0.7);
+										variable[jugador].metal=variable[jugador].metal+18*(total*0.7);
+										variable[jugador].madera=variable[jugador].madera+15*(total*0.7);
+										variable[jugador].dinero=variable[jugador].dinero-50*(total*0.7);
 										variable[jugador].poblacion=variable[jugador].poblacion-3;
 											if((variable[jugador].poblacion<0)||(variable[jugador].dinero<0)){
 												printf("	Te has quedado sin recursos... HAS PERDIDO.\n");
@@ -588,10 +591,10 @@ int episodio3 (struct variables variable[], int jugador) {
 										printf("	\n");
 										printf("	Los marineros traen algo de materiales, nada especial, pero menos da una piedra.\n");
 										printf("	Segun dicen los marineros, se cruzaron con algunos de los marineros del impeio Alfa. Y gracias a que en el barco iba uno de los diplomaticos del imperio %s, se ha llegado a un acuero con el imperio vecino. A partir de ahora el imperio alfa se unirá con nosotros HURRA!!",variable[jugador].nombreimperio);
-										variable[jugador].alimentos=variable[jugador].alimentos+19;
-										variable[jugador].metal=variable[jugador].metal+25;
-										variable[jugador].madera=variable[jugador].madera+30;
-										variable[jugador].dinero=variable[jugador].dinero+110;
+										variable[jugador].alimentos=variable[jugador].alimentos+19+(total*0.7);
+										variable[jugador].metal=variable[jugador].metal+25+(total*0.7);
+										variable[jugador].madera=variable[jugador].madera+30+(total*0.7);
+										variable[jugador].dinero=variable[jugador].dinero+110+(total*0.7);
 										variable[jugador].poblacion=variable[jugador].poblacion+30;
 										variable[jugador].ejercito=variable[jugador].ejercito+15;
 												return 3;
@@ -604,7 +607,7 @@ int episodio3 (struct variables variable[], int jugador) {
 												return 0;
 											}
 									}
-								
+								informe(variable, jugador);
 								
 							i=1;
 						}	//Aqui acaba el 1º IF 
@@ -800,10 +803,10 @@ int episodio5 (struct variables variable [], int jugador){
 						variable[jugador].poblacion=variable[jugador].poblacion-aux;
 		
 							if (variable[jugador].poblacion<0){
-													printf("Lo siento %s, pero te has quedado sin habitantes y tu territorio ha sido invadido. HAS PERDIDO.\n",variable[jugador].nombre); 
-													final(variable, jugador);	
-													return 0;
-												}	
+								printf("Lo siento %s, pero te has quedado sin habitantes y tu territorio ha sido invadido. HAS PERDIDO.\n",variable[jugador].nombre); 
+								final(variable, jugador);	
+								return 0;
+							}
 				}
 				else if((respuesta=='N'||(respuesta=='n'))){
 					printf("\nAlla tu, debes ser consciente que sin suficientes recursos luego no estaras listo para la guerra.");
