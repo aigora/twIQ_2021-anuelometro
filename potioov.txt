@@ -1,0 +1,5 @@
+0 1 angekl nombreimperio1 10.0 10.0 10.0 10.0 10.0 10.0 0 1
+1 4 ian nombreimperio2  10.0 10.0 10.0 10.0 10.0 10.0 0 1
+2 3 albeto nombreimperio3  10.0 10.0 10.0 10.0 10.0 10.0 0 1
+3 2 masca nombreimperio4  10.0 10.0 10.0 10.0 10.0 10.0 0 1
+4 1 kaka nombreimperio5  10.0 10.0 10.0 10.0 10.0 10.0 0 1
