@@ -1,0 +1,8 @@
+NUEVA PARTIDA
+	Jugó: barco 3
+	Su imperio se llamó: barco
+variable[jugador].asentamientoinicial---> COSTA
+barco 3 no debió haber construido el barco.tado.
+	--> 70.80 kilogramos de madera.
+	--> 83.40 kilogramos de metales y minerales.
+	--> 27.20 kilogramos de alimentos con los que mantenía a su pueblo.
