@@ -1,4 +1,8 @@
 NUEVA PARTIDA
-	Jugó: angeellllllll
-	Su imperio se llamó: angeeeeeeeeeee
-Asentamiento inicial---> MESETA
+	Jugó: ian
+	Su imperio se llamó: lokokooo
+variable[jugador].asentamientoinicial---> COSTA
+olares de dinero publico en las arcas del estado.
+	--> 20.60 kilogramos de madera.
+	--> 22.60 kilogramos de metales y minerales.
+	--> -0.60 kilogramos de alimentos con los que mantenía a su pueblo.
