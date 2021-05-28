@@ -160,7 +160,7 @@ do{
 	}
 	else if  ((respuesta == 'C')||(respuesta == 'c')){
 		printf("	Este videojuego, ha sido realizado enteramente por:\n");
-		printf("			Angel Rubio Ramos.\n			Federico Javier Laoroga de Villa\n			Alejandro Bejar.\n");
+		printf("			Angel Rubio Ramos (Menu, funciones, episodios...).m\n			Federico Javier Laoroga de Villa (Episodio 5 y guerras).\n");
 		printf("(Presiona ENTER para empezar)\n");
 			getch();
 			printf("	Tienes alguna partida iniciacada ya?? (S para si Y N para no)");
@@ -400,12 +400,14 @@ do{
 		}
 		variable[jugador].partepartida++;
 	}
-
 	
+	final(variable, jugador);
+	
+	char v[]="VACIO";
 	if (variable[jugador].partepartida==6){	//Igualamos a 0 todas las variable para "desalojar el hueco" 
 		variable[jugador].partepartida=0;
-		variable[jugador].nombre={'V','A','C','I','O','\0',};
-		variable[jugador].nombreimperio={"VACIO"};
+		strcpy(variable[jugador].nombre,v);
+		strcpy(variable[jugador].nombreimperio,v);
 		variable[jugador].poblacion=0;
 		variable[jugador].ejercito=0;
 		variable[jugador].alimentos=0;
@@ -415,7 +417,7 @@ do{
 		variable[jugador].unidos=0;
 		variable[jugador].asentamiento=0;	
 	}
-	final(variable, jugador);
+
 	fclose(fentrada);
 return 0;	
 }
