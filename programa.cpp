@@ -37,6 +37,7 @@ int main(){
 	
 	int i=1,j=1,jugador,aux;
 	FILE *fentrada;	
+	FILE *fhistorial;	
 	struct variables variable[N];
 	char respuesta,compnombre[N];
 
@@ -73,7 +74,7 @@ do{
 						j=0;
 					}
 					else if ((respuesta == 'N')||(respuesta == 'n')){
-						printf("	Vas a empezar una nueva partida.\n");
+						printf("	Vas a empezar una nueva partida. Revisa el documento 'historial.txt', que esta en la carpeta del juego, y busca un slot con todo 0's menos el 1º numero. Si no hay elija cualquier otro.\n");
 						printf("	Introduce el numero de jugador que quieres tomar. Ten en cuenta que si eliges el nmumero de alguien que tenga su partida iniciada, se perderan sus datos.\n");
 							fflush(stdin);
 							scanf("%i",&jugador);
@@ -132,7 +133,7 @@ do{
 						j=0;
 						}
 					else if ((respuesta == 'N')||(respuesta == 'n')){
-						printf("	Vas a empezar una nueva partida.\n");
+						printf("	Vas a empezar una nueva partida.Revisa el documento 'historial.txt', que esta en la carpeta del juego, y busca un slot con todo 0's menos el 1º numero. Si no hay elija cualquier otro.\n");
 						printf("	Introduce el numero de jugador que quieres tomar. Ten en cuenta que si eliges el nmumero de alguien que tenga su partida iniciada, se perderan sus datos.\n");
 							fflush(stdin);
 							scanf("%i",&jugador);
@@ -188,7 +189,7 @@ do{
 						j=0;
 					}
 					else if ((respuesta == 'N')||(respuesta == 'n')){
-						printf("Vas a empezar una nueva partida.\n");
+						printf("Vas a empezar una nueva partida.Revisa el documento 'historial.txt', que esta en la carpeta del juego, y busca un slot con todo 0's menos el 1º numero. Si no hay elija cualquier otro.\n");
 						printf("	Introduce el numero de jugador que quieres tomar. Ten en cuenta que si eliges el nmumero de alguien que tenga su partida iniciada, se perderan sus datos.\n");
 							fflush(stdin);
 							scanf("%i",&jugador);
@@ -246,12 +247,17 @@ do{
 	if(variable[jugador].partepartida==1){
 		episodio1(variable, jugador);
 		variable[jugador].partepartida++;
-	
+					
 			//Guardamos la decision en el fichero de decisiones:
 						if(variable[jugador].asentamiento==1){fprintf(fentrada,"variable[jugador].asentamientoinicial---> COSTA\n");	}
 						else if(variable[jugador].asentamiento==2){fprintf(fentrada,"Asentamiento inicial---> CORDILLERA\n");	}	
 						else {fprintf(fentrada,"Asentamiento inicial---> MESETA\n");	}
 	
+			if (aux==0){
+				final(variable, jugador);
+				return 0;
+			}
+			
 		//Guardamos partida
 		printf("\n\n");
 			if (guardar(variable, jugador)==0){
@@ -261,16 +267,19 @@ do{
 	}
 
 		//**************  declaramos los VALORES INICIALES de las variables (iguales para todos)  ***************//
-				variable[jugador].dinero=100;
-				variable[jugador].poblacion=10;
-				variable[jugador].ejercito=5;
-				variable[jugador].metal=0;
-				variable[jugador].alimentos=0;
-				variable[jugador].madera=0;
-				variable[jugador].unidos=0;
-					//comunicamos al jugador
-					informe(variable, jugador);
-						printf("\n\n");
+		if (variable[jugador].partepartida==2){
+			variable[jugador].dinero=100;
+			variable[jugador].poblacion=10;
+			variable[jugador].ejercito=5;
+			variable[jugador].metal=0;
+			variable[jugador].alimentos=0;
+			variable[jugador].madera=0;
+			variable[jugador].unidos=0;
+				//comunicamos al jugador
+				informe(variable, jugador);
+					printf("\n\n");
+		}
+				
 					
 		
 		
@@ -280,7 +289,7 @@ do{
 			// Para este poco código, no merece la pena hacer una fincion a parte, se queda asi.
 	if(variable[jugador].partepartida==2){
 			if(explorar(variable,jugador)==0) {
-				final(variable, jugador);
+				// Final ya está incluido en Explorar
 				return 0;
 			}
 		informe(variable, jugador);
@@ -383,6 +392,7 @@ do{
 	//5º EPISODIO: 1ª GUERRA****************************** 4 ************** 4 ******************* 4 ************* 4 ************ 4 ************* 4 *********** 4 ******** 4 *****
 	if (variable[jugador].partepartida==5){
 		if (episodio5(variable, jugador)==0){
+			//No ponemos aqui la funcion final porque en este caso ya estaba puesto dentro de episodio5
 			return 0;
 		}
 		if (guardar(variable, jugador)==0){
@@ -392,9 +402,20 @@ do{
 	}
 
 	
-	
-	
-	
+	if (variable[jugador].partepartida==6){	//Igualamos a 0 todas las variable para "desalojar el hueco" 
+		variable[jugador].partepartida=0;
+		variable[jugador].nombre[N]={'V','A','C','I','O','\0',};
+		variable[jugador].nombreimperio[N]={"VACIO"};
+		variable[jugador].poblacion=0;
+		variable[jugador].ejercito=0;
+		variable[jugador].alimentos=0;
+		variable[jugador].metal=0;
+		variable[jugador].madera=0;
+		variable[jugador].dinero=0;
+		variable[jugador].unidos=0;
+		variable[jugador].asentamiento=0;	
+	}
+	final(variable, jugador);
 	fclose(fentrada);
 return 0;	
 }
@@ -599,7 +620,11 @@ int episodio3 (struct variables variable[], int jugador) {
 										variable[jugador].dinero=variable[jugador].dinero+110+(total*0.7);
 										variable[jugador].poblacion=variable[jugador].poblacion+20;
 										variable[jugador].ejercito=variable[jugador].ejercito+15;
-												return 3;
+										
+										printf("\n	Trás la union diplomatica, el imperio Alfa queda fusionado por completo con nosotros vajo el nmombre de %s, quedando asi:\n",variable[jugador].nombreimperio);
+										informe(variable,jugador);
+									
+									return 3;
 									}
 									else{
 										printf("	Ya han pasado mas de 5 dias desde que salio el barco, y no tenemos noticias... Veremos a ver que ocurre pero me huele a que no van a volver.\n");
@@ -624,10 +649,10 @@ int episodio3 (struct variables variable[], int jugador) {
 								scanf("%c",&respuesta);
 						}
 				}	
-		}//Aqui acaba el while del variable[jugador].asentamiento1 
+		}//Aqui acaba el while del ASENTAMIENTO 1 
 					
 		else{ //Lo que ocurre en la 2ª ronda para los asentamientos 2 y 3
-			printf("	Buenos dias emperador! Hoy ha salido un sol precioso, y podemos ver como %s empieza a coger forma y a ganarse el respeto de los imperios vecinos.\n ");
+			printf("	Buenos dias emperador! Hoy ha salido un sol precioso, y podemos ver como %s empieza a coger forma y a ganarse el respeto de los imperios vecinos.\n ",variable[jugador].nombreimperio);
 					printf("Quieres salir a la ventana y observar el maravilloso dia que hace??		(S para si y N para no)\n");
 						fflush(stdin);
 						scanf("%c",&letra);
@@ -735,7 +760,6 @@ int episodio5 (struct variables variable [], int jugador){
 						
 							if (variable[jugador].poblacion<0){
 													printf("Lo siento %s, pero te has quedado sin habitantes y tu territorio ha sido invadido. HAS PERDIDO.\n",variable[jugador].nombre); 
-													final(variable, jugador);	
 													return 0;
 												}	
 				}
@@ -1650,14 +1674,14 @@ void informe(struct variables variable[], int jugador){	//Informamos del estado 
 
 int explorar (struct variables variable[], int jugador){
 	int i,num;
-	float mitad;
+	float protegen;
 	printf("	Debes mandar a algunas de las personas a por recursos. Tu eliges a cuantos de los %.0f mandas.\n",variable[jugador].poblacion);
 		fflush(stdin);
 		scanf("%i",&num);
-	mitad=variable[jugador].poblacion*0.5;
+	protegen=variable[jugador].poblacion*0.68;
 	i=0;
 	while(i==0){
-		if (num==variable[jugador].poblacion){
+		if (num==variable[jugador].poblacion*0.9){
 			printf("	Lamentamos comunicarte, que tu imperio a sido asaltado por el imperio vecino. A quien se le ocurre dejarla sin nadie que la proteja... De verdad que... EN QUE ESTABAS PENSANDO!!");
 			printf("Lo has perdido TODO. Aunque casi no te ha dado tiempo a tener nada....\n 	Este es el final de tu imperio\n");
 			printf("	Esperamos que te lo hayas pasado bien en tu corta estancia jungando EGO. Tambien espaeramos que vuelvas pronto.\n HASTA LA PROXIMA!!");
@@ -1688,7 +1712,7 @@ int explorar (struct variables variable[], int jugador){
 				variable[jugador].dinero=variable[jugador].dinero+((variable[jugador].madera+variable[jugador].metal+variable[jugador].alimentos)*0.3);
 			}
 			else{   //variable[jugador].asentamientos 2 y 3
-				if (num>=mitad){
+				if (num>=protegen){
 					variable[jugador].dinero=variable[jugador].dinero-40;
 					printf("	Siento mucho tener que ser yo quien te lo diga, pero mandaste demasiadas personas a recolectar. Han venido ladrones, y se han llevado 40 dolares de las arcas publicas. Suerte has tenido de que no se llevasen mas.");
 				}
@@ -1749,11 +1773,12 @@ int CargaPartida (struct variables variable[], int jugador){
 			return jugador;
 		}
 	
-	return 6;	
+return jugador;	
 }
  
 void final(struct variables variable[], int jugador){
 	FILE *fentrada;
+	FILE *fhistorial;
 	printf("\n\n");
 	printf("	Esto ha sido lo que el destino le tenia guardado a %s.\n");
 	printf("	%s, te agradecemos que hayas invertido tu tiempo en jugar a EGO. A ver si tienes mas suerte la proxima vez que no veamos.\n\n\n				 HASTA LUEGO !!!!");
@@ -1764,7 +1789,7 @@ void final(struct variables variable[], int jugador){
 							if (fentrada == NULL){
 								printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'decisiones.txt'.");
 							}
-				//ESCRIBIMOS LOS DATOS CON LOS QUE EL IMPERIO TERMINA SU HISTORIA:
+			//ESCRIBIMOS LOS DATOS CON LOS QUE EL IMPERIO TERMINA SU HISTORIA:
 				fprintf(fentrada,"El imperio %s, termino su historia con:\n");
 					fprintf(fentrada,"	--> %.0f habitantes.\n",variable[jugador].poblacion);
 					fprintf(fentrada,"	--> %.0f miembros del ejercito .\n");
@@ -1773,6 +1798,26 @@ void final(struct variables variable[], int jugador){
 					fprintf(fentrada,"	--> %.2f kilogramos de metales y minerales.\n",variable[jugador].metal);
 					fprintf(fentrada,"	--> %.2f kilogramos de alimentos con los que mantenía a su pueblo.\n",variable[jugador].alimentos);
 			fclose(fentrada);
-						
+			
+		//Ahora hay dejar constancia en el fichero de 'historial.txt' de que se ha acabado la partida y de que otro puede usarlo.
+			fhistorial=fopen("historial.txt","w");
+				if (fhistorial == NULL){
+					printf("Ha ocurrido un error en la escritura del fichero con los datos de las decidiones 'historial.txt'.");
+				}
+			fprintf(fhistorial,"%i ",variable[jugador].jugador);
+			fprintf(fhistorial,"0 ");
+			fprintf(fhistorial,"VACIO ");
+			fprintf(fhistorial,"VACIO ");
+			fprintf(fhistorial,"0 ");
+			fprintf(fhistorial,"0 ");
+			fprintf(fhistorial,"0.00f ");
+			fprintf(fhistorial,"0.00 ");
+			fprintf(fhistorial,"0.00 ");
+			fprintf(fhistorial,"0.00 ");
+			fprintf(fhistorial,"0 ");
+			fprintf(fhistorial,"0 ");
+			fprintf(fhistorial,"\n");
+			
+		fclose(fhistorial);
 	}
 
