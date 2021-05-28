@@ -404,8 +404,8 @@ do{
 	
 	if (variable[jugador].partepartida==6){	//Igualamos a 0 todas las variable para "desalojar el hueco" 
 		variable[jugador].partepartida=0;
-		variable[jugador].nombre[N]={'V','A','C','I','O','\0',};
-		variable[jugador].nombreimperio[N]={"VACIO"};
+		variable[jugador].nombre={'V','A','C','I','O','\0',};
+		variable[jugador].nombreimperio={"VACIO"};
 		variable[jugador].poblacion=0;
 		variable[jugador].ejercito=0;
 		variable[jugador].alimentos=0;
