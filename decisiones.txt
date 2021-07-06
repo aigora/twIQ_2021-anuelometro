@@ -1,0 +1,9 @@
+NUEVA PARTIDA
+	Jugó: angel
+	Su imperio se llamó: akcala
+Asentamiento inicial---> MESETA
+.
+	--> 100.00 Dolares de dinero publico en las arcas del estado.
+	--> 0.00 kilogramos de madera.
+	--> 0.00 kilogramos de metales y minerales.
+	--> 0.00 kilogramos de alimentos con los que mantenía a su pueblo.
