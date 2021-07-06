@@ -3,7 +3,6 @@
 INTEGRANTES DEL EQUIPO 
    Ángel Rubio Ramos 
    Federico Javier Laoroga de Villa
-   Alejandro Bejar
 
 OBJETIVOS DEL TRABAJO (Idea del proyecto)
 
